@@ -1,0 +1,25 @@
+{
+  "name": "rf-blog-web",
+  "version": "1.0.0",
+  "description": "",
+  "private": false,
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ryougifujino/rf-blog-web.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ryougifujino/rf-blog-web/issues"
+  },
+  "homepage": "https://github.com/ryougifujino/rf-blog-web#readme",
+  "devDependencies": {
+    "webpack": "^4.29.6",
+    "webpack-cli": "^3.2.3"
+  }
+}
