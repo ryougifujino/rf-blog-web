@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Index</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            margin: 0 auto;
+            max-width: 700px;
+            width: 90%;
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin-top: 32px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header h1 span {
+            display: inline-flex;
+            align-items: center;
+        }
+
+        header h1 img:nth-of-type(1) {
+            width: 24px;
+            height: 24px;
+            padding: 8px;
+            margin-right: 8px;
+            border-radius: 50%;
+        }
+
+        header h1 img:nth-of-type(1):hover {
+            cursor: pointer;
+            background-color: #eeeeee;
+        }
+
+        header h1 img:nth-of-type(2) {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+        }
+
+        header h3 {
+            margin-bottom: 32px;
+            color: #484848;
+        }
+
+        nav ul {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        nav ul li {
+            list-style: none;
+            border-radius: 30px;
+            border: #eeeeee 1px solid;
+            padding: 8px 16px;
+            color: #484848;
+            background-color: #eeeeee;
+            white-space: nowrap;
+        }
+
+        nav ul li:hover {
+            color: black;
+            background-color: #e0e0e0;
+            border: #e0e0e0 1px solid;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <h1>ryougifujino
+        <span>
+            <img src="../assets/images/baseline-search-24px.svg" alt="Search">
+            <img src="../assets/logo.jpeg" alt="Logo">
+        </span>
+    </h1>
+
+    <h3>life blog</h3>
+</header>
+<nav>
+    <ul>
+        <li>主页</li>
+        <li>档案</li>
+        <li>分享</li>
+        <li>关于</li>
+    </ul>
+</nav>
+</body>
+</html>
