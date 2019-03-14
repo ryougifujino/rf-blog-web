@@ -56,7 +56,7 @@
         align-items: center;
     }
 
-    header h1 img:nth-of-type(1), img:nth-of-type(2) {
+    header h1 img:nth-of-type(n) {
         width: 24px;
         height: 24px;
         padding: 8px;
@@ -64,7 +64,7 @@
         border-radius: 50%;
     }
 
-    header h1 img:nth-of-type(1):hover, img:nth-of-type(2):hover {
+    header h1 img:nth-of-type(n):hover {
         cursor: pointer;
         background-color: #e0e0e0;
     }
@@ -72,7 +72,7 @@
     header h1 img:nth-of-type(3) {
         width: 40px;
         height: 40px;
-        border-radius: 50%;
+        padding: 0;
     }
 
     header h3 {
