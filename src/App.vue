@@ -20,6 +20,7 @@
             </ul>
             <hr>
         </nav>
+        <router-view></router-view>
     </div>
 </template>
 
@@ -113,17 +114,5 @@
         display: block;
         border: 0;
         border-top: 1px solid #f5f5f5;
-    }
-
-    section {
-        padding: 16px 0;
-    }
-
-    section h1 {
-        margin-bottom: 16px;
-    }
-
-    section p {
-        margin-bottom: 16px;
     }
 </style>
