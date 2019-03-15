@@ -14,7 +14,8 @@
         <nav>
             <div>
                 <router-link to="/home" :class="checkedNavTabClass('/home')">主页</router-link>
-                <router-link to="/archives" :class="checkedNavTabClass('/archives')">档案</router-link>
+                <router-link to="/archives" :class="checkedNavTabClass('/archives')">档案
+                </router-link>
                 <router-link to="/share" :class="checkedNavTabClass('/share')">分享</router-link>
                 <router-link to="/about" :class="checkedNavTabClass('/about')">关于</router-link>
             </div>
@@ -51,6 +52,10 @@
     }
 
     body {
+        margin-left: calc(100vw - 100%);
+    }
+
+    #app {
         margin: 0 auto;
         max-width: 700px;
         width: 90%;
