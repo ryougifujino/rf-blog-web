@@ -12,12 +12,12 @@
             <h3>life blog</h3>
         </header>
         <nav>
-            <ul>
-                <li>主页</li>
-                <li>档案</li>
-                <li>分享</li>
-                <li>关于</li>
-            </ul>
+            <div>
+                <router-link to="/home" :class="checkedNavTabClass('/home')">主页</router-link>
+                <router-link to="/archives" :class="checkedNavTabClass('/archives')">档案</router-link>
+                <router-link to="/share" :class="checkedNavTabClass('/share')">分享</router-link>
+                <router-link to="/about" :class="checkedNavTabClass('/about')">关于</router-link>
+            </div>
             <hr>
         </nav>
         <router-view></router-view>
@@ -25,7 +25,23 @@
 </template>
 
 <script>
-    export default {}
+    export default {
+        data() {
+            return {
+                currentNavTab: this.$route.path
+            };
+        },
+        watch: {
+            $route(to) {
+                this.currentNavTab = to.path;
+            }
+        },
+        computed: {
+            checkedNavTabClass() {
+                return path => ({"nav-tab-checked": this.currentNavTab.includes(path)});
+            }
+        }
+    }
 </script>
 
 <style>
@@ -85,14 +101,14 @@
         background-color: white;
     }
 
-    nav ul {
+    nav div {
         display: flex;
         justify-content: space-between;
         padding: 16px 0;
     }
 
-    nav ul li {
-        list-style: none;
+    nav div a {
+        text-decoration: none;
         border-radius: 30px;
         padding: 8px 16px;
         color: #6d6d6d;
@@ -100,12 +116,12 @@
         white-space: nowrap;
     }
 
-    nav ul li:nth-of-type(1) {
+    .nav-tab-checked {
         background-color: #e0e0e0;
         color: black;
     }
 
-    nav ul li:hover {
+    nav div a:hover {
         cursor: pointer;
         border: #6d6d6d 1px solid;
     }
