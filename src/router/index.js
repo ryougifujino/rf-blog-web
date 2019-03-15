@@ -3,7 +3,7 @@ import Router from 'vue-router';
 
 Vue.use(Router);
 
-import Home from '../views/Home.vue';
+import Home from '@/views/Home.vue';
 
 export default new Router({
     routes: [

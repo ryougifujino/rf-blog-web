@@ -36,5 +36,10 @@ module.exports = {
             title: "rf's Blog",
             template: "./index.html"
         })
-    ]
+    ],
+    resolve: {
+        alias: {
+            '@': path.resolve(__dirname, 'src')
+        }
+    }
 };
