@@ -5,7 +5,8 @@
   "private": false,
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "webpack"
+    "build": "webpack",
+    "watch": "webpack --watch"
   },
   "repository": {
     "type": "git",
@@ -30,6 +31,8 @@
     "webpack-cli": "^3.2.3"
   },
   "dependencies": {
-    "vue": "^2.6.8"
+    "vue": "^2.6.8",
+    "vue-router": "^3.0.2",
+    "vuex": "^3.1.0"
   }
 }
