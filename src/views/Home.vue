@@ -1,6 +1,9 @@
 <template>
     <div>
-        <HomePostPreview v-for="post of posts" :post="post"/>
+        <template v-for="post of posts">
+            <HomePostPreview :post="post"/>
+            <hr>
+        </template>
     </div>
 </template>
 
