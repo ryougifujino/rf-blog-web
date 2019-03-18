@@ -36,4 +36,8 @@
     section p {
         margin-bottom: 16px;
     }
+
+    section > div{
+        color: #212121;
+    }
 </style>
