@@ -24,7 +24,7 @@
     }
 </script>
 
-<style>
+<style scoped>
     section {
         padding: 16px 0;
     }
@@ -37,7 +37,7 @@
         margin-bottom: 16px;
     }
 
-    section > div{
+    section > div {
         color: #212121;
     }
 </style>
