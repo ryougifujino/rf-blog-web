@@ -1,0 +1,31 @@
+<template>
+    <div class="archives-post-list">
+        <ul>
+            <li v-for="post of posts"><h3>{{post.title}}</h3></li>
+        </ul>
+    </div>
+</template>
+
+<script>
+    import {mapModuleState} from '@/util/mapStateUtils';
+    import {FETCH_POST_TITLES} from '@/store/action-types';
+
+
+    export default {
+        computed: {
+            ...mapModuleState('archives', ['posts'])
+        },
+        async created() {
+            await this.$store.dispatch(FETCH_POST_TITLES, {offset: 0, limit: 20})
+        }
+    }
+</script>
+
+<style scoped>
+
+    ul li{
+        margin-bottom: 8px;
+        cursor: pointer;
+    }
+
+</style>
