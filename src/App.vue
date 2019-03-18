@@ -49,6 +49,7 @@
     * {
         margin: 0;
         padding: 0;
+        background-color: #f7f2ee;
     }
 
     body {
@@ -57,7 +58,7 @@
 
     #app {
         margin: 0 auto;
-        max-width: 700px;
+        max-width: 800px;
         width: 90%;
     }
 
@@ -117,7 +118,7 @@
         border-radius: 30px;
         padding: 8px 16px;
         color: #6d6d6d;
-        border: white 1px solid;
+        border: #f7f2ee 1px solid;
         white-space: nowrap;
     }
 
@@ -134,6 +135,10 @@
     hr {
         display: block;
         border: 0;
-        border-top: 1px solid #f5f5f5;
+        border-top: 1px solid #eee6e1;
+    }
+
+    ul li {
+        list-style: none;
     }
 </style>
