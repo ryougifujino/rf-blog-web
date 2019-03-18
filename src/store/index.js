@@ -7,6 +7,7 @@ import actions from '@/store/actions';
 import mutations from '@/store/mutations';
 import home from '@/store/modules/home';
 import archives from '@/store/modules/archives';
+import shares from '@/store/modules/shares';
 
 const state = {
 
@@ -18,6 +19,7 @@ export default new Vuex.Store({
     mutations,
     modules: {
         home,
-        archives
+        archives,
+        shares
     }
 });
