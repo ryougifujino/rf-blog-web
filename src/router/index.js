@@ -5,7 +5,7 @@ Vue.use(Router);
 
 import Home from '@/views/Home.vue';
 import Archives from '@/views/Archives.vue';
-import Share from '@/views/Share.vue';
+import Share from '@/views/Shares.vue';
 import About from '@/views/About.vue';
 
 export default new Router({

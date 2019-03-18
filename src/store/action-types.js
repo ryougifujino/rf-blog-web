@@ -2,3 +2,4 @@ export const FETCH_POST_PREVIEWS = 'FETCH_POST_PREVIEWS';
 export const FETCH_POST_TITLES = 'FETCH_POST_TITLES';
 export const FETCH_ALBUMS = "FETCH_ALBUMS";
 export const FETCH_TAGS = "FETCH_TAGS";
+export const FETCH_SHARES = "FETCH_SHARES";

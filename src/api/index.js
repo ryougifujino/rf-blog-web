@@ -66,3 +66,100 @@ export function fetchTags(offset, limit) {
         ])
     })
 }
+
+export function fetchShares(offset, limit) {
+    return new Promise(resolve => {
+        resolve([
+            {
+                title:"axios发送post请求，springMVC接收不到数据问题",
+                link: "https://www.baidu.com",
+                category: 'Web'
+            },
+            {
+                title:"Google 1Q84",
+                link: "https://www.google.com",
+                category: 'Web'
+            },
+            {
+                title:"标题1Q84",
+                link: "https://www.baidu.com",
+                category: 'Web'
+            },
+            {
+                title:"Google 1Q84",
+                link: "https://www.google.com",
+                category: 'Web'
+            },
+            {
+                title:"标题1Q84",
+                link: "https://www.baidu.com",
+                category: 'Web'
+            },
+            {
+                title:"Google 1Q84",
+                link: "https://www.google.com",
+                category: 'Web'
+            },
+            {
+                title:"标题1Q84",
+                link: "https://www.baidu.com",
+                category: 'Web'
+            },
+            {
+                title:"Google 1Q84",
+                link: "https://www.google.com",
+                category: 'Web'
+            },
+            {
+                title:"标题1Q84",
+                link: "https://www.baidu.com",
+                category: 'Web'
+            },
+            {
+                title:"Google 1Q84",
+                link: "https://www.google.com",
+                category: 'Web'
+            },
+            {
+                title:"标题1Q84",
+                link: "https://www.baidu.com",
+                category: 'Web'
+            },
+            {
+                title:"Google 1Q84",
+                link: "https://www.google.com",
+                category: 'Web'
+            },
+            {
+                title:"标题1Q84",
+                link: "https://www.baidu.com",
+                category: 'Web'
+            },
+            {
+                title:"Google 1Q84",
+                link: "https://www.google.com",
+                category: 'DDD'
+            },
+            {
+                title:"标题1Q84",
+                link: "https://www.baidu.com",
+                category: 'DDD'
+            },
+            {
+                title:"Google 1Q84",
+                link: "https://www.google.com",
+                category: 'AAA'
+            },
+            {
+                title:"标题1Q84",
+                link: "https://www.baidu.com",
+                category: 'WAAb'
+            },
+            {
+                title:"Google 1Q84",
+                link: "https://www.google.com",
+                category: 'WAAb'
+            },
+        ]);
+    });
+}
