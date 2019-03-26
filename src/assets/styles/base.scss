@@ -1,0 +1,16 @@
+@import "normalize";
+@import "theme";
+
+* {
+  margin: 0;
+  padding: 0;
+  background-color: $color-accent;
+}
+
+body {
+  margin-left: calc(100vw - 100%);
+}
+
+ul li {
+  list-style: none;
+}

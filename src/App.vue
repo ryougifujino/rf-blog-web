@@ -1,7 +1,7 @@
 <template>
     <div id="app">
         <header class="horizontal-padding">
-            <h1>ryougifujino
+            <h1 class="header-title">ryougifujino
                 <span>
                     <img src="./assets/images/baseline-search-24px.svg" alt="Search">
                     <img src="./assets/images/baseline-create-24px.svg" alt="Create">
@@ -9,7 +9,7 @@
                 </span>
             </h1>
 
-            <h3>the blog</h3>
+            <h3 class="header-subtitle">the blog</h3>
         </header>
         <nav class="horizontal-padding">
             <div>
@@ -45,16 +45,9 @@
     }
 </script>
 
-<style>
-    * {
-        margin: 0;
-        padding: 0;
-        background-color: #f7f2ee;
-    }
-
-    body {
-        margin-left: calc(100vw - 100%);
-    }
+<style lang="scss">
+    @import "~@/assets/styles/base";
+    @import "~@/assets/styles/theme";
 
     #app {
         margin: 0 auto;
@@ -65,19 +58,19 @@
         margin: 32px 0 16px;
     }
 
-    header h1 {
+    .header-title {
         font-size: 2.5em;
         display: flex;
         justify-content: space-between;
         align-items: center;
     }
 
-    header h1 span {
+    .header-title > span {
         display: inline-flex;
         align-items: center;
     }
 
-    header h1 img:nth-of-type(n) {
+    .header-title img {
         width: 24px;
         height: 24px;
         padding: 8px;
@@ -85,19 +78,23 @@
         border-radius: 50%;
     }
 
-    header h1 img:nth-of-type(n):hover {
+    .header-title img:hover {
         cursor: pointer;
-        background-color: #e0e0e0;
+        background-color: $text-color-secondary-light2;
     }
 
-    header h1 img:nth-of-type(3) {
+    .header-title img:nth-of-type(3) {
         width: 40px;
         height: 40px;
         padding: 0;
     }
 
-    header h3 {
-        color: #484848;
+    .header-subtitle {
+        color: $text-color-primary-light;
+    }
+
+    .app-nav {
+
     }
 
     nav {
@@ -115,29 +112,25 @@
         text-decoration: none;
         border-radius: 30px;
         padding: 8px 16px;
-        color: #6d6d6d;
-        border: #f7f2ee 1px solid;
+        color: $text-color-secondary;
+        border: $color-accent 1px solid;
         white-space: nowrap;
     }
 
     .nav-tab-checked {
-        background-color: #e0e0e0;
-        color: black;
+        background-color: $text-color-secondary-light2;
+        color: $text-color-primary;
     }
 
     nav div a:hover {
         cursor: pointer;
-        border: #6d6d6d 1px solid;
+        border: $text-color-secondary 1px solid;
     }
 
     hr {
         display: block;
         border: 0;
-        border-top: 1px solid #eee6e1;
-    }
-
-    ul li {
-        list-style: none;
+        border-top: 1px solid $color-accent-dark;
     }
 
     .horizontal-padding {
@@ -145,11 +138,12 @@
     }
 
     .title-text {
-        color: #212121;
+        color: $text-color-primary;
     }
 
     .body-text {
-        color: #212121;
+        color: $text-color-primary-light;
         font-size: 18px;
     }
+
 </style>

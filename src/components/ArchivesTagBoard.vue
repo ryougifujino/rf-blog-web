@@ -22,14 +22,16 @@
     }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+    @import "~@/assets/styles/theme";
+
     * {
-        background-color: #eee6e1;
-        color: #212121;
+        background-color: $color-accent-dark;
+        color: $text-color-primary-light;
     }
 
     hr {
-        border-color: #bdbdbd;
+        border-color: $color-line;
         margin-top: 12px;
         padding-bottom: 4px;
     }
@@ -46,13 +48,13 @@
     }
 
     h3, a {
-        background-color: #eee6e1;
+        background-color: $color-accent-dark;
     }
 
     a {
         border-radius: 8px;
-        border: 1px #bdbdbd solid;
-        background-color: #f7f2ee;
+        border: 1px $color-line solid;
+        background-color: $color-accent;
         padding: 4px 8px;
         margin: 8px 8px 0 0;
         cursor: pointer;
