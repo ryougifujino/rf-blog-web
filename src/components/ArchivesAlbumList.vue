@@ -23,14 +23,15 @@
     }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+    @import "~@/assets/styles/theme";
 
     * {
-        color: #212121;
+        color: $text-color-primary-light;
     }
 
     hr {
-        border-color: #bdbdbd;
+        border-color: $color-line;
         margin-top: 12px;
         padding-bottom: 4px;
     }
@@ -38,7 +39,7 @@
     .archives-album-list {
         padding: 12px;
         border-radius: 16px;
-        border: 1px solid #bdbdbd;
+        border: 1px solid $color-line;
     }
 
     .archives-album-list ul li {
