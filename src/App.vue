@@ -45,16 +45,9 @@
     }
 </script>
 
-<style>
-    * {
-        margin: 0;
-        padding: 0;
-        background-color: #f7f2ee;
-    }
-
-    body {
-        margin-left: calc(100vw - 100%);
-    }
+<style lang="scss">
+    @import "assets/styles/base";
+    @import "assets/styles/theme";
 
     #app {
         margin: 0 auto;
@@ -134,10 +127,6 @@
         display: block;
         border: 0;
         border-top: 1px solid #eee6e1;
-    }
-
-    ul li {
-        list-style: none;
     }
 
     .horizontal-padding {
