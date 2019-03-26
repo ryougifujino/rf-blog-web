@@ -59,11 +59,10 @@
     }
 
     .header-title {
-        font-size: 2.5em;
         display: flex;
         justify-content: space-between;
         align-items: center;
-        margin-bottom: 8px;
+        margin-bottom: 0;
     }
 
     .header-title > span {
