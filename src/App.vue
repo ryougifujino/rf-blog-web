@@ -5,7 +5,7 @@
                 <span>
                     <img src="./assets/images/baseline-search-24px.svg" alt="Search">
                     <img src="./assets/images/baseline-create-24px.svg" alt="Create">
-                    <img src="./assets/logo.jpeg" alt="Logo">
+                    <img src="./assets/images/logo.png" alt="Logo">
                 </span>
             </h1>
 
@@ -63,6 +63,7 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
+        margin-bottom: 8px;
     }
 
     .header-title > span {
