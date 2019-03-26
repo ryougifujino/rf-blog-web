@@ -1,6 +1,6 @@
 <template>
     <div id="app">
-        <header>
+        <header class="horizontal-padding">
             <h1>ryougifujino
                 <span>
                     <img src="./assets/images/baseline-search-24px.svg" alt="Search">
@@ -9,9 +9,9 @@
                 </span>
             </h1>
 
-            <h3>life blog</h3>
+            <h3>the blog</h3>
         </header>
-        <nav>
+        <nav class="horizontal-padding">
             <div>
                 <router-link to="/home" :class="checkedNavTabClass('/home')">主页</router-link>
                 <router-link to="/archives" :class="checkedNavTabClass('/archives')">档案
@@ -58,8 +58,7 @@
 
     #app {
         margin: 0 auto;
-        max-width: 800px;
-        width: 90%;
+        max-width: 750px;
     }
 
     header {
@@ -104,7 +103,6 @@
     nav {
         position: sticky;
         top: 0;
-        background-color: white;
     }
 
     nav div {
@@ -140,5 +138,18 @@
 
     ul li {
         list-style: none;
+    }
+
+    .horizontal-padding {
+        padding: 0 16px;
+    }
+
+    .title-text {
+        color: #212121;
+    }
+
+    .body-text {
+        color: #212121;
+        font-size: 18px;
     }
 </style>

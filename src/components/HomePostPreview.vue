@@ -1,7 +1,8 @@
 <template>
     <section>
-        <h1>{{post.title}}</h1>
-        <div v-html="bodyPreview">
+        <h2 class="title-text">{{post.title}}</h2>
+        <div class="body-text">
+            {{bodyPreview}}
         </div>
     </section>
 </template>
@@ -26,18 +27,11 @@
 
 <style scoped>
     section {
-        padding: 16px 0;
+        padding: 16px;
     }
 
-    section h1 {
+    section h2 {
         margin-bottom: 16px;
     }
 
-    section p {
-        margin-bottom: 16px;
-    }
-
-    section > div {
-        color: #212121;
-    }
 </style>
