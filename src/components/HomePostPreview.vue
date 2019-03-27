@@ -1,7 +1,7 @@
 <template>
-    <section>
-        <h2 class="title-text">{{post.title}}</h2>
-        <div class="body-text">
+    <section class="post-preview">
+        <h2 class="post-preview__title">{{post.title}}</h2>
+        <div class="post-preview__body">
             {{bodyPreview}}
         </div>
     </section>
@@ -25,13 +25,21 @@
     }
 </script>
 
-<style scoped>
-    section {
-        padding: 16px;
-    }
+<style lang="scss">
+    @import "~@/assets/styles/theme";
 
-    section h2 {
-        margin-bottom: 16px;
+    .post-preview {
+        padding: 16px;
+
+        &__title {
+            margin-bottom: 16px;
+            color: $text-color-primary;
+        }
+
+        &__body {
+            color: $text-color-primary-light;
+            font-size: 18px;
+        }
     }
 
 </style>

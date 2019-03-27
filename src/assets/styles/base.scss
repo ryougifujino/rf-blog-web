@@ -14,3 +14,9 @@ body {
 ul li {
   list-style: none;
 }
+
+hr {
+  display: block;
+  border: 0;
+  border-top: 1px solid $color-accent-dark;
+}

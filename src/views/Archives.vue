@@ -1,7 +1,7 @@
 <template>
-    <main>
-        <ArchivesPostList class="archives-posts"/>
-        <aside class="archives-aside">
+    <main class="archives">
+        <ArchivesPostList class="archives__post-list"/>
+        <aside class="archives__aside">
             <ArchivesAlbumList/>
             <ArchivesTagBoard/>
         </aside>
@@ -22,18 +22,19 @@
     }
 </script>
 
-<style>
-    main {
+<style lang="scss">
+
+    .archives {
         display: flex;
         margin: 16px 0;
-    }
 
-    .archives-posts {
-        flex: 2;
-    }
+        &__post-list {
+            flex: 2;
+        }
 
-    .archives-aside {
-        flex: 1;
+        &__aside {
+            flex: 1;
+        }
     }
 
 </style>
