@@ -24,16 +24,18 @@
     }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
     @import "~@/assets/styles/theme";
 
-    .share-item > h1 {
-        margin: 16px 0 4px;
-    }
+    .share-item {
+        > h1 {
+            margin: 16px 0 4px;
+        }
 
-    .share-item > h4 {
-        color: $text-color-primary-light;
-        margin-bottom: 4px;
+        > h4 {
+            color: $text-color-primary-light;
+            margin-bottom: 4px;
+        }
     }
 
 </style>

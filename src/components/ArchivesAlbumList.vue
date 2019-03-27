@@ -1,9 +1,9 @@
 <template>
-    <div class="archives-album-list">
+    <div class="album-list">
         <h3>专辑</h3>
         <hr>
         <ul>
-            <li v-for="album of albums">{{album.name}}</li>
+            <li class="album-list__item" v-for="album of albums">{{album.name}}</li>
         </ul>
         <div></div>
     </div>
@@ -23,27 +23,25 @@
     }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
     @import "~@/assets/styles/theme";
 
-    * {
-        color: $text-color-primary-light;
-    }
-
-    hr {
-        border-color: $color-line;
-        margin-top: 12px;
-        padding-bottom: 4px;
-    }
-
-    .archives-album-list {
+    .album-list {
         padding: 12px;
         border-radius: 16px;
         border: 1px solid $color-line;
+        color: $text-color-primary-light;
+
+        > hr {
+            border-color: $color-line;
+            margin-top: 12px;
+            padding-bottom: 4px;
+        }
+
+        &__item {
+            cursor: pointer;
+            margin: 8px 0 0;
+        }
     }
 
-    .archives-album-list ul li {
-        cursor: pointer;
-        margin: 8px 0 0;
-    }
 </style>
