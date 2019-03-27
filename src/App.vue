@@ -88,17 +88,17 @@
                 padding: 8px;
                 margin-right: 8px;
                 border-radius: 50%;
-            }
 
-            > img:hover {
-                cursor: pointer;
-                background-color: $text-color-secondary-light2;
-            }
+                &:hover {
+                    cursor: pointer;
+                    background-color: $text-color-secondary-light2;
+                }
 
-            > img:nth-of-type(3) {
-                width: 40px;
-                height: 40px;
-                padding: 0;
+                &:nth-of-type(3) {
+                    width: 40px;
+                    height: 40px;
+                    padding: 0;
+                }
             }
         }
 
@@ -124,11 +124,11 @@
                 color: $text-color-secondary;
                 border: $color-accent 1px solid;
                 white-space: nowrap;
-            }
 
-            > a:hover {
-                cursor: pointer;
-                border: $text-color-secondary 1px solid;
+                &:hover {
+                    cursor: pointer;
+                    border: $text-color-secondary 1px solid;
+                }
             }
         }
 
