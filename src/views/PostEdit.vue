@@ -4,9 +4,11 @@
             <input class="post-edit__title" spellcheck="false">
         </div>
         <article class="post-edit__markdown-input">
-            <textarea v-model="markdownInput" spellcheck="false"></textarea>
+            <textarea v-model="markdownInput" spellcheck="false"
+                      v-scroll="onInputScroll" ref="input"></textarea>
         </article>
-        <article class="post-edit__markdown-preview markdown-body" v-html="markdownPreview">
+        <article class="post-edit__markdown-preview markdown-body" v-html="markdownPreview"
+                 v-scroll="onPreviewScroll" ref="preview">
         </article>
     </div>
 </template>
@@ -27,15 +29,45 @@
         }
     });
 
+    const INPUT_REF_NAME = 'input';
+    const PREVIEW_REF_NAME = 'preview';
     export default {
         data() {
             return {
-                markdownInput: ''
+                markdownInput: '',
+                [INPUT_REF_NAME + 'ScrollControl']: {
+                    timer: null,
+                    lock: false
+                },
+                [PREVIEW_REF_NAME + 'ScrollControl']: {
+                    timer: null,
+                    lock: false
+                }
             };
         },
         computed: {
             markdownPreview() {
                 return md.render(this.markdownInput);
+            }
+        },
+        methods: {
+            computeCorrespondingHeight: (t1, t2) => (t1.scrollTop / t1.scrollHeight) * t2.scrollHeight,
+            onScroll(t1RefName, t2RefName) {
+                const [t1Ctrl, t2Ctrl] = [this[t1RefName + 'ScrollControl'], this[t2RefName + 'ScrollControl']];
+                const [t1, t2] = [this.$refs[t1RefName], this.$refs[t2RefName]];
+
+                if (t1Ctrl.lock) return;
+                t2Ctrl.lock = true;
+                t2.scrollTop = this.computeCorrespondingHeight(t1, t2);
+
+                t1Ctrl.timer && clearTimeout(t1Ctrl.timer);
+                t1Ctrl.timer = setTimeout(() => void (t2Ctrl.lock = false), 150);
+            },
+            onInputScroll() {
+                this.onScroll(INPUT_REF_NAME, PREVIEW_REF_NAME);
+            },
+            onPreviewScroll() {
+                this.onScroll(PREVIEW_REF_NAME, INPUT_REF_NAME);
             }
         }
     }
