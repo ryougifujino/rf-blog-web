@@ -1,17 +1,18 @@
 <template>
-    <div id="app">
-        <header class="header-bar">
+    <div id="app" :class="appWidthClass">
+        <header class="header-bar" v-if="headersSeen">
             <h1 class="header-bar__title">ryougifujino
                 <span class="header-bar__menu">
                     <img src="./assets/images/baseline-search-24px.svg" alt="Search">
-                    <img src="./assets/images/baseline-create-24px.svg" alt="Create">
+                    <img src="./assets/images/baseline-create-24px.svg" alt="Edit"
+                         @click="go('/post-edit')">
                     <img src="./assets/images/logo.png" alt="Logo">
                 </span>
             </h1>
 
             <h3 class="header-bar__subtitle">the blog</h3>
         </header>
-        <nav class="header-nav">
+        <nav class="header-nav" v-if="headersSeen">
             <div class="header-nav__menu">
                 <router-link to="/home" :class="checkedNavTabClass('/home')">主页</router-link>
                 <router-link to="/archives" :class="checkedNavTabClass('/archives')">档案
@@ -26,10 +27,11 @@
 </template>
 
 <script>
+    const MAIN_VIEW_PATHS = ['/home', '/archives', '/share', '/about'];
     export default {
         data() {
             return {
-                currentNavTab: this.$route.path
+                currentNavTab: this.$route.path,
             };
         },
         watch: {
@@ -40,6 +42,17 @@
         computed: {
             checkedNavTabClass() {
                 return path => ({"header-nav__item--checked": this.currentNavTab.includes(path)});
+            },
+            headersSeen() {
+                return MAIN_VIEW_PATHS.some(path => this.currentNavTab.includes(path));
+            },
+            appWidthClass() {
+                return ({'app--width-limited': this.headersSeen});
+            }
+        },
+        methods: {
+            go(location) {
+                this.$router.push(location);
             }
         }
     }
@@ -49,7 +62,7 @@
     @import "~@/assets/styles/base";
     @import "~@/assets/styles/theme";
 
-    #app {
+    .app--width-limited {
         margin: 0 auto;
         max-width: 750px;
     }
