@@ -128,6 +128,10 @@
             overflow: auto;
             padding: 16px;
 
+            ul li {
+                list-style: inherit;
+            }
+
             pre, span {
                 background-color: $text-color-secondary-light3;
             }
