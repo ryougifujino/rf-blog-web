@@ -51,7 +51,10 @@
             }
         },
         methods: {
-            computeCorrespondingHeight: (t1, t2) => (t1.scrollTop / t1.scrollHeight) * t2.scrollHeight,
+            computeCorrespondingHeight: (t1, t2) => {
+                const ratio = t1.scrollTop / (t1.scrollHeight - t1.offsetHeight);
+                return ratio * (t2.scrollHeight - t2.offsetHeight);
+            },
             onScroll(t1RefName, t2RefName) {
                 const [t1Ctrl, t2Ctrl] = [this[t1RefName + 'ScrollControl'], this[t2RefName + 'ScrollControl']];
                 const [t1, t2] = [this.$refs[t1RefName], this.$refs[t2RefName]];
