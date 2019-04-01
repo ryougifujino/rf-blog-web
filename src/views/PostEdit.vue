@@ -16,7 +16,7 @@
 
 <script>
     import hljs from 'highlight.js';
-    import 'highlight.js/styles/atom-one-light.css';
+    import 'highlight.js/styles/googlecode.css';
     import MarkdownEditor from '@/components/MarkdownEditor.vue';
 
     const md = require('markdown-it')({
@@ -107,7 +107,11 @@
             }
 
             pre, span {
-                background-color: $text-color-secondary-light3;
+                background-color: $color-accent;
+            }
+
+            pre {
+                border: 2px dashed $text-color-secondary-light;
             }
 
             img {

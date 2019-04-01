@@ -5,6 +5,7 @@
 <script>
     import ace from 'ace-builds';
     import 'ace-builds/src-noconflict/mode-markdown';
+    import 'ace-builds/src-noconflict/theme-dawn'
 
     let editor;
     export default {
@@ -21,6 +22,7 @@
                 foldStyle: 'manual',
                 useSoftTabs: true
             });
+            editor.setTheme("ace/theme/dawn");
             const lineHeight = document.querySelector(".ace_active-line").offsetHeight;
             let lastScrollTop;
             editor.session.on("changeScrollTop", scrollTop => {
@@ -40,7 +42,7 @@
 </script>
 
 <style>
-    .ace-tm .ace_heading {
+    .ace_heading {
         color: black;
         font-weight: bold;
     }
