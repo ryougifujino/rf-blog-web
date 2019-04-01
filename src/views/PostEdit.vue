@@ -7,52 +7,34 @@
                         @input="markdownInput = $event"
                         @scroll="onInputScroll">
         </MarkdownEditor>
-        <article class="post-edit__markdown-preview markdown-body"
-                 v-html="markdownPreview"
-                 ref="preview">
-        </article>
+        <MarkdownPreviewer class="post-edit__markdown-preview"
+                           :markdown-input="markdownInput"
+                           :scroll-ratio="previewerScrollRatio">
+        </MarkdownPreviewer>
     </div>
 </template>
 
 <script>
-    import hljs from 'highlight.js';
-    import 'highlight.js/styles/googlecode.css';
     import MarkdownEditor from '@/components/MarkdownEditor.vue';
-
-    const md = require('markdown-it')({
-        highlight(str, lang) {
-            if (lang && hljs.getLanguage(lang)) {
-                try {
-                    return hljs.highlight(lang, str).value;
-                } catch (__) {
-                }
-            }
-            return ''; // use external default escaping
-        }
-    });
+    import MarkdownPreviewer from '@/components/MarkdownPreviewer.vue';
 
     export default {
         components: {
-            MarkdownEditor
+            MarkdownEditor,
+            MarkdownPreviewer
         },
         data() {
             return {
-                markdownInput: ''
+                markdownInput: '',
+                previewerScrollRatio: 0
             };
         },
-        computed: {
-            markdownPreview() {
-                return md.render(this.markdownInput);
-            }
-        },
         methods: {
-            computeCorrespondingHeight: (t1, t2) => {
-                const ratio = t1.scrollTop / (t1.scrollHeight - t1.offsetHeight);
-                return ratio * (t2.scrollHeight - t2.offsetHeight);
+            computeRatio: (t) => {
+                return t.scrollTop / (t.scrollHeight - t.offsetHeight);
             },
             onInputScroll(scrollPayload) {
-                const {preview} = this.$refs;
-                preview.scrollTop = this.computeCorrespondingHeight(scrollPayload, preview);
+                this.previewerScrollRatio = this.computeRatio(scrollPayload);
             }
         }
     }
@@ -60,7 +42,6 @@
 
 <style lang="scss">
     @import "~@/assets/styles/theme";
-    @import "~github-markdown-css";
 
     .post-edit {
         * {
@@ -101,22 +82,6 @@
             @extend %markdown;
             overflow: auto;
             padding: 0 16px 16px 16px;
-
-            ul li {
-                list-style: inherit;
-            }
-
-            pre, span {
-                background-color: $color-accent;
-            }
-
-            pre {
-                border: 2px dashed $text-color-secondary-light;
-            }
-
-            img {
-                background-color: $color-accent;
-            }
         }
 
     }
