@@ -3,12 +3,13 @@
         <div class="post-edit__toolbar">
             <input class="post-edit__title" spellcheck="false">
         </div>
-        <article class="post-edit__markdown-input">
-            <textarea v-model="markdownInput" spellcheck="false"
-                      v-scroll="onInputScroll" ref="input"></textarea>
-        </article>
-        <article class="post-edit__markdown-preview markdown-body" v-html="markdownPreview"
-                 v-scroll="onPreviewScroll" ref="preview">
+        <MarkdownEditor class="post-edit__markdown-input"
+                        @input="markdownInput = $event"
+                        @scroll="onInputScroll">
+        </MarkdownEditor>
+        <article class="post-edit__markdown-preview markdown-body"
+                 v-html="markdownPreview"
+                 ref="preview">
         </article>
     </div>
 </template>
@@ -16,6 +17,7 @@
 <script>
     import hljs from 'highlight.js';
     import 'highlight.js/styles/atom-one-light.css';
+    import MarkdownEditor from '@/components/MarkdownEditor.vue';
 
     const md = require('markdown-it')({
         highlight(str, lang) {
@@ -29,20 +31,13 @@
         }
     });
 
-    const INPUT_REF_NAME = 'input';
-    const PREVIEW_REF_NAME = 'preview';
     export default {
+        components: {
+            MarkdownEditor
+        },
         data() {
             return {
-                markdownInput: '',
-                [INPUT_REF_NAME + 'ScrollControl']: {
-                    timer: null,
-                    lock: false
-                },
-                [PREVIEW_REF_NAME + 'ScrollControl']: {
-                    timer: null,
-                    lock: false
-                }
+                markdownInput: ''
             };
         },
         computed: {
@@ -55,22 +50,9 @@
                 const ratio = t1.scrollTop / (t1.scrollHeight - t1.offsetHeight);
                 return ratio * (t2.scrollHeight - t2.offsetHeight);
             },
-            onScroll(t1RefName, t2RefName) {
-                const [t1Ctrl, t2Ctrl] = [this[t1RefName + 'ScrollControl'], this[t2RefName + 'ScrollControl']];
-                const [t1, t2] = [this.$refs[t1RefName], this.$refs[t2RefName]];
-
-                if (t1Ctrl.lock) return;
-                t2Ctrl.lock = true;
-                t2.scrollTop = this.computeCorrespondingHeight(t1, t2);
-
-                t1Ctrl.timer && clearTimeout(t1Ctrl.timer);
-                t1Ctrl.timer = setTimeout(() => void (t2Ctrl.lock = false), 150);
-            },
-            onInputScroll() {
-                this.onScroll(INPUT_REF_NAME, PREVIEW_REF_NAME);
-            },
-            onPreviewScroll() {
-                this.onScroll(PREVIEW_REF_NAME, INPUT_REF_NAME);
+            onInputScroll(scrollPayload) {
+                const {preview} = this.$refs;
+                preview.scrollTop = this.computeCorrespondingHeight(scrollPayload, preview);
             }
         }
     }
@@ -83,6 +65,7 @@
     .post-edit {
         * {
             box-sizing: border-box;
+            background: none;
         }
 
         height: 100vh;
@@ -112,21 +95,12 @@
         &__markdown-input {
             @extend %markdown;
             border-right: 1px solid $color-accent-dark;
-
-            > textarea {
-                height: 100%;
-                width: 100%;
-                border: none;
-                outline: none;
-                resize: none;
-                padding: 16px;
-            }
         }
 
         &__markdown-preview {
             @extend %markdown;
             overflow: auto;
-            padding: 16px;
+            padding: 0 16px 16px 16px;
 
             ul li {
                 list-style: inherit;
