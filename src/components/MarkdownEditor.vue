@@ -13,6 +13,8 @@
             editor = ace.edit(this.$el, {
                 showLineNumbers: false,
                 mode: "ace/mode/markdown",
+                theme: 'ace/theme/dawn',
+                newLineMode: 'unix',
                 fontSize: '15px',
                 fontFamily: 'Menlo, "Ubuntu Mono", Consolas, "Courier New", "Microsoft Yahei", ' +
                     '"Hiragino Sans GB", "WenQuanYi Micro Hei", sans-serif',
@@ -20,9 +22,9 @@
                 showGutter: true,
                 showPrintMargin: false,
                 foldStyle: 'manual',
-                useSoftTabs: true
+                useSoftTabs: true,
+                scrollPastEnd: true
             });
-            editor.setTheme("ace/theme/dawn");
             const lineHeight = document.querySelector(".ace_active-line").offsetHeight;
             let lastScrollTop;
             editor.session.on("changeScrollTop", scrollTop => {
