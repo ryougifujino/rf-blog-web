@@ -46,7 +46,6 @@
     .post-edit {
         * {
             box-sizing: border-box;
-            background: none;
         }
 
         height: 100vh;
