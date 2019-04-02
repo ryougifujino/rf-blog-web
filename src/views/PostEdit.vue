@@ -1,7 +1,10 @@
 <template>
     <div class="post-edit">
         <div class="post-edit__toolbar">
-            <input class="post-edit__title" spellcheck="false">
+            <input class="post-edit__title" spellcheck="false" placeholder="添加标题" maxlength="200">
+            <div class="post-edit__toolbar-right">
+                <FlatButton class="post-edit__publish">发布</FlatButton>
+            </div>
         </div>
         <MarkdownEditor class="post-edit__markdown-input"
                         @input="markdownInput = $event"
@@ -17,11 +20,13 @@
 <script>
     import MarkdownEditor from '@/components/MarkdownEditor.vue';
     import MarkdownPreviewer from '@/components/MarkdownPreviewer.vue';
+    import FlatButton from '@/components/FlatButton.vue';
 
     export default {
         components: {
             MarkdownEditor,
-            MarkdownPreviewer
+            MarkdownPreviewer,
+            FlatButton
         },
         data() {
             return {
@@ -53,9 +58,19 @@
         $toolbar-height: 64px;
 
         &__toolbar {
-            padding: 16px;
             height: $toolbar-height;
             border-bottom: 1px solid $color-accent-dark;
+            padding: 0 16px;
+            font-size: 0;
+        }
+
+        $toolbar-right-width: 64px + 8px;
+
+        &__toolbar-right {
+            display: inline-block;
+            vertical-align: middle;
+            text-align: right;
+            width: $toolbar-right-width;
         }
 
         &__title {
@@ -63,7 +78,13 @@
             outline: none;
             font-weight: bold;
             font-size: 24px;
-            line-height: 32px;
+            height: 100%;
+            width: calc(100% - #{$toolbar-right-width});
+            vertical-align: middle;
+        }
+
+        &__publish {
+            font-size: 16px;
         }
 
         %markdown {
