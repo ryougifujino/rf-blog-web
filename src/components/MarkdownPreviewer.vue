@@ -6,6 +6,7 @@
 <script>
     import hljs from 'highlight.js';
     import 'highlight.js/styles/googlecode.css';
+    import taskLists from 'markdown-it-task-lists';
 
     const md = require('markdown-it')({
         highlight(str, lang) {
@@ -17,7 +18,8 @@
             }
             return ''; // use external default escaping
         }
-    });
+    })
+        .use(taskLists);
 
     export default {
         props: {

@@ -6,7 +6,7 @@
     import ace from 'ace-builds';
     import 'ace-builds/src-noconflict/ext-searchbox';
     import 'ace-builds/src-noconflict/mode-markdown';
-    import 'ace-builds/src-noconflict/theme-dawn'
+    import 'ace-builds/src-noconflict/theme-dawn';
 
     let editor;
     export default {
