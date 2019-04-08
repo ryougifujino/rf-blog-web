@@ -3,7 +3,7 @@
         <div class="post-edit__toolbar">
             <input class="post-edit__title" spellcheck="false" placeholder="添加标题" maxlength="200">
             <div class="post-edit__toolbar-right">
-                <FlatButton class="post-edit__publish">发布</FlatButton>
+                <VFlatButton @click.native="isShowPublisher = true">发布</VFlatButton>
             </div>
         </div>
         <MarkdownEditor class="post-edit__markdown-input"
@@ -14,24 +14,26 @@
                            :markdown-input="markdownInput"
                            :scroll-ratio="previewerScrollRatio">
         </MarkdownPreviewer>
+        <PostEditPublisher :visible.sync="isShowPublisher"></PostEditPublisher>
     </div>
 </template>
 
 <script>
     import MarkdownEditor from '@/components/MarkdownEditor.vue';
     import MarkdownPreviewer from '@/components/MarkdownPreviewer.vue';
-    import FlatButton from '@/components/FlatButton.vue';
+    import PostEditPublisher from '@/components/PostEditPublisher.vue';
 
     export default {
         components: {
             MarkdownEditor,
             MarkdownPreviewer,
-            FlatButton
+            PostEditPublisher
         },
         data() {
             return {
                 markdownInput: '',
-                previewerScrollRatio: 0
+                previewerScrollRatio: 0,
+                isShowPublisher: false
             };
         },
         methods: {
@@ -56,6 +58,7 @@
         height: 100vh;
         overflow: hidden; // otherwise textarea will expand its container div
         $toolbar-height: 64px;
+        $toolbar-right-width: 64px + 8px;
 
         &__toolbar {
             height: $toolbar-height;
@@ -64,26 +67,21 @@
             font-size: 0;
         }
 
-        $toolbar-right-width: 64px + 8px;
+        &__title {
+            border: none;
+            outline: none;
+            font-weight: bold;
+            font-size: 24px;
+            width: calc(100% - #{$toolbar-right-width});
+            line-height: $toolbar-height;
+            vertical-align: middle;
+        }
 
         &__toolbar-right {
             display: inline-block;
             vertical-align: middle;
             text-align: right;
             width: $toolbar-right-width;
-        }
-
-        &__title {
-            border: none;
-            outline: none;
-            font-weight: bold;
-            font-size: 24px;
-            height: 100%;
-            width: calc(100% - #{$toolbar-right-width});
-            vertical-align: middle;
-        }
-
-        &__publish {
             font-size: 16px;
         }
 
