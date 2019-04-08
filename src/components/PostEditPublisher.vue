@@ -1,12 +1,15 @@
 <template>
     <div class="mask" v-if="visible">
-        <div class="post-edit__publisher">
-            <div class="post-edit__publisher-header">发布博文</div>
-            <div class="post-edit__publisher-form">
-                <div></div>
+        <div class="post-edit-publisher">
+            <div class="post-edit-publisher__header">发布博文</div>
+            <div class="post-edit-publisher__form">
+                <div class="post-edit-publisher__item">
+                    <VRadioGroup class="post-edit-publisher__privacy"
+                                 v-bind.sync="privacy"></VRadioGroup>
+                </div>
             </div>
-            <div class="post-edit__publisher-footer">
-                <div class="post-edit__publisher-buttons-container">
+            <div class="post-edit-publisher__footer">
+                <div class="post-edit-publisher__buttons-container">
                     <VButtonFlat @click.native="cancel">取消</VButtonFlat>
                     <VButtonFlat @click.native="confirm">确认</VButtonFlat>
                 </div>
@@ -24,6 +27,10 @@
             }
         },
         data: () => ({
+            privacy: {
+                items: [{name: "公开", value: false}, {name: "私有", value: true}],
+                checkedIndex: 0
+            },
             formData: {
                 isPrivate: false,
                 albumId: null,
@@ -48,7 +55,7 @@
     $header-height: 50px;
     $border-radius: 16px;
 
-    .post-edit__publisher {
+    .post-edit-publisher {
         @extend %center;
         width: 450px;
         height: 550px;
@@ -58,7 +65,7 @@
         }
         border-radius: $border-radius;
 
-        &-header {
+        &__header {
             font-size: 16px;
             color: $text-color-primary;
             height: $header-height;
@@ -68,7 +75,7 @@
             text-align: center;
         }
 
-        &-form {
+        &__form {
             position: absolute;
             top: $header-height;
             bottom: $header-height;
@@ -76,7 +83,21 @@
             right: 16px;
         }
 
-        &-footer {
+        &__item {
+            margin: 16px 0;
+        }
+
+        &__item:after {
+            display: block;
+            content: '';
+            clear: both;
+        }
+
+        &__privacy {
+            float: right;
+        }
+
+        &__footer {
             height: $header-height;
             position: absolute;
             left: 0;
@@ -85,7 +106,7 @@
             border-radius: 0 0 $border-radius $border-radius;
         }
 
-        &-buttons-container {
+        &__buttons-container {
             display: inline-block;
             position: absolute;
             right: 16px;
