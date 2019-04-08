@@ -7,8 +7,8 @@
             </div>
             <div class="post-edit__publisher-footer">
                 <div class="post-edit__publisher-buttons-container">
-                    <VFlatButton @click.native="cancel">取消</VFlatButton>
-                    <VFlatButton @click.native="confirm">确认</VFlatButton>
+                    <VButtonFlat @click.native="cancel">取消</VButtonFlat>
+                    <VButtonFlat @click.native="confirm">确认</VButtonFlat>
                 </div>
             </div>
         </div>

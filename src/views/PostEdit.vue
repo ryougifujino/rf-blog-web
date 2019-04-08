@@ -3,7 +3,7 @@
         <div class="post-edit__toolbar">
             <input class="post-edit__title" spellcheck="false" placeholder="添加标题" maxlength="200">
             <div class="post-edit__toolbar-right">
-                <VFlatButton @click.native="isShowPublisher = true">发布</VFlatButton>
+                <VButtonFlat @click.native="isShowPublisher = true">发布</VButtonFlat>
             </div>
         </div>
         <MarkdownEditor class="post-edit__markdown-input"
