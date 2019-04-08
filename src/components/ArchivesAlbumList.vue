@@ -1,9 +1,9 @@
 <template>
-    <div class="album-list">
+    <div class="archives-album-list">
         <h3>专辑</h3>
         <hr>
         <ul>
-            <li class="album-list__item" v-for="album of albums">{{album.name}}</li>
+            <li class="archives-album-list__item" v-for="album of albums">{{album.name}}</li>
         </ul>
         <div></div>
     </div>
@@ -26,7 +26,7 @@
 <style lang="scss">
     @import "~@/assets/styles/theme";
 
-    .album-list {
+    .archives-album-list {
         padding: 12px;
         border-radius: 16px;
         border: 1px solid $color-line;
