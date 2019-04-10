@@ -1,0 +1,26 @@
+@import "theme";
+
+%center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+%scrollbar {
+  &::-webkit-scrollbar {
+    width: 8px;
+    background-color: $text-color-secondary-light3;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: $text-color-secondary-light2;
+    border-radius: 8px;
+
+    &:hover {
+      background: $text-color-secondary-light
+    }
+  }
+
+  //TODO: IE
+}
