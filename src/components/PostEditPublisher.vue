@@ -11,6 +11,13 @@
                     <div class="post-edit-publisher__item-title">专辑</div>
                     <AlbumsSelect v-model="album"></AlbumsSelect>
                 </div>
+                <div class="post-edit-publisher__item">
+                    <div class="post-edit-publisher__item-title">标签</div>
+                    <VInput class="post-edit-publisher__tag-input"
+                            placeholder="添加标签"
+                            maxlength="200"
+                            max-width></VInput>
+                </div>
             </div>
             <div class="post-edit-publisher__footer">
                 <div class="post-edit-publisher__buttons-container">
@@ -110,6 +117,10 @@
 
         &__privacy {
             float: right;
+        }
+
+        &__tag-input {
+            font-size: 0.9em;
         }
 
         &__footer {
