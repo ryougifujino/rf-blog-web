@@ -92,7 +92,8 @@
         computed: {
             ...mapState(['albums']),
             filteredAlbums() {
-                return this.albums.filter(album => album.name.includes(this.albumKey.trim()));
+                const re = new RegExp(this.albumKey.trim(), 'i');
+                return this.albums.filter(album => re.test(album.name));
             },
             addMessageClass() {
                 const base = 'albums-select__add-message';
