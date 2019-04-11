@@ -7,6 +7,10 @@
                     <VRadioGroup class="post-edit-publisher__privacy"
                                  v-bind.sync="privacy"></VRadioGroup>
                 </div>
+                <div class="post-edit-publisher__item">
+                    <div class="post-edit-publisher__item-title">专辑</div>
+                    <AlbumsSelect v-model="album"></AlbumsSelect>
+                </div>
             </div>
             <div class="post-edit-publisher__footer">
                 <div class="post-edit-publisher__buttons-container">
@@ -19,7 +23,12 @@
 </template>
 
 <script>
+    import AlbumsSelect from "@/components/AlbumsSelect.vue";
+
     export default {
+        components: {
+            AlbumsSelect
+        },
         props: {
             visible: {
                 type: Boolean,
@@ -29,8 +38,9 @@
         data: () => ({
             privacy: {
                 items: [{name: "公开", value: false}, {name: "私有", value: true}],
-                checkedIndex: 0
+                checkedIndex: 0 //TODO: change to v-model
             },
+            album: null,
             formData: {
                 isPrivate: false,
                 albumId: null,
@@ -42,7 +52,7 @@
                 this.$emit('update:visible', false);
             },
             confirm() {
-                console.log('c')
+
             }
         }
     }
@@ -50,7 +60,7 @@
 
 <style lang="scss">
     @import "~@/assets/styles/theme";
-    @import "~@/assets/styles/base";
+    @import "~@/assets/styles/mixins";
 
     $header-height: 50px;
     $border-radius: 16px;
@@ -91,6 +101,11 @@
             display: block;
             content: '';
             clear: both;
+        }
+
+        &__item-title {
+            color: $text-color-primary-light;
+            padding: 8px 4px;
         }
 
         &__privacy {

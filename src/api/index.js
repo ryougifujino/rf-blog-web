@@ -1,3 +1,10 @@
+import axios from 'axios';
+import {API_BASE_URL} from '@/common/constants';
+
+const _ = axios.create({
+    baseURL: API_BASE_URL
+});
+
 const FAKE_BODY =
     `博客（英语：Blog）是一种由个人管理、张贴新的文章、图片或影片的网站或在线日记，用来纪录、抒发情感或分享信息。
     博客上的文章通常根据张贴时间，以倒序方式由新到旧排列。
@@ -22,12 +29,6 @@ function generatePostTitle() {
     }
 }
 
-function generateAlbum() {
-    return {
-        name: `专辑描述${Math.random()}`.substring(0, 16)
-    }
-}
-
 export function fetchPostPreviews(pageNumber) {
     return new Promise((resolve, reject) => {
         let result = [];
@@ -49,14 +50,8 @@ export function fetchPostTitles(offset, limit) {
     });
 }
 
-export function fetchAlbums(offset, limit) {
-    return new Promise(resolve => {
-        let result = [];
-        while (limit--) {
-            result.push(generateAlbum());
-        }
-        resolve(result);
-    });
+export function fetchAlbums() {
+    return _.get('/albums');
 }
 
 export function fetchTags(offset, limit) {
@@ -71,95 +66,99 @@ export function fetchShares(offset, limit) {
     return new Promise(resolve => {
         resolve([
             {
-                title:"axios发送post请求，springMVC接收不到数据问题",
+                title: "axios发送post请求，springMVC接收不到数据问题",
                 link: "https://www.baidu.com",
                 category: 'Web'
             },
             {
-                title:"Google 1Q84",
+                title: "Google 1Q84",
                 link: "https://www.google.com",
                 category: 'Web'
             },
             {
-                title:"标题1Q84",
+                title: "标题1Q84",
                 link: "https://www.baidu.com",
                 category: 'Web'
             },
             {
-                title:"Google 1Q84",
+                title: "Google 1Q84",
                 link: "https://www.google.com",
                 category: 'Web'
             },
             {
-                title:"标题1Q84",
+                title: "标题1Q84",
                 link: "https://www.baidu.com",
                 category: 'Web'
             },
             {
-                title:"Google 1Q84",
+                title: "Google 1Q84",
                 link: "https://www.google.com",
                 category: 'Web'
             },
             {
-                title:"标题1Q84",
+                title: "标题1Q84",
                 link: "https://www.baidu.com",
                 category: 'Web'
             },
             {
-                title:"Google 1Q84",
+                title: "Google 1Q84",
                 link: "https://www.google.com",
                 category: 'Web'
             },
             {
-                title:"标题1Q84",
+                title: "标题1Q84",
                 link: "https://www.baidu.com",
                 category: 'Web'
             },
             {
-                title:"Google 1Q84",
+                title: "Google 1Q84",
                 link: "https://www.google.com",
                 category: 'Web'
             },
             {
-                title:"标题1Q84",
+                title: "标题1Q84",
                 link: "https://www.baidu.com",
                 category: 'Web'
             },
             {
-                title:"Google 1Q84",
+                title: "Google 1Q84",
                 link: "https://www.google.com",
                 category: 'Web'
             },
             {
-                title:"标题1Q84",
+                title: "标题1Q84",
                 link: "https://www.baidu.com",
                 category: 'Web'
             },
             {
-                title:"Google 1Q84",
+                title: "Google 1Q84",
                 link: "https://www.google.com",
                 category: 'DDD'
             },
             {
-                title:"标题1Q84",
+                title: "标题1Q84",
                 link: "https://www.baidu.com",
                 category: 'DDD'
             },
             {
-                title:"Google 1Q84",
+                title: "Google 1Q84",
                 link: "https://www.google.com",
                 category: 'AAA'
             },
             {
-                title:"标题1Q84",
+                title: "标题1Q84",
                 link: "https://www.baidu.com",
                 category: 'WAAb'
             },
             {
-                title:"Google 1Q84",
+                title: "Google 1Q84",
                 link: "https://www.google.com",
                 category: 'WAAb'
             },
         ]);
     });
+}
+
+export function createAlbum(name) {
+    return _.post('/albums', {album: {name}});
 }

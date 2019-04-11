@@ -10,7 +10,7 @@ import archives from '@/store/modules/archives';
 import shares from '@/store/modules/shares';
 
 const state = {
-
+    albums: []
 };
 
 export default new Vuex.Store({
