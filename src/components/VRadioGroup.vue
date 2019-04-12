@@ -1,7 +1,7 @@
 <template>
     <div>
         <template v-for="(item, index) of items">
-            <span :class="radioClass(index)" @click="checkItem(index)">{{item.name}}</span>
+            <span :class="radioClass(item)" @click="checkItem(item)">{{item.name}}</span>
             <span class="v-radio-group__divider" v-if="index !== (items.length - 1)">/</span>
         </template>
     </div>
@@ -14,21 +14,21 @@
                 type: Array,
                 require: true
             },
-            checkedIndex: {
-                type: Number,
-                require: true
+            value: {
+                type: [String, Number, Boolean],
+                require: false
             }
         },
         methods: {
-            checkItem(index) {
-                this.$emit('update:checkedIndex', index);
+            checkItem(item) {
+                this.$emit('input', item.value);
             }
         },
         computed: {
             radioClass() {
-                return index => [
+                return item => [
                     'v-radio-group__radio',
-                    {'v-radio-group__radio--checked': index === this.checkedIndex}
+                    {'v-radio-group__radio--checked': item.value === this.value}
                 ];
             }
         }

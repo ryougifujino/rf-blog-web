@@ -43,8 +43,8 @@
     export default {
         props: {
             value: {
-                types: [Object, null],
-                required: true
+                required: true,
+                validator: prop => typeof prop === 'object' || prop === null
             }
         },
         data: () => ({

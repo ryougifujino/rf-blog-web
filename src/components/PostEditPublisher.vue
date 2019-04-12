@@ -5,7 +5,8 @@
             <div class="post-edit-publisher__form">
                 <div class="post-edit-publisher__item">
                     <VRadioGroup class="post-edit-publisher__privacy"
-                                 v-bind.sync="privacy"></VRadioGroup>
+                                 :items="privacyItems"
+                                 v-model="isPrivate"></VRadioGroup>
                 </div>
                 <div class="post-edit-publisher__item">
                     <div class="post-edit-publisher__item-title">专辑</div>
@@ -56,10 +57,8 @@
             }
         },
         data: () => ({
-            privacy: {
-                items: [{name: "公开", value: false}, {name: "私有", value: true}],
-                checkedIndex: 0 //TODO: change to v-model
-            },
+            privacyItems: [{name: "公开", value: false}, {name: "私有", value: true}],
+            isPrivate: false,
             album: null,
             tagInput: '',
             tagSetChangeTracker: 1,
