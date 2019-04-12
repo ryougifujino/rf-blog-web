@@ -13,10 +13,14 @@
                 </div>
                 <div class="post-edit-publisher__item">
                     <div class="post-edit-publisher__item-title">标签</div>
-                    <VInput class="post-edit-publisher__tag-input"
-                            placeholder="添加标签"
-                            maxlength="200"
-                            max-width></VInput>
+                    <div class="post-edit-publisher__tag-input-container">
+                        <VInput placeholder="添加标签"
+                                maxlength="200"
+                                max-width></VInput>
+                        <div class="post-edit-publisher__tag-confirm-container">
+                            <VButtonFlat>确认</VButtonFlat>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="post-edit-publisher__footer">
@@ -119,8 +123,20 @@
             float: right;
         }
 
-        &__tag-input {
+        &__tag-input-container {
+            display: table;
+            width: 100%;
             font-size: 0.9em;
+
+            > * {
+                display: table-cell;
+                vertical-align: middle;
+            }
+        }
+
+        &__tag-confirm-container {
+            width: 72px;
+            text-align: right;
         }
 
         &__footer {
