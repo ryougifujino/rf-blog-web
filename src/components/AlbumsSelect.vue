@@ -210,16 +210,16 @@
 
             $space: 8px;
 
-            :first-child {
-                margin-right: $space;
-            }
-
             .v-flat-button {
                 font-weight: normal;
                 font-size: 14px;
                 padding: 6px 8px;
                 text-align: center;
                 width: calc(50% - #{$space} / 2);
+
+                &:first-child {
+                    margin-right: $space;
+                }
             }
         }
 
