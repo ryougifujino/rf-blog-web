@@ -17,7 +17,7 @@
         text-overflow: ellipsis;
         max-width: 200px;
         overflow: hidden;
-
+        user-select: none; //TODO: add prefix: -ms,-moz...
 
         &:hover {
             cursor: pointer;

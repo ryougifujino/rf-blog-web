@@ -16,11 +16,20 @@
                     <div class="post-edit-publisher__tag-input-container">
                         <VInput placeholder="添加标签"
                                 maxlength="200"
-                                max-width></VInput>
+                                max-width
+                                v-model="tagInput"
+                                @keyup.enter.native="confirmTag"></VInput>
                         <div class="post-edit-publisher__tag-confirm-container">
-                            <VButtonFlat>确认</VButtonFlat>
+                            <VButtonFlat @click.native="confirmTag">确认</VButtonFlat>
                         </div>
                     </div>
+                </div>
+                <div class="post-edit-publisher__item post-edit-publisher__tags">
+                    <VTag class="post-edit-publisher__tag"
+                          v-for="tag of tags"
+                          :key="tag"
+                          @click.native="removeTag(tag)">{{tag}}
+                    </VTag>
                 </div>
             </div>
             <div class="post-edit-publisher__footer">
@@ -52,18 +61,43 @@
                 checkedIndex: 0 //TODO: change to v-model
             },
             album: null,
-            formData: {
-                isPrivate: false,
-                albumId: null,
-                tagIds: []
-            }
+            tagInput: '',
+            tagSetChangeTracker: 1,
+            tagSet: new Set()
         }),
+        computed: {
+            tags() {
+                return this.tagSetChangeTracker && Array.from(this.tagSet);
+            }
+        },
         methods: {
             cancel() {
                 this.$emit('update:visible', false);
             },
             confirm() {
 
+            },
+            addTag(newTag) {
+                if (!this.tagSet.has(newTag)) {
+                    this.tagSet.add(newTag);
+                    this.tagSetChangeTracker++;
+                }
+            },
+            removeTag(oldTag) {
+                this.tagSet.delete(oldTag);
+                this.tagSetChangeTracker++;
+            },
+            emptyTags() {
+                this.tagSet = new Set();
+                this.tagSetChangeTracker++;
+            },
+            confirmTag() {
+                const tagInput = this.tagInput.trim();
+                if (tagInput === '') {
+                    return;
+                }
+                this.addTag(tagInput);
+                this.tagInput = '';
             }
         }
     }
@@ -79,7 +113,6 @@
     .post-edit-publisher {
         @extend %center;
         width: 450px;
-        height: 550px;
         @media screen and (max-width: 450px) {
             width: 90%;
             min-width: 300px;
@@ -97,11 +130,7 @@
         }
 
         &__form {
-            position: absolute;
-            top: $header-height;
-            bottom: $header-height;
-            left: 16px;
-            right: 16px;
+            padding: 0 16px;
         }
 
         &__item {
@@ -139,12 +168,21 @@
             text-align: right;
         }
 
+        &__tags {
+            font-size: 0;
+            height: 200px;
+            overflow: auto;
+            @extend %scrollbar;
+        }
+
+        &__tag {
+            font-size: 14px;
+            margin-right: 8px;
+            margin-bottom: 8px;
+        }
+
         &__footer {
             height: $header-height;
-            position: absolute;
-            left: 0;
-            right: 0;
-            bottom: 0;
             border-radius: 0 0 $border-radius $border-radius;
         }
 

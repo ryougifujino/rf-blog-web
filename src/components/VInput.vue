@@ -1,9 +1,13 @@
 <template>
-    <input :class="['v-input', {'v-input--max-width': isMaxWidth}]" spellcheck="false">
+    <input :class="['v-input', {'v-input--max-width': isMaxWidth}]"
+           spellcheck="false"
+           :value="value"
+           @input="$emit('input', $event.target.value)">
 </template>
 
 <script>
     export default {
+        props: ['value'],
         data: () => ({
             isMaxWidth: false
         }),
