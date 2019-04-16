@@ -23,6 +23,6 @@ export default {
     },
     async [CREATE_ALBUM]({state, commit}, {newAlbumName}) {
         const {data: newAlbum} = await createAlbum(newAlbumName);
-        state.albums.push(newAlbum);
+        state.albums.unshift(newAlbum);
     }
 };
