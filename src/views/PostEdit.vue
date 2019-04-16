@@ -1,17 +1,21 @@
 <template>
     <div class="post-edit">
         <div class="post-edit__toolbar">
-            <input class="post-edit__title" spellcheck="false" placeholder="添加标题" maxlength="200">
+            <input class="post-edit__title"
+                   spellcheck="false"
+                   placeholder="添加标题"
+                   maxlength="200"
+                   v-model="postTitle">
             <div class="post-edit__toolbar-right">
-                <VButtonFlat @click.native="isShowPublisher = true">发布</VButtonFlat>
+                <VButtonFlat @click.native="showPublisher">发布</VButtonFlat>
             </div>
         </div>
         <MarkdownEditor class="post-edit__markdown-input"
-                        @input="markdownInput = $event"
+                        @input="postBody = $event"
                         @scroll="onInputScroll">
         </MarkdownEditor>
         <MarkdownPreviewer class="post-edit__markdown-preview"
-                           :markdown-input="markdownInput"
+                           :markdown-input="postBody"
                            :scroll-ratio="previewerScrollRatio">
         </MarkdownPreviewer>
         <PostEditPublisher :visible.sync="isShowPublisher"></PostEditPublisher>
@@ -31,7 +35,8 @@
         },
         data() {
             return {
-                markdownInput: '',
+                postTitle: '',
+                postBody: '',
                 previewerScrollRatio: 0,
                 isShowPublisher: false
             };
@@ -42,6 +47,13 @@
             },
             onInputScroll(scrollPayload) {
                 this.previewerScrollRatio = this.computeRatio(scrollPayload);
+            },
+            showPublisher() {
+                if (this.postTitle.trim() === '') {
+                    this.$showToast("标题不能为空");
+                    return;
+                }
+                this.isShowPublisher = true
             }
         }
     }
