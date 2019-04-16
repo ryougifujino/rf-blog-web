@@ -6,17 +6,17 @@
                 <div class="post-edit-publisher__item">
                     <VRadioGroup class="post-edit-publisher__privacy"
                                  :items="privacyItems"
-                                 v-model="isPrivate"></VRadioGroup>
+                                 v-model="_isPrivate"></VRadioGroup>
                 </div>
                 <div class="post-edit-publisher__item">
                     <div class="post-edit-publisher__item-title">专辑</div>
-                    <AlbumsSelect v-model="album"></AlbumsSelect>
+                    <AlbumsSelect v-model="_albumId"></AlbumsSelect>
                 </div>
                 <div class="post-edit-publisher__item">
                     <div class="post-edit-publisher__item-title">标签</div>
                     <div class="post-edit-publisher__tag-input-container">
                         <VInput placeholder="添加标签"
-                                maxlength="200"
+                                maxlength="20"
                                 max-width
                                 v-model="tagInput"
                                 @keyup.enter.native="confirmTag"></VInput>
@@ -39,12 +39,23 @@
                     <VButtonFlat @click.native="confirm">确认</VButtonFlat>
                 </div>
             </div>
+            <VProgressBar class="post-edit-publisher__progress-bar"
+                          v-if="isPublishing"></VProgressBar>
         </div>
     </div>
 </template>
 
 <script>
     import AlbumsSelect from "@/components/AlbumsSelect.vue";
+    import {CREATE_POST} from '@/store/action-types';
+    import {mapActions, mapMutations} from 'vuex';
+    import {mapModuleState} from '@/util/mapStateUtils';
+    import {
+        POST_EDIT_SET_IS_PRIVATE,
+        POST_EDIT_SET_ALBUM_ID,
+        POST_EDIT_ADD_TAG,
+        POST_EDIT_REMOVE_TAG
+    } from '@/store/mutation-types';
 
     export default {
         components: {
@@ -58,37 +69,52 @@
         },
         data: () => ({
             privacyItems: [{name: "公开", value: false}, {name: "私有", value: true}],
-            isPrivate: false,
-            album: null,
             tagInput: '',
-            tagSetChangeTracker: 1,
-            tagSet: new Set()
+            isPublishing: false
         }),
         computed: {
+            ...mapModuleState('postEdit', ['isPrivate', 'albumId', 'tagSetChangeTracker', 'tagSet']),
+            _isPrivate: {
+                get() {
+                    return this.isPrivate;
+                },
+                set(value) {
+                    this[POST_EDIT_SET_IS_PRIVATE](value);
+                }
+            },
+            _albumId: {
+                get() {
+                    return this.albumId;
+                },
+                set(value) {
+                    this[POST_EDIT_SET_ALBUM_ID](value);
+                }
+            },
             tags() {
                 return this.tagSetChangeTracker && Array.from(this.tagSet);
             }
         },
         methods: {
+            ...mapActions([CREATE_POST]),
+            ...mapMutations([POST_EDIT_SET_IS_PRIVATE, POST_EDIT_SET_ALBUM_ID, POST_EDIT_ADD_TAG,
+                POST_EDIT_REMOVE_TAG]),
             cancel() {
                 this.$emit('update:visible', false);
             },
             confirm() {
-
+                this.isPublishing = true;
+                this[CREATE_POST]()
+                    .then(() => {
+                        this.$showToast("发布成功");
+                    })
+                    .catch(() => this.$showToast("发布失败"))
+                    .finally(() => this.isPublishing = false);
             },
             addTag(newTag) {
-                if (!this.tagSet.has(newTag)) {
-                    this.tagSet.add(newTag);
-                    this.tagSetChangeTracker++;
-                }
+                this[POST_EDIT_ADD_TAG](newTag);
             },
             removeTag(oldTag) {
-                this.tagSet.delete(oldTag);
-                this.tagSetChangeTracker++;
-            },
-            emptyTags() {
-                this.tagSet = new Set();
-                this.tagSetChangeTracker++;
+                this[POST_EDIT_REMOVE_TAG](oldTag);
             },
             confirmTag() {
                 const tagInput = this.tagInput.trim();
@@ -117,6 +143,7 @@
             min-width: 300px;
         }
         border-radius: $border-radius;
+        position: relative;
 
         &__header {
             font-size: 16px;
@@ -200,6 +227,10 @@
                 background-color: $color-accent-dark;
                 color: $text-color-secondary;
             }
+        }
+
+        &__progress-bar {
+            border-radius: $border-radius;
         }
     }
 

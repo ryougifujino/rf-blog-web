@@ -5,17 +5,17 @@
                    spellcheck="false"
                    placeholder="添加标题"
                    maxlength="200"
-                   v-model="postTitle">
+                   v-model="_title">
             <div class="post-edit__toolbar-right">
                 <VButtonFlat @click.native="showPublisher">发布</VButtonFlat>
             </div>
         </div>
         <MarkdownEditor class="post-edit__markdown-input"
-                        @input="postBody = $event"
+                        v-model="_body"
                         @scroll="onInputScroll">
         </MarkdownEditor>
         <MarkdownPreviewer class="post-edit__markdown-preview"
-                           :markdown-input="postBody"
+                           :markdown-input="_body"
                            :scroll-ratio="previewerScrollRatio">
         </MarkdownPreviewer>
         <PostEditPublisher :visible.sync="isShowPublisher"></PostEditPublisher>
@@ -26,6 +26,9 @@
     import MarkdownEditor from '@/components/MarkdownEditor.vue';
     import MarkdownPreviewer from '@/components/MarkdownPreviewer.vue';
     import PostEditPublisher from '@/components/PostEditPublisher.vue';
+    import {mapModuleState} from '@/util/mapStateUtils';
+    import {mapMutations} from 'vuex';
+    import {POST_EDIT_SET_TITLE, POST_EDIT_SET_BODY} from '@/store/mutation-types';
 
     export default {
         components: {
@@ -33,15 +36,31 @@
             MarkdownPreviewer,
             PostEditPublisher
         },
-        data() {
-            return {
-                postTitle: '',
-                postBody: '',
-                previewerScrollRatio: 0,
-                isShowPublisher: false
-            };
+        data: () => ({
+            previewerScrollRatio: 0,
+            isShowPublisher: false
+        }),
+        computed: {
+            ...mapModuleState('postEdit', ['title', 'body']),
+            _title: {
+                get() {
+                    return this.title;
+                },
+                set(value) {
+                    this[POST_EDIT_SET_TITLE](value);
+                }
+            },
+            _body: {
+                get() {
+                    return this.body;
+                },
+                set(value) {
+                    this[POST_EDIT_SET_BODY](value);
+                }
+            }
         },
         methods: {
+            ...mapMutations([POST_EDIT_SET_TITLE, POST_EDIT_SET_BODY]),
             computeRatio: (t) => {
                 return t.scrollTop / (t.scrollHeight - t.offsetHeight);
             },
@@ -49,11 +68,11 @@
                 this.previewerScrollRatio = this.computeRatio(scrollPayload);
             },
             showPublisher() {
-                if (this.postTitle.trim() === '') {
+                if (this._title.trim() === '') {
                     this.$showToast("标题不能为空");
                     return;
                 }
-                this.isShowPublisher = true
+                this.isShowPublisher = true;
             }
         }
     }

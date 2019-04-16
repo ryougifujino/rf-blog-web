@@ -162,3 +162,15 @@ export function fetchShares(offset, limit) {
 export function createAlbum(name) {
     return _.post('/albums', {album: {name}});
 }
+
+export function createPost(title, body, isPrivate, albumId, tagNames) {
+    return _.post('/posts', {
+        post: {
+            title,
+            body,
+            is_private: isPrivate,
+            album_id: albumId,
+            tag_names: tagNames
+        }
+    });
+}

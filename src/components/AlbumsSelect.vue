@@ -1,7 +1,7 @@
 <template>
     <div class="albums-select" @click.self="toggleContent">
         <span class="albums-select__value"
-              @click="toggleContent">{{value ? value.name : "未选择"}}</span>
+              @click="toggleContent">{{selectedItemName}}</span>
         <div class="albums-select__content" v-show="isContentVisible">
             <div class="albums-select__search">
                 <input placeholder="查找专辑" spellcheck="false" v-model="albumKey">
@@ -28,7 +28,7 @@
                 </div>
                 <ul class="albums-select__list">
                     <li @click="selectItem(null)">未选择</li>
-                    <li v-for="album of filteredAlbums" @click="selectItem(album)">{{album.name}}
+                    <li v-for="album of filteredAlbums" @click="selectItem(album.id)">{{album.name}}
                     </li>
                 </ul>
             </div>
@@ -44,7 +44,7 @@
         props: {
             value: {
                 required: true,
-                validator: prop => typeof prop === 'object' || prop === null
+                validator: prop => typeof prop === 'number' || prop === null
             }
         },
         data: () => ({
@@ -60,8 +60,8 @@
             toggleContent() {
                 this.isContentVisible = !this.isContentVisible;
             },
-            selectItem(album) {
-                this.$emit('input', album);
+            selectItem(albumId) {
+                this.$emit('input', albumId);
                 this.isContentVisible = false;
             },
             addCancel() {
@@ -99,6 +99,15 @@
                 const base = 'albums-select__add-message';
                 const modifier = this.addMessageType === 'error' ? '--error' : '--success';
                 return [base, base + modifier];
+            },
+            selectedItemName() {
+                const unselected = "未选择";
+                if (this.value) {
+                    const selectedItem = this.albums.find(album => album.id === this.value);
+                    return selectedItem ? selectedItem.name : unselected;
+                } else {
+                    return unselected;
+                }
             }
         },
         async created() {

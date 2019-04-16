@@ -31,6 +31,7 @@
         border-radius: 8px;
         padding: 12px 16px;
         color: white;
+        z-index: 9999;
     }
 
 </style>
