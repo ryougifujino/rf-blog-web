@@ -3,3 +3,5 @@ export const FETCH_POST_TITLES = 'FETCH_POST_TITLES';
 export const FETCH_ALBUMS = "FETCH_ALBUMS";
 export const FETCH_TAGS = "FETCH_TAGS";
 export const FETCH_SHARES = "FETCH_SHARES";
+export const CREATE_ALBUM = "CREATE_ALBUM";
+export const CREATE_POST = "CREATE_POST";

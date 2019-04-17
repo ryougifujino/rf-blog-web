@@ -1,9 +1,9 @@
 <template>
-    <div class="album-list">
+    <div class="archives-album-list">
         <h3>专辑</h3>
         <hr>
         <ul>
-            <li class="album-list__item" v-for="album of albums">{{album.name}}</li>
+            <li class="archives-album-list__item" v-for="album of albums">{{album.name}}</li>
         </ul>
         <div></div>
     </div>
@@ -11,14 +11,17 @@
 
 <script>
     import {FETCH_ALBUMS} from '@/store/action-types';
-    import {mapModuleState} from '@/util/mapStateUtils';
+    import {mapState, mapActions} from 'vuex';
 
     export default {
         computed: {
-            ...mapModuleState('archives', ['albums'])
+            ...mapState(['albums'])
+        },
+        methods: {
+            ...mapActions([FETCH_ALBUMS])
         },
         async created() {
-            await this.$store.dispatch(FETCH_ALBUMS, {offset: 0, limit: 20})
+            await this[FETCH_ALBUMS]();
         }
     }
 </script>
@@ -26,7 +29,7 @@
 <style lang="scss">
     @import "~@/assets/styles/theme";
 
-    .album-list {
+    .archives-album-list {
         padding: 12px;
         border-radius: 16px;
         border: 1px solid $color-line;

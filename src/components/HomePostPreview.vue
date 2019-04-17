@@ -1,7 +1,7 @@
 <template>
-    <section class="post-preview">
-        <h2 class="post-preview__title">{{post.title}}</h2>
-        <div class="post-preview__body">
+    <section class="home-post-preview">
+        <h2 class="home-post-preview__title">{{post.title}}</h2>
+        <div class="home-post-preview__body">
             {{bodyPreview}}
         </div>
     </section>
@@ -28,7 +28,7 @@
 <style lang="scss">
     @import "~@/assets/styles/theme";
 
-    .post-preview {
+    .home-post-preview {
         padding: 16px;
 
         &__title {

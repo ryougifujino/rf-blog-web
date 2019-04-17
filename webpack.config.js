@@ -2,6 +2,7 @@ const path = require('path');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const webpack = require('webpack');
 
 module.exports = {
     mode: "development",
@@ -35,7 +36,8 @@ module.exports = {
         new HtmlWebpackPlugin({
             title: "rf's Blog",
             template: "./index.html"
-        })
+        }),
+        new webpack.HotModuleReplacementPlugin()
     ],
     resolve: {
         alias: {
@@ -43,6 +45,7 @@ module.exports = {
         }
     },
     devServer: {
-        contentBase: './dist'
+        contentBase: './dist',
+        hot: true
     }
 };

@@ -1,6 +1,6 @@
 <template>
     <ul>
-        <li class="share-item" v-for="share of shares">
+        <li class="share-list__item" v-for="share of shares">
             <h1 v-if="share.category">{{share.category}}</h1>
             <h4>{{share.title}}</h4>
         </li>
@@ -27,7 +27,7 @@
 <style lang="scss">
     @import "~@/assets/styles/theme";
 
-    .share-item {
+    .share-list__item {
         > h1 {
             margin: 16px 0 4px;
         }

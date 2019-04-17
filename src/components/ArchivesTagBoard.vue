@@ -1,9 +1,9 @@
 <template>
-    <div class="tags-board">
+    <div class="archives-tag-board">
         <h3>标签</h3>
         <hr>
-        <div class="tags-board__container">
-            <a class="tags-board__tag" v-for="tag of tags">{{tag}}</a>
+        <div class="archives-tag-board__container">
+            <a class="archives-tag-board__tag" v-for="tag of tags">{{tag}}</a>
         </div>
     </div>
 </template>
@@ -25,7 +25,7 @@
 <style lang="scss">
     @import "~@/assets/styles/theme";
 
-    .tags-board {
+    .archives-tag-board {
         padding: 12px;
         border-radius: 16px;
         margin-top: 16px;

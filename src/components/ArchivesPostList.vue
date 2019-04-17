@@ -1,7 +1,7 @@
 <template>
     <div>
         <ul>
-            <li class="post-list__item" v-for="post of posts"><h3>{{post.title}}</h3></li>
+            <li class="archives-post-list__item" v-for="post of posts"><h3>{{post.title}}</h3></li>
         </ul>
     </div>
 </template>
@@ -23,7 +23,7 @@
 
 <style lang="scss">
 
-    .post-list {
+    .archives-post-list {
         &__item {
             margin-bottom: 8px;
             cursor: pointer;
