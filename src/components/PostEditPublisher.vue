@@ -106,6 +106,7 @@
                 this[CREATE_POST]()
                     .then(() => {
                         this.$showToast("发布成功");
+                        this.$router.replace('/home');
                     })
                     .catch(() => this.$showToast("发布失败"))
                     .finally(() => this.isPublishing = false);

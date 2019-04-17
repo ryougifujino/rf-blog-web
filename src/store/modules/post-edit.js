@@ -1,3 +1,4 @@
+import Vue from 'vue';
 import {
     CREATE_POST
 } from '@/store/action-types';
@@ -7,7 +8,8 @@ import {
     POST_EDIT_SET_IS_PRIVATE,
     POST_EDIT_SET_ALBUM_ID,
     POST_EDIT_ADD_TAG,
-    POST_EDIT_REMOVE_TAG
+    POST_EDIT_REMOVE_TAG,
+    POST_EDIT_RESET_STATE
 } from '@/store/mutation-types';
 import {
     createPost
@@ -25,8 +27,9 @@ const initialState = {
 const state = {...initialState};
 
 const actions = {
-    async [CREATE_POST]({state: {title, body, isPrivate, albumId, tagSet}}) {
+    async [CREATE_POST]({commit, state: {title, body, isPrivate, albumId, tagSet}}) {
         await createPost(title, body, isPrivate, albumId, Array.from(tagSet));
+        commit(POST_EDIT_RESET_STATE);
     }
 };
 
@@ -52,6 +55,12 @@ const mutations = {
     [POST_EDIT_REMOVE_TAG](state, tag) {
         state.tagSet.delete(tag);
         state.tagSetChangeTracker++;
+    },
+    [POST_EDIT_RESET_STATE](state) {
+        Object.keys(state).forEach(key => {
+            const value = initialState[key];
+            Vue.set(state, key, value instanceof Set ? new Set() : value);
+        });
     }
 };
 
