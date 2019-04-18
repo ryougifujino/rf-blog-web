@@ -4,9 +4,11 @@ import router from '@/router';
 import store from '@/store';
 import VueScroll from 'vue-scroll';
 import Toast from '@/plugins/toast';
+import Directives from '@/plugins/directives';
 
 Vue.use(VueScroll);
 Vue.use(Toast);
+Vue.use(Directives);
 
 const requireComponent = require.context(
     // 其组件目录的相对路径
