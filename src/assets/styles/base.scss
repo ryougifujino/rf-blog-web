@@ -1,5 +1,6 @@
 @import "normalize";
 @import "theme";
+@import "mixins";
 
 * {
   margin: 0;
@@ -9,6 +10,7 @@
 
 body {
   margin-left: calc(100vw - 100%);
+  @extend %scrollbar;
 }
 
 ul li {
