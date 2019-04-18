@@ -1,7 +1,7 @@
 <template>
     <div id="app" :class="appWidthClass">
         <header class="header-bar" v-if="headersSeen">
-            <h1 class="header-bar__title">ryougifujino
+            <h1 class="header-bar__title">{{title}}
                 <span class="header-bar__menu">
                     <img src="./assets/images/baseline-search-24px.svg" alt="Search">
                     <img src="./assets/images/baseline-create-24px.svg" alt="Edit"
@@ -32,6 +32,7 @@
         data() {
             return {
                 currentNavTab: this.$route.path,
+                windowWidth: window.innerWidth
             };
         },
         watch: {
@@ -48,12 +49,20 @@
             },
             appWidthClass() {
                 return ({'app--width-limited': this.headersSeen});
+            },
+            title() {
+                return this.windowWidth <= 450 ? "rf" : "ryougifujino";
             }
         },
         methods: {
             go(location) {
                 this.$router.push(location);
             }
+        },
+        mounted() {
+            window.addEventListener('resize', () => {
+                this.windowWidth = window.innerWidth;
+            });
         }
     }
 </script>
