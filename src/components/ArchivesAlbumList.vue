@@ -28,6 +28,7 @@
 
 <style lang="scss">
     @import "~@/assets/styles/theme";
+    @import "~@/assets/styles/mixins";
 
     .archives-album-list {
         padding: 12px;
@@ -44,6 +45,11 @@
         &__item {
             cursor: pointer;
             margin: 8px 0 0;
+            @extend %word-break;
+
+            &:hover {
+                text-decoration: underline;
+            }
         }
     }
 
