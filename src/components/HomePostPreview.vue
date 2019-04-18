@@ -1,16 +1,19 @@
 <template>
     <section class="home-post-preview">
         <h2 class="home-post-preview__title">{{post.title}}</h2>
-        <div class="home-post-preview__body">
-            {{bodyPreview}}
+        <div class="home-post-preview__body" v-if="bodyPreview">
+            <MarkdownPreviewer :markdown-input="bodyPreview"></MarkdownPreviewer>
         </div>
     </section>
 </template>
 
 <script>
+    import MarkdownPreviewer from "@/components/MarkdownPreviewer.vue";
+
     const BODY_MAX_LENGTH = 200;
 
     export default {
+        components: {MarkdownPreviewer},
         props: {
             post: {
                 type: Object,
@@ -19,7 +22,7 @@
         },
         computed: {
             bodyPreview() {
-                return this.post.body.substring(0, BODY_MAX_LENGTH);
+                return this.post.body.substring(0, BODY_MAX_LENGTH).trim();
             }
         }
     }
@@ -31,14 +34,24 @@
     .home-post-preview {
         padding: 16px;
 
+        &:hover, &:hover * {
+            cursor: pointer;
+            background: $color-accent-dark;
+        }
+
+        &:hover {
+            border-radius: 16px;
+        }
+
         &__title {
             margin-bottom: 16px;
             color: $text-color-primary;
         }
 
         &__body {
-            color: $text-color-primary-light;
-            font-size: 18px;
+            border: 1px solid $text-color-secondary-light;
+            border-radius: 16px;
+            padding: 16px;
         }
     }
 
