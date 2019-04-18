@@ -56,6 +56,10 @@
             padding: 4px 8px;
             margin: 8px 8px 0 0;
             cursor: pointer;
+
+            &:hover{
+                background: $color-accent-dark;
+            }
         }
     }
 </style>

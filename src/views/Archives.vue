@@ -26,14 +26,22 @@
 
     .archives {
         display: flex;
-        margin: 16px 0;
+        flex-wrap: wrap;
+        margin: 16px;
+
+        $list-min-width: 300px;
+        $aside-min-width: 200px;
+        $space: 16px;
 
         &__post-list {
-            flex: 2;
+            flex: $list-min-width;
+            @media (min-width: $list-min-width + $aside-min-width + $space) {
+                margin-right: $space;
+            }
         }
 
         &__aside {
-            flex: 1;
+            flex: $aside-min-width;
         }
     }
 
