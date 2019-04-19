@@ -29,10 +29,12 @@ const state = {...initialState};
 
 const actions = {
     async [CREATE_POST]({commit, state: {title, body, isPrivate, albumId, tagSet}, rootState}) {
-        await createPost(title, body, isPrivate, albumId, Array.from(tagSet));
+        const {data: post} = await createPost(title, body, isPrivate, albumId, Array.from(tagSet));
         if (difference(tagSet, rootState.tags.map(tag => tag.name)).size) {
             rootState.isTagsDirty = true;
         }
+        delete post.body;
+        rootState.posts.unshift(post);
         commit(POST_EDIT_RESET_STATE);
     }
 };
