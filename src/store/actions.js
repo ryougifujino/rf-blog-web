@@ -36,8 +36,13 @@ export default {
         const {data: {items: posts}} = await fetchPostTitles();
         commit(ADD_POST_TITLES, {posts});
     },
-    async [FETCH_TAGS]({commit}, {offset, limit}) {
-        let tags = await fetchTags(offset, limit);
+    async [FETCH_TAGS]({state, commit}) {
+        if (!state.isTagsDirty) {
+            return;
+        }
+        state.tags = [];
+        const {data: {items: tags}} = await fetchTags();
         commit(ADD_TAGS, {tags});
+        state.isTagsDirty = false;
     }
 };

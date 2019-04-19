@@ -1,5 +1,5 @@
 <template>
-    <div class="archives-album-list">
+    <div class="archives-album-list" v-if="albums.length">
         <h3>专辑</h3>
         <hr>
         <ul>

@@ -13,7 +13,8 @@ import postEdit from '@/store/modules/post-edit';
 const state = {
     albums: [],
     posts: [],
-    tags: []
+    tags: [],
+    isTagsDirty: true
 };
 
 export default new Vuex.Store({

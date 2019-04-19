@@ -17,12 +17,8 @@ export function fetchAlbums() {
     return _.get('/albums');
 }
 
-export function fetchTags(offset, limit) {
-    return new Promise(resolve => {
-        resolve([
-            "Java", "编程", "C++", "有限元", "模板元编程", "DSL", "敏捷方法", "持续集成", "抽象语法树"
-        ])
-    })
+export function fetchTags() {
+    return _.get('/tags');
 }
 
 export function fetchShares(offset, limit) {

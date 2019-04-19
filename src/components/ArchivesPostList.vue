@@ -1,7 +1,7 @@
 <template>
     <div>
         <ul>
-            <li class="archives-post-list__item" v-for="post of posts">
+            <li class="archives-post-list__item" v-for="post of filteredPosts">
                 <h4>{{post.title}}</h4>
                 <div class="archives-post-list__corner-info">{{post.created_on | localDate}}</div>
             </li>
@@ -10,12 +10,12 @@
 </template>
 
 <script>
-    import {mapActions, mapState} from 'vuex';
+    import {mapActions, mapGetters} from 'vuex';
     import {FETCH_POST_TITLES} from '@/store/action-types';
 
     export default {
         computed: {
-            ...mapState(['posts'])
+            ...mapGetters(['filteredPosts'])
         },
         methods: {
             ...mapActions([FETCH_POST_TITLES])
