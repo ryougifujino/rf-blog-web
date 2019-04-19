@@ -17,13 +17,8 @@ export default {
         if (state.albums.length !== 0) {
             return;
         }
-        try {
-            const {data: {items: albums}} = await fetchAlbums();
-            commit(ADD_ALBUMS, {albums});
-        } catch (e) {
-            //TODO: handle error
-            console.error(e);
-        }
+        const {data: {items: albums}} = await fetchAlbums();
+        commit(ADD_ALBUMS, {albums});
     },
     async [CREATE_ALBUM]({state, commit}, {newAlbumName}) {
         const {data: newAlbum} = await createAlbum(newAlbumName);

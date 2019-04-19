@@ -3,7 +3,10 @@
         <h3>专辑</h3>
         <hr>
         <ul>
-            <li class="archives-album-list__item" v-for="album of albums">{{album.name}}</li>
+            <li :class="itemClass(album.id)"
+                v-for="album of albums"
+                @click="checkAlbum(album)">{{album.name}}
+            </li>
         </ul>
         <div></div>
     </div>
@@ -11,17 +14,27 @@
 
 <script>
     import {FETCH_ALBUMS} from '@/store/action-types';
-    import {mapState, mapActions} from 'vuex';
+    import {mapState, mapActions, mapMutations} from 'vuex';
+    import {ARCHIVES_CHECK_ALBUM} from "@/store/mutation-types";
+    import {mapModuleState} from "@/util/mapStateUtils";
 
     export default {
         computed: {
-            ...mapState(['albums'])
+            ...mapState(['albums']),
+            ...mapModuleState('archives', ['checkedAlbumId']),
+            itemClass() {
+                return id => ['archives-album-list__item', {'archives-album-list__item--checked': id === this.checkedAlbumId}];
+            }
         },
         methods: {
-            ...mapActions([FETCH_ALBUMS])
+            ...mapActions([FETCH_ALBUMS]),
+            ...mapMutations([ARCHIVES_CHECK_ALBUM]),
+            checkAlbum(album) {
+                this[ARCHIVES_CHECK_ALBUM](album.id);
+            }
         },
-        async created() {
-            await this[FETCH_ALBUMS]();
+        created() {
+            this[FETCH_ALBUMS]().catch(() => this.$showToast('加载专辑失败'));
         }
     }
 </script>
@@ -47,7 +60,7 @@
             margin: 8px 0 0;
             @extend %word-break;
 
-            &:hover {
+            &:hover, &--checked {
                 text-decoration: underline;
             }
         }
