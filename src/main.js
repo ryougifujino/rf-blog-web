@@ -5,10 +5,12 @@ import store from '@/store';
 import VueScroll from 'vue-scroll';
 import Toast from '@/plugins/toast';
 import Directives from '@/plugins/directives';
+import Filters from '@/plugins/filters';
 
 Vue.use(VueScroll);
 Vue.use(Toast);
 Vue.use(Directives);
+Vue.use(Filters);
 
 const requireComponent = require.context(
     // 其组件目录的相对路径
