@@ -1,25 +1,27 @@
 <template>
     <div>
         <ul>
-            <li class="archives-post-list__item" v-for="post of posts">
+            <li class="archives-post-list__item" v-for="post of filteredPosts">
                 <h4>{{post.title}}</h4>
-                <div class="archives-post-list__corner-info">2017-03-15</div>
+                <div class="archives-post-list__corner-info">{{post.created_on | localDate}}</div>
             </li>
         </ul>
     </div>
 </template>
 
 <script>
-    import {mapModuleState} from '@/util/mapStateUtils';
+    import {mapActions, mapGetters} from 'vuex';
     import {FETCH_POST_TITLES} from '@/store/action-types';
-
 
     export default {
         computed: {
-            ...mapModuleState('archives', ['posts'])
+            ...mapGetters(['filteredPosts'])
         },
-        async created() {
-            await this.$store.dispatch(FETCH_POST_TITLES, {offset: 0, limit: 20})
+        methods: {
+            ...mapActions([FETCH_POST_TITLES])
+        },
+        created() {
+            this[FETCH_POST_TITLES]();
         }
     }
 </script>

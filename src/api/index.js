@@ -5,36 +5,20 @@ const _ = axios.create({
     baseURL: API_BASE_URL
 });
 
-function generatePostTitle() {
-    return {
-        title: `博客${Math.random()}`
-    }
-}
-
 export function fetchPostPreviews(offset, limit) {
     return _.get(`/posts?offset=${offset}&limit=${limit}`);
 }
 
-export function fetchPostTitles(offset, limit) {
-    return new Promise(resolve => {
-        let result = [];
-        while (limit--) {
-            result.push(generatePostTitle());
-        }
-        resolve(result);
-    });
+export function fetchPostTitles() {
+    return _.get('/posts/titles');
 }
 
 export function fetchAlbums() {
     return _.get('/albums');
 }
 
-export function fetchTags(offset, limit) {
-    return new Promise(resolve => {
-        resolve([
-            "Java", "编程", "C++", "有限元", "模板元编程", "DSL", "敏捷方法", "持续集成", "抽象语法树"
-        ])
-    })
+export function fetchTags() {
+    return _.get('/tags');
 }
 
 export function fetchShares(offset, limit) {

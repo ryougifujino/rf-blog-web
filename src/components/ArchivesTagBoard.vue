@@ -1,23 +1,37 @@
 <template>
-    <div class="archives-tag-board">
+    <div class="archives-tag-board" v-if="tags.length">
         <h3>标签</h3>
         <hr>
         <div class="archives-tag-board__container">
-            <a class="archives-tag-board__tag" v-for="tag of tags">{{tag}}</a>
+            <VTag v-for="tag of tags"
+                  :key="tag.id"
+                  :class="['archives-tag-board__tag', {'archives-tag-board__tag--checked': tag.id === checkedTagId}]"
+                  @click.native="checkTag(tag)">{{tag.name}}
+            </VTag>
         </div>
     </div>
 </template>
 
 <script>
     import {FETCH_TAGS} from '@/store/action-types';
-    import {mapModuleState} from '@/util/mapStateUtils';
+    import {ARCHIVES_CHECK_TAG} from '@/store/mutation-types'
+    import {mapState, mapActions, mapMutations} from 'vuex';
+    import {mapModuleState} from "@/util/mapStateUtils";
 
     export default {
         computed: {
-            ...mapModuleState('archives', ['tags'])
+            ...mapState(['tags']),
+            ...mapModuleState('archives', ['checkedTagId'])
         },
-        async created() {
-            await this.$store.dispatch(FETCH_TAGS, {offset: 0, limit: 20})
+        methods: {
+            ...mapActions([FETCH_TAGS]),
+            ...mapMutations([ARCHIVES_CHECK_TAG]),
+            checkTag(tag) {
+                this[ARCHIVES_CHECK_TAG](tag.id);
+            }
+        },
+        created() {
+            this[FETCH_TAGS]().catch(() => this.$showToast('加载标签失败'));
         }
     }
 </script>
@@ -50,15 +64,15 @@
         }
 
         &__tag {
-            border-radius: 8px;
-            border: 1px $color-line solid;
-            background-color: $color-accent;
-            padding: 4px 8px;
             margin: 8px 8px 0 0;
-            cursor: pointer;
 
-            &:hover{
+            &:hover, &--checked {
                 background: $color-accent-dark;
+            }
+
+            &--checked {
+                color: $text-color-primary-light !important;
+                border-color: $text-color-primary-light !important;
             }
         }
     }

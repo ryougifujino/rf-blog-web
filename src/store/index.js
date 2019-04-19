@@ -11,7 +11,10 @@ import shares from '@/store/modules/shares';
 import postEdit from '@/store/modules/post-edit';
 
 const state = {
-    albums: []
+    albums: [],
+    posts: [],
+    tags: [],
+    isTagsDirty: true
 };
 
 export default new Vuex.Store({
