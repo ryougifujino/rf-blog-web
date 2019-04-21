@@ -16,7 +16,6 @@
 
 <style>
     .shares{
-        width: 60%;
-        margin: 0 auto 16px;
+        padding: 0 16px 16px;
     }
 </style>

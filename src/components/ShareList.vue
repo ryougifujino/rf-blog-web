@@ -1,7 +1,7 @@
 <template>
     <ul>
         <li class="share-list__item" v-for="share of shares">
-            <h1 v-if="share.category">{{share.category}}</h1>
+            <h3 v-if="share.category">{{share.category}}</h3>
             <h4>{{share.title}}</h4>
         </li>
     </ul>
@@ -28,13 +28,18 @@
     @import "~@/assets/styles/theme";
 
     .share-list__item {
-        > h1 {
-            margin: 16px 0 4px;
+        > h3 {
+            margin: 16px 0 8px;
+            padding: 8px 16px;
+            border-radius: 8px;
+            background: $color-accent-dark;
+            display: inline-block;
         }
 
         > h4 {
             color: $text-color-primary-light;
             margin-bottom: 4px;
+            font-weight: 500;
         }
     }
 
