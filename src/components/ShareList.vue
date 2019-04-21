@@ -29,17 +29,23 @@
 
     .share-list__item {
         > h3 {
-            margin: 16px 0 8px;
-            padding: 8px 16px;
-            border-radius: 8px;
-            background: $color-accent-dark;
-            display: inline-block;
+            margin: 16px 0 4px;
+            text-align: center;
         }
 
         > h4 {
             color: $text-color-primary-light;
             margin-bottom: 4px;
-            font-weight: 500;
+            font-weight: normal;
+            text-align: center;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
+
+            &:hover {
+                text-decoration: underline;
+                cursor: pointer;
+            }
         }
     }
 
