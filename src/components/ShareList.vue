@@ -1,5 +1,6 @@
 <template>
-    <ul>
+    <ul class="share-list">
+        <li class="share-list__add-new">新增分享</li>
         <li class="share-list__item" v-for="share of shares">
             <h3 v-if="share.category">{{share.category}}</h3>
             <h4>{{share.title}}</h4>
@@ -27,26 +28,43 @@
 <style lang="scss">
     @import "~@/assets/styles/theme";
 
-    .share-list__item {
-        > h3 {
-            margin: 16px 0 4px;
-            text-align: center;
-        }
+    .share-list {
+        text-align: center;
 
-        > h4 {
-            color: $text-color-primary-light;
-            margin-bottom: 4px;
-            font-weight: normal;
-            text-align: center;
-            white-space: nowrap;
-            text-overflow: ellipsis;
-            overflow: hidden;
+        &__add-new {
+            padding: 8px 16px;
+            border-radius: 16px;
+            border: 1px solid $color-accent-dark;
+            background: $color-accent-dark;
+            margin-top: 16px;
 
             &:hover {
-                text-decoration: underline;
                 cursor: pointer;
+                user-select: none;
+                border: 1px solid $text-color-secondary;
+            }
+        }
+
+        &__item {
+            > h3 {
+                margin: 16px 0 4px;
+            }
+
+            > h4 {
+                color: $text-color-primary-light;
+                margin-bottom: 4px;
+                font-weight: normal;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                overflow: hidden;
+
+                &:hover {
+                    text-decoration: underline;
+                    cursor: pointer;
+                }
             }
         }
     }
+
 
 </style>
