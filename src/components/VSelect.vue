@@ -144,6 +144,12 @@
         cursor: pointer;
         user-select: none;
         font-size: 0.9em;
+        box-sizing: border-box;
+        z-index: 100;
+
+        * {
+            box-sizing: border-box;
+        }
 
         &__value {
             display: inline-block;
@@ -240,6 +246,7 @@
         }
 
         &__list {
+            @extend %word-break;
 
             > li {
                 padding: 6px 8px;
