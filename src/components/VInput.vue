@@ -25,6 +25,7 @@
         border: 1px solid $text-color-secondary;
         border-radius: 9999px;
         padding: 8px 12px;
+        box-sizing: border-box;
 
         &--max-width {
             width: 100%;

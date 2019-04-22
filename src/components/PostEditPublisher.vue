@@ -1,16 +1,22 @@
 <template>
     <div class="mask" v-if="visible">
         <div class="post-edit-publisher">
-            <div class="post-edit-publisher__header">发布博文</div>
+            <VTheDialogHeader>发布博文</VTheDialogHeader>
             <div class="post-edit-publisher__form">
                 <div class="post-edit-publisher__item">
                     <VRadioGroup class="post-edit-publisher__privacy"
                                  :items="privacyItems"
-                                 v-model="_isPrivate"></VRadioGroup>
+                                 v-model="_isPrivate">
+                    </VRadioGroup>
                 </div>
                 <div class="post-edit-publisher__item">
                     <div class="post-edit-publisher__item-title">专辑</div>
-                    <AlbumsSelect v-model="_albumId"></AlbumsSelect>
+                    <VSelect v-model="_albumId"
+                             keyword="专辑"
+                             :maxlength="200"
+                             :items="albums"
+                             @add-new="createAlbum">
+                    </VSelect>
                 </div>
                 <div class="post-edit-publisher__item">
                     <div class="post-edit-publisher__item-title">标签</div>
@@ -33,12 +39,7 @@
                     </VTag>
                 </div>
             </div>
-            <div class="post-edit-publisher__footer">
-                <div class="post-edit-publisher__buttons-container">
-                    <VButtonFlat @click.native="cancel">取消</VButtonFlat>
-                    <VButtonFlat @click.native="confirm">确认</VButtonFlat>
-                </div>
-            </div>
+            <VTheDialogFooter @cancel="cancel" @confirm="confirm"></VTheDialogFooter>
             <VProgressBar class="post-edit-publisher__progress-bar"
                           v-if="isPublishing"></VProgressBar>
         </div>
@@ -46,9 +47,8 @@
 </template>
 
 <script>
-    import AlbumsSelect from "@/components/AlbumsSelect.vue";
-    import {CREATE_POST} from '@/store/action-types';
-    import {mapActions, mapMutations} from 'vuex';
+    import {CREATE_POST, FETCH_ALBUMS, CREATE_ALBUM} from '@/store/action-types';
+    import {mapActions, mapMutations, mapState} from 'vuex';
     import {mapModuleState} from '@/util/mapStateUtils';
     import {
         POST_EDIT_SET_IS_PRIVATE,
@@ -58,9 +58,6 @@
     } from '@/store/mutation-types';
 
     export default {
-        components: {
-            AlbumsSelect
-        },
         props: {
             visible: {
                 type: Boolean,
@@ -74,6 +71,7 @@
         }),
         computed: {
             ...mapModuleState('postEdit', ['isPrivate', 'albumId', 'tagSetChangeTracker', 'tagSet']),
+            ...mapState(['albums']),
             _isPrivate: {
                 get() {
                     return this.isPrivate;
@@ -95,7 +93,7 @@
             }
         },
         methods: {
-            ...mapActions([CREATE_POST]),
+            ...mapActions([CREATE_POST, FETCH_ALBUMS, CREATE_ALBUM]),
             ...mapMutations([POST_EDIT_SET_IS_PRIVATE, POST_EDIT_SET_ALBUM_ID, POST_EDIT_ADD_TAG,
                 POST_EDIT_REMOVE_TAG]),
             cancel() {
@@ -124,7 +122,13 @@
                 }
                 this.addTag(tagInput);
                 this.tagInput = '';
+            },
+            createAlbum(newAlbumName, callback) {
+                callback(this[CREATE_ALBUM]({newAlbumName}));
             }
+        },
+        created() {
+            this[FETCH_ALBUMS]();
         }
     }
 </script>
@@ -132,29 +136,10 @@
 <style lang="scss">
     @import "~@/assets/styles/theme";
     @import "~@/assets/styles/mixins";
-
-    $header-height: 50px;
-    $border-radius: 16px;
+    @import "~@/assets/styles/dimens";
 
     .post-edit-publisher {
-        @extend %center;
-        width: 450px;
-        @media screen and (max-width: 450px) {
-            width: 90%;
-            min-width: 300px;
-        }
-        border-radius: $border-radius;
-        position: relative;
-
-        &__header {
-            font-size: 16px;
-            color: $text-color-primary;
-            height: $header-height;
-            line-height: $header-height;
-            border-radius: $border-radius $border-radius 0 0;
-            border-bottom: 1px solid $color-accent-dark;
-            text-align: center;
-        }
+        @extend %dialog;
 
         &__form {
             padding: 0 16px;
@@ -208,32 +193,8 @@
             margin-bottom: 8px;
         }
 
-        &__footer {
-            height: $header-height;
-            border-radius: 0 0 $border-radius $border-radius;
-        }
-
-        &__buttons-container {
-            display: inline-block;
-            position: absolute;
-            right: 16px;
-
-            > div {
-                background-color: $color-accent;
-                font-weight: normal;
-                font-size: 14px;
-            }
-
-            > div:hover {
-                background-color: $color-accent-dark;
-                color: $text-color-secondary;
-            }
-        }
-
         &__progress-bar {
             border-radius: $border-radius;
         }
     }
-
-
 </style>
