@@ -1,34 +1,34 @@
 <template>
-    <div class="albums-select" @click.self="toggleContent">
-        <span class="albums-select__value"
+    <div class="v-select" @click.self="toggleContent">
+        <span class="v-select__value"
               @click="toggleContent">{{selectedItemName}}</span>
-        <div class="albums-select__content" v-show="isContentVisible">
-            <div class="albums-select__search">
-                <input placeholder="查找专辑" spellcheck="false" v-model="albumKey">
+        <div class="v-select__content" v-show="isContentVisible">
+            <div class="v-select__search">
+                <input :placeholder="`查找${keyword}`" spellcheck="false" v-model="searchKey">
             </div>
-            <div class="albums-select__list-container">
-                <div class="albums-select__add">
+            <div class="v-select__list-container">
+                <div class="v-select__add">
                     <VProgressBar v-if="isAdding"></VProgressBar>
-                    <div class="albums-select__add-button"
+                    <div class="v-select__add-button"
                          v-if="!isAddInputVisible"
-                         @click="isAddInputVisible = true">新增专辑
+                         @click="isAddInputVisible = true">新增{{keyword}}
                     </div>
                     <div v-if="isAddInputVisible">
                         <div :class="addMessageClass" v-if="addMessage">{{addMessage}}</div>
-                        <input class="albums-select__add-input"
-                               placeholder="添加新专辑"
+                        <input class="v-select__add-input"
+                               :placeholder="`添加新${keyword}`"
                                spellcheck="false"
-                               maxlength="200"
-                               v-model="newAlbumName">
-                        <div class="albums-select__add-footer">
+                               :maxlength="maxlength"
+                               v-model="newItemName">
+                        <div class="v-select__add-footer">
                             <VButtonFlat @click.native="addCancel">取消</VButtonFlat>
                             <VButtonFlat @click.native="addConfirm">确认</VButtonFlat>
                         </div>
                     </div>
                 </div>
-                <ul class="albums-select__list">
+                <ul class="v-select__list">
                     <li @click="selectItem(null)">未选择</li>
-                    <li v-for="album of filteredAlbums" @click="selectItem(album.id)">{{album.name}}
+                    <li v-for="item of filteredItems" @click="selectItem(item.id)">{{item.name}}
                     </li>
                 </ul>
             </div>
@@ -37,21 +37,32 @@
 </template>
 
 <script>
-    import {FETCH_ALBUMS, CREATE_ALBUM} from '@/store/action-types';
-    import {mapState, mapActions} from 'vuex'
-
+    const UNSELECTED = "未选择";
     export default {
         props: {
             value: {
                 required: true,
                 validator: prop => typeof prop === 'number' || prop === null
+            },
+            keyword: {
+                required: true,
+                type: String
+            },
+            maxlength: {
+                required: true,
+                type: Number
+            },
+            items: {
+                required: true,
+                type: Array,
+                default: () => []
             }
         },
         data: () => ({
             isContentVisible: false,
             isAddInputVisible: false,
-            albumKey: '',
-            newAlbumName: '',
+            searchKey: '',
+            newItemName: '',
             addMessage: '',
             addMessageType: 'error',
             isAdding: false
@@ -60,8 +71,8 @@
             toggleContent() {
                 this.isContentVisible = !this.isContentVisible;
             },
-            selectItem(albumId) {
-                this.$emit('input', albumId);
+            selectItem(itemId) {
+                this.$emit('input', itemId);
                 this.isContentVisible = false;
             },
             addCancel() {
@@ -73,45 +84,41 @@
                 setTimeout(() => this.addMessage = '', 1500);
             },
             addConfirm() {
-                const newAlbumName = this.newAlbumName;
-                if (newAlbumName.trim() === '') {
-                    this.showAddMessage('专辑名称不能为空', 'error');
+                const newItemName = this.newItemName;
+                if (newItemName.trim() === '') {
+                    this.showAddMessage(`${this.keyword}名称不能为空`, 'error');
                     return;
                 }
                 this.isAdding = true;
-                this[CREATE_ALBUM]({newAlbumName})
-                    .then(() => {
-                        this.showAddMessage('专辑创建成功', 'success');
-                        this.newAlbumName = '';
-                    })
-                    .catch(() => this.showAddMessage('专辑创建失败', 'error'))
-                    .finally(() => this.isAdding = false);
-            },
-            ...mapActions([FETCH_ALBUMS, CREATE_ALBUM])
+                this.$emit('add-new', newItemName, p => {
+                    p
+                        .then(() => {
+                            this.showAddMessage(`${this.keyword}创建成功`, 'success');
+                            this.newItemName = '';
+                        })
+                        .catch(() => this.showAddMessage(`${this.keyword}创建失败`, 'error'))
+                        .finally(() => this.isAdding = false);
+                });
+            }
         },
         computed: {
-            ...mapState(['albums']),
-            filteredAlbums() {
-                const re = new RegExp(this.albumKey.trim(), 'i');
-                return this.albums.filter(album => re.test(album.name));
+            filteredItems() {
+                const re = new RegExp(this.searchKey.trim(), 'i');
+                return this.items.filter(({name}) => re.test(name));
             },
             addMessageClass() {
-                const base = 'albums-select__add-message';
+                const base = 'v-select__add-message';
                 const modifier = this.addMessageType === 'error' ? '--error' : '--success';
                 return [base, base + modifier];
             },
             selectedItemName() {
-                const unselected = "未选择";
                 if (this.value) {
-                    const selectedItem = this.albums.find(album => album.id === this.value);
-                    return selectedItem ? selectedItem.name : unselected;
+                    const selectedItem = this.items.find(({id}) => id === this.value);
+                    return selectedItem ? selectedItem.name : UNSELECTED;
                 } else {
-                    return unselected;
+                    return UNSELECTED;
                 }
             }
-        },
-        async created() {
-            await this[FETCH_ALBUMS]();
         }
     }
 </script>
@@ -130,7 +137,7 @@
         border-radius: $border-radius;
     }
 
-    .albums-select {
+    .v-select {
         position: relative;
         @extend %border;
         height: $select-height;

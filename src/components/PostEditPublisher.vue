@@ -10,7 +10,11 @@
                 </div>
                 <div class="post-edit-publisher__item">
                     <div class="post-edit-publisher__item-title">专辑</div>
-                    <AlbumsSelect v-model="_albumId"></AlbumsSelect>
+                    <VSelect v-model="_albumId"
+                             keyword="专辑"
+                             :maxlength="200"
+                             :items="albums"
+                             @add-new="createAlbum"></VSelect>
                 </div>
                 <div class="post-edit-publisher__item">
                     <div class="post-edit-publisher__item-title">标签</div>
@@ -46,9 +50,8 @@
 </template>
 
 <script>
-    import AlbumsSelect from "@/components/AlbumsSelect.vue";
-    import {CREATE_POST} from '@/store/action-types';
-    import {mapActions, mapMutations} from 'vuex';
+    import {CREATE_POST, FETCH_ALBUMS, CREATE_ALBUM} from '@/store/action-types';
+    import {mapActions, mapMutations, mapState} from 'vuex';
     import {mapModuleState} from '@/util/mapStateUtils';
     import {
         POST_EDIT_SET_IS_PRIVATE,
@@ -58,9 +61,6 @@
     } from '@/store/mutation-types';
 
     export default {
-        components: {
-            AlbumsSelect
-        },
         props: {
             visible: {
                 type: Boolean,
@@ -74,6 +74,7 @@
         }),
         computed: {
             ...mapModuleState('postEdit', ['isPrivate', 'albumId', 'tagSetChangeTracker', 'tagSet']),
+            ...mapState(['albums']),
             _isPrivate: {
                 get() {
                     return this.isPrivate;
@@ -95,7 +96,7 @@
             }
         },
         methods: {
-            ...mapActions([CREATE_POST]),
+            ...mapActions([CREATE_POST, FETCH_ALBUMS, CREATE_ALBUM]),
             ...mapMutations([POST_EDIT_SET_IS_PRIVATE, POST_EDIT_SET_ALBUM_ID, POST_EDIT_ADD_TAG,
                 POST_EDIT_REMOVE_TAG]),
             cancel() {
@@ -124,7 +125,13 @@
                 }
                 this.addTag(tagInput);
                 this.tagInput = '';
+            },
+            createAlbum(newAlbumName, callback) {
+                callback(this[CREATE_ALBUM]({newAlbumName}));
             }
+        },
+        created() {
+            this[FETCH_ALBUMS]();
         }
     }
 </script>
