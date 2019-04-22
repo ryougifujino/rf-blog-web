@@ -21,101 +21,12 @@ export function fetchTags() {
     return _.get('/tags');
 }
 
-export function fetchShares(offset, limit) {
-    return new Promise(resolve => {
-        resolve([
-            {
-                title: "axios发送post请求，springMVC接收不到数据问题axios发送post请求，springMVC接收不到数据问题axios发送post请求，springMVC接收不到数据问题axios发送post请求，springMVC接收不到数据问题",
-                link: "https://www.baidu.com",
-                category: 'Web'
-            },
-            {
-                title: "Google 1Q84",
-                link: "https://www.google.com",
-                category: 'Web'
-            },
-            {
-                title: "标题1Q84",
-                link: "https://www.baidu.com",
-                category: 'Web'
-            },
-            {
-                title: "Google 1Q84",
-                link: "https://www.google.com",
-                category: 'Web'
-            },
-            {
-                title: "标题1Q84",
-                link: "https://www.baidu.com",
-                category: 'Web'
-            },
-            {
-                title: "Google 1Q84",
-                link: "https://www.google.com",
-                category: 'Web'
-            },
-            {
-                title: "标题1Q84",
-                link: "https://www.baidu.com",
-                category: 'Web'
-            },
-            {
-                title: "Google 1Q84",
-                link: "https://www.google.com",
-                category: 'Web'
-            },
-            {
-                title: "标题1Q84",
-                link: "https://www.baidu.com",
-                category: 'Web'
-            },
-            {
-                title: "Google 1Q84",
-                link: "https://www.google.com",
-                category: 'Web'
-            },
-            {
-                title: "标题1Q84",
-                link: "https://www.baidu.com",
-                category: 'Web'
-            },
-            {
-                title: "Google 1Q84",
-                link: "https://www.google.com",
-                category: 'Web'
-            },
-            {
-                title: "标题1Q84",
-                link: "https://www.baidu.com",
-                category: 'Web'
-            },
-            {
-                title: "Google 1Q84",
-                link: "https://www.google.com",
-                category: 'DDD'
-            },
-            {
-                title: "标题1Q84",
-                link: "https://www.baidu.com",
-                category: 'DDD'
-            },
-            {
-                title: "Google 1Q84",
-                link: "https://www.google.com",
-                category: 'AAA'
-            },
-            {
-                title: "标题1Q84",
-                link: "https://www.baidu.com",
-                category: 'WAAb'
-            },
-            {
-                title: "Google 1Q84",
-                link: "https://www.google.com",
-                category: 'WAAb'
-            },
-        ]);
-    });
+export function fetchShares() {
+    return _.get('shares');
+}
+
+export function fetchShareCategories() {
+    return _.get('/share-categories');
 }
 
 export function createAlbum(name) {
@@ -132,4 +43,18 @@ export function createPost(title, body, isPrivate, albumId, tagNames) {
             tag_names: tagNames
         }
     });
+}
+
+export function createShare(title, url, shareCategoryId) {
+    return _.post('/shares', {
+        share: {
+            title,
+            url,
+            share_category_id: shareCategoryId
+        }
+    });
+}
+
+export function createShareCategory(name) {
+    return _.post('/share-categories', {share_category: {name}});
 }
