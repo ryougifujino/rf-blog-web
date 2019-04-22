@@ -1,7 +1,7 @@
 <template>
     <div class="mask" v-if="visible">
         <div class="post-edit-publisher">
-            <div class="post-edit-publisher__header">发布博文</div>
+            <VTheDialogHeader>发布博文</VTheDialogHeader>
             <div class="post-edit-publisher__form">
                 <div class="post-edit-publisher__item">
                     <VRadioGroup class="post-edit-publisher__privacy"
@@ -37,12 +37,7 @@
                     </VTag>
                 </div>
             </div>
-            <div class="post-edit-publisher__footer">
-                <div class="post-edit-publisher__buttons-container">
-                    <VButtonFlat @click.native="cancel">取消</VButtonFlat>
-                    <VButtonFlat @click.native="confirm">确认</VButtonFlat>
-                </div>
-            </div>
+            <VTheDialogFooter @cancel="cancel" @confirm="confirm"></VTheDialogFooter>
             <VProgressBar class="post-edit-publisher__progress-bar"
                           v-if="isPublishing"></VProgressBar>
         </div>
@@ -139,9 +134,7 @@
 <style lang="scss">
     @import "~@/assets/styles/theme";
     @import "~@/assets/styles/mixins";
-
-    $header-height: 50px;
-    $border-radius: 16px;
+    @import "~@/assets/styles/dimens";
 
     .post-edit-publisher {
         @extend %center;
@@ -152,16 +145,6 @@
         }
         border-radius: $border-radius;
         position: relative;
-
-        &__header {
-            font-size: 16px;
-            color: $text-color-primary;
-            height: $header-height;
-            line-height: $header-height;
-            border-radius: $border-radius $border-radius 0 0;
-            border-bottom: 1px solid $color-accent-dark;
-            text-align: center;
-        }
 
         &__form {
             padding: 0 16px;
@@ -213,28 +196,6 @@
             font-size: 14px;
             margin-right: 8px;
             margin-bottom: 8px;
-        }
-
-        &__footer {
-            height: $header-height;
-            border-radius: 0 0 $border-radius $border-radius;
-        }
-
-        &__buttons-container {
-            display: inline-block;
-            position: absolute;
-            right: 16px;
-
-            > div {
-                background-color: $color-accent;
-                font-weight: normal;
-                font-size: 14px;
-            }
-
-            > div:hover {
-                background-color: $color-accent-dark;
-                color: $text-color-secondary;
-            }
         }
 
         &__progress-bar {
