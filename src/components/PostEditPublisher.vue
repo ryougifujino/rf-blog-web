@@ -6,7 +6,8 @@
                 <div class="post-edit-publisher__item">
                     <VRadioGroup class="post-edit-publisher__privacy"
                                  :items="privacyItems"
-                                 v-model="_isPrivate"></VRadioGroup>
+                                 v-model="_isPrivate">
+                    </VRadioGroup>
                 </div>
                 <div class="post-edit-publisher__item">
                     <div class="post-edit-publisher__item-title">专辑</div>
@@ -14,7 +15,8 @@
                              keyword="专辑"
                              :maxlength="200"
                              :items="albums"
-                             @add-new="createAlbum"></VSelect>
+                             @add-new="createAlbum">
+                    </VSelect>
                 </div>
                 <div class="post-edit-publisher__item">
                     <div class="post-edit-publisher__item-title">标签</div>
@@ -137,14 +139,7 @@
     @import "~@/assets/styles/dimens";
 
     .post-edit-publisher {
-        @extend %center;
-        width: 450px;
-        @media screen and (max-width: 450px) {
-            width: 90%;
-            min-width: 300px;
-        }
-        border-radius: $border-radius;
-        position: relative;
+        @extend %dialog;
 
         &__form {
             padding: 0 16px;
@@ -202,6 +197,4 @@
             border-radius: $border-radius;
         }
     }
-
-
 </style>
