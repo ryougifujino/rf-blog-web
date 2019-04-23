@@ -10,7 +10,12 @@
 
 body {
   margin-left: calc(100vw - 100%);
+  -webkit-tap-highlight-color: transparent;
   @extend %scrollbar;
+}
+
+input, textarea {
+  -webkit-appearance: none;
 }
 
 ul li {

@@ -10,7 +10,11 @@ import {
     fetchPostTitles,
     fetchTags
 } from "@/api";
-import {ADD_ALBUMS, ADD_POST_TITLES, ADD_TAGS} from "@/store/mutation-types";
+import {
+    ADD_ALBUMS,
+    ADD_POST_TITLES,
+    ADD_TAGS
+} from "@/store/mutation-types";
 
 export default {
     async [FETCH_ALBUMS]({state, commit}) {

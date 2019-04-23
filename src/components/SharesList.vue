@@ -1,26 +1,36 @@
 <template>
-    <ul class="share-list">
-        <li class="share-list__add-new">新增分享</li>
-        <li class="share-list__item" v-for="share of shares">
-            <h3 v-if="share.category">{{share.category}}</h3>
-            <h4>{{share.title}}</h4>
+    <ul class="shares-list">
+        <li class="shares-list__specific-category-shares"
+            v-for="specificCategoryShares of categorizedShares">
+            <h3>{{specificCategoryShares.category}}</h3>
+            <h4 v-for="share of specificCategoryShares.shares"
+                @click="openLink(share.url)">{{share.title}}
+            </h4>
         </li>
     </ul>
 </template>
 
 <script>
-    import {FETCH_SHARES} from '@/store/action-types';
-    import {mapModuleState} from '@/util/mapStateUtils';
+    import {FETCH_SHARES, FETCH_SHARE_CATEGORIES} from '@/store/action-types';
+    import {mapActions, mapGetters} from "vuex";
 
+    const RE_URL = /^https?:\/\//;
     export default {
-        data() {
-            return {};
-        },
         computed: {
-            ...mapModuleState('shares', ['shares'])
+            ...mapGetters(['categorizedShares'])
         },
-        async created() {
-            await this.$store.dispatch(FETCH_SHARES, {offset: 0, limit: 20});
+        methods: {
+            ...mapActions([FETCH_SHARES, FETCH_SHARE_CATEGORIES]),
+            openLink(url) {
+                if (!RE_URL.test(url)) {
+                    url = "http://" + url;
+                }
+                window.open(url);
+            }
+        },
+        created() {
+            const promises = [this[FETCH_SHARE_CATEGORIES](), this[FETCH_SHARES]()];
+            Promise.all(promises).catch(() => this.$showToast('加载分享失败'));
         }
     }
 </script>
@@ -28,24 +38,10 @@
 <style lang="scss">
     @import "~@/assets/styles/theme";
 
-    .share-list {
+    .shares-list {
         text-align: center;
 
-        &__add-new {
-            padding: 8px 16px;
-            border-radius: 16px;
-            border: 1px solid $color-accent-dark;
-            background: $color-accent-dark;
-            margin-top: 16px;
-
-            &:hover {
-                cursor: pointer;
-                user-select: none;
-                border: 1px solid $text-color-secondary;
-            }
-        }
-
-        &__item {
+        &__specific-category-shares {
             > h3 {
                 margin: 16px 0 4px;
             }
@@ -66,6 +62,4 @@
             }
         }
     }
-
-
 </style>
