@@ -38,7 +38,7 @@
             border-radius: 16px;
             padding: 8px;
 
-            &:hover, &:hover * {
+            @include sm("&:active, &:active *", "&:hover, &:hover *") {
                 background: $color-accent-dark;
             }
 

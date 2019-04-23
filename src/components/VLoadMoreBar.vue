@@ -25,6 +25,8 @@
 </script>
 
 <style lang="scss">
+    @import "~@/assets/styles/mixins";
+
     .v-load-more-bar {
 
         text-align: center;
@@ -40,7 +42,7 @@
             color: #2196f3;
             font-weight: bold;
 
-            &:hover {
+            @include sm("&:active", "&:hover") {
                 cursor: pointer;
                 text-decoration: underline;
             }

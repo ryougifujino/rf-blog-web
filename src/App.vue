@@ -70,6 +70,7 @@
 <style lang="scss">
     @import "~@/assets/styles/base";
     @import "~@/assets/styles/theme";
+    @import "~@/assets/styles/mixins";
 
     .app--width-limited {
         margin: 0 auto;
@@ -98,7 +99,7 @@
                 margin-right: 8px;
                 border-radius: 50%;
 
-                &:hover {
+                @include sm("&:active", "&:hover") {
                     cursor: pointer;
                     background-color: $text-color-secondary-light2;
                 }
@@ -134,7 +135,7 @@
                 border: $color-accent 1px solid;
                 white-space: nowrap;
 
-                &:hover {
+                @include sm("&:active", "&:hover") {
                     cursor: pointer;
                     border: $text-color-secondary 1px solid;
                 }

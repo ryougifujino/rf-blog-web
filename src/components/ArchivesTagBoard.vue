@@ -38,6 +38,7 @@
 
 <style lang="scss">
     @import "~@/assets/styles/theme";
+    @import "~@/assets/styles/mixins";
 
     .archives-tag-board {
         padding: 12px;
@@ -66,7 +67,7 @@
         &__tag {
             margin: 8px 8px 0 0;
 
-            &:hover, &--checked {
+            @include sm("&:active, &--checked", "&:hover, &--checked") {
                 background: $color-accent-dark;
             }
 

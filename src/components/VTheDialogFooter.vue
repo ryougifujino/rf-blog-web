@@ -10,6 +10,7 @@
 <style lang="scss">
     @import "~@/assets/styles/theme";
     @import "~@/assets/styles/dimens";
+    @import "~@/assets/styles/mixins";
 
     .v-the-dialog-footer {
         height: $header-height;
@@ -26,7 +27,7 @@
                 font-size: 14px;
             }
 
-            > div:hover {
+            @include sm("> div:active", "> div:hover") {
                 background-color: $color-accent-dark;
                 color: $text-color-secondary;
             }

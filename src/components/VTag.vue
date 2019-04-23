@@ -6,6 +6,7 @@
 
 <style lang="scss">
     @import "~@/assets/styles/theme";
+    @import "~@/assets/styles/mixins";
 
     .v-tag {
         display: inline-block;
@@ -19,7 +20,7 @@
         overflow: hidden;
         user-select: none; //TODO: add prefix: -ms,-moz...
 
-        &:hover {
+        @include sm("&:active", "&:hover") {
             cursor: pointer;
             border: 1px solid $text-color-primary-light;
             color: $text-color-primary-light;

@@ -6,6 +6,7 @@
 
 <style lang="scss">
     @import "~@/assets/styles/theme";
+    @import "~@/assets/styles/mixins";
 
     .v-flat-button {
         display: inline-block;
@@ -17,7 +18,7 @@
         user-select: none;
     }
 
-    .v-flat-button:hover {
+    @include sm(".v-flat-button:active", ".v-flat-button:hover") {
         cursor: pointer;
         background-color: $text-color-secondary-light;
         color: $text-color-primary-light;
