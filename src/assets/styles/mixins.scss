@@ -1,6 +1,44 @@
 @import "theme";
 @import "dimens";
 
+@mixin sm($always, $conditional) {
+  #{$always} {
+    @content;
+  }
+  @media (min-width: #{$screen-sm-min}) {
+    #{$conditional} {
+      @content;
+    }
+  }
+}
+
+@mixin md($always, $conditional) {
+  #{$always} {
+    @content;
+  }
+  @media (min-width: #{$screen-md-min}) {
+    @content;
+  }
+}
+
+@mixin lg($always, $conditional) {
+  #{$always} {
+    @content;
+  }
+  @media (min-width: #{$screen-lg-min}) {
+    @content;
+  }
+}
+
+@mixin xl($always, $conditional) {
+  #{$always} {
+    @content;
+  }
+  @media (min-width: #{$screen-xl-min}) {
+    @content;
+  }
+}
+
 %center {
   position: absolute;
   top: 50%;
@@ -18,7 +56,7 @@
     background: $text-color-secondary-light2;
     border-radius: 8px;
 
-    &:hover {
+    @include sm("&:active", "&:hover") {
       background: $text-color-secondary-light
     }
   }
