@@ -37,6 +37,7 @@
 
 <style lang="scss">
     @import "~@/assets/styles/theme";
+    @import "~@/assets/styles/mixins";
 
     .shares-list {
         text-align: center;
@@ -55,7 +56,7 @@
                 overflow: hidden;
                 line-height: 20px;
 
-                &:hover {
+                @include sm("&:active", "&:hover") {
                     text-decoration: underline;
                     cursor: pointer;
                 }

@@ -201,7 +201,7 @@
             color: $text-color-primary-light;
         }
 
-        &__add-button:hover {
+        @include sm("&__add-button:active", "&__add-button:hover") {
             background-color: $color-accent-dark;
         }
 
@@ -253,7 +253,7 @@
                 color: $text-color-primary-light;
             }
 
-            > li:hover {
+            @include sm("> li:active", "> li:hover") {
                 background-color: $color-accent-dark;
             }
         }

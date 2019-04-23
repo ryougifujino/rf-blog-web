@@ -60,7 +60,7 @@
             margin: 8px 0 0;
             @extend %word-break;
 
-            &:hover, &--checked {
+            @include sm("&:active, &--checked", "&:hover, &--checked") {
                 text-decoration: underline;
             }
         }

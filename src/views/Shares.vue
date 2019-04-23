@@ -23,6 +23,7 @@
 
 <style lang="scss">
     @import "~@/assets/styles/theme";
+    @import "~@/assets/styles/mixins";
 
     .shares {
         padding: 0 16px 16px;
@@ -35,7 +36,7 @@
             margin-top: 16px;
             text-align: center;
 
-            &:hover {
+            @include sm("&:active", "&:hover") {
                 cursor: pointer;
                 user-select: none;
                 border: 1px solid $text-color-secondary;

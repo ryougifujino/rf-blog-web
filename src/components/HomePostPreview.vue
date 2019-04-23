@@ -30,16 +30,17 @@
 
 <style lang="scss">
     @import "~@/assets/styles/theme";
+    @import "~@/assets/styles/mixins";
 
     .home-post-preview {
         padding: 16px;
 
-        &:hover, &:hover * {
+        @include sm("&:active, &:active *", "&:hover, &:hover *") {
             cursor: pointer;
             background: $color-accent-dark;
         }
 
-        &:hover {
+        @include sm("&:active", "&:hover") {
             border-radius: 16px;
         }
 
