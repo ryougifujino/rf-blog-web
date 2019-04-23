@@ -28,7 +28,8 @@
                 </div>
                 <ul class="v-select__list">
                     <li @click="selectItem(null)">未选择</li>
-                    <li v-for="item of filteredItems" @click="selectItem(item.id)">{{item.name}}
+                    <li v-for="item of filteredItems" :key="item.id" @click="selectItem(item.id)">
+                        {{item.name}}
                     </li>
                 </ul>
             </div>

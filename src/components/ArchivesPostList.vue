@@ -1,7 +1,7 @@
 <template>
     <div>
         <ul>
-            <li class="archives-post-list__item" v-for="post of filteredPosts">
+            <li class="archives-post-list__item" v-for="post of filteredPosts" :key="post.id">
                 <h4>{{post.title}}</h4>
                 <div class="archives-post-list__corner-info">{{post.created_on | localDate}}</div>
             </li>

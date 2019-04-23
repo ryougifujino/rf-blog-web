@@ -1,9 +1,11 @@
 <template>
     <ul class="shares-list">
         <li class="shares-list__specific-category-shares"
-            v-for="specificCategoryShares of categorizedShares">
+            v-for="specificCategoryShares of categorizedShares"
+            :key="specificCategoryShares.category">
             <h3>{{specificCategoryShares.category}}</h3>
             <h4 v-for="share of specificCategoryShares.shares"
+                :key="share.id"
                 @click="openLink(share.url)">{{share.title}}
             </h4>
         </li>

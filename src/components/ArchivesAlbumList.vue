@@ -5,6 +5,7 @@
         <ul>
             <li :class="itemClass(album.id)"
                 v-for="album of albums"
+                :key="album.id"
                 @click="checkAlbum(album)">{{album.name}}
             </li>
         </ul>
