@@ -1,7 +1,7 @@
 <template>
     <div class="mask" v-if="visible">
         <div class="shares-publisher">
-            <VTheDialogHeader>发布分享</VTheDialogHeader>
+            <VDialogHeader>发布分享</VDialogHeader>
             <div class="shares-publisher__form">
                 <div class="shares-publisher__item">
                     <div class="shares-publisher__item-title">分类</div>
@@ -30,7 +30,7 @@
                     </VInput>
                 </div>
             </div>
-            <VTheDialogFooter @cancel="cancel" @confirm="confirm"></VTheDialogFooter>
+            <VDialogFooter @cancel="cancel" @confirm="confirm"></VDialogFooter>
             <VProgressBar class="shares-publisher__progress-bar"
                           v-if="isPublishing"></VProgressBar>
         </div>

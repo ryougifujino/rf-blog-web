@@ -1,7 +1,7 @@
 <template>
     <div class="mask" v-if="visible">
         <div class="post-edit-publisher">
-            <VTheDialogHeader>发布博文</VTheDialogHeader>
+            <VDialogHeader>发布博文</VDialogHeader>
             <div class="post-edit-publisher__form">
                 <div class="post-edit-publisher__item">
                     <VRadioGroup class="post-edit-publisher__privacy"
@@ -39,7 +39,7 @@
                     </VTag>
                 </div>
             </div>
-            <VTheDialogFooter @cancel="cancel" @confirm="confirm"></VTheDialogFooter>
+            <VDialogFooter @cancel="cancel" @confirm="confirm"></VDialogFooter>
             <VProgressBar class="post-edit-publisher__progress-bar"
                           v-if="isPublishing"></VProgressBar>
         </div>

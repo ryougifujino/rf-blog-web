@@ -1,7 +1,10 @@
 <template>
     <div>
         <ul>
-            <li class="archives-post-list__item" v-for="post of filteredPosts" :key="post.id">
+            <li class="archives-post-list__item"
+                v-for="post of filteredPosts"
+                :key="post.id"
+                @click="showPost(post.id)">
                 <h4>{{post.title}}</h4>
                 <div class="archives-post-list__corner-info">{{post.created_on | localDate}}</div>
             </li>
@@ -18,7 +21,10 @@
             ...mapGetters(['filteredPosts'])
         },
         methods: {
-            ...mapActions([FETCH_POST_TITLES])
+            ...mapActions([FETCH_POST_TITLES]),
+            showPost(postId) {
+                this.$router.push({path: `/post/${postId}`});
+            }
         },
         created() {
             this[FETCH_POST_TITLES]();

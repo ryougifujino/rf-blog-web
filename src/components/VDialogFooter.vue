@@ -1,6 +1,6 @@
 <template>
-    <div class="v-the-dialog-footer">
-        <div class="v-the-dialog-footer__buttons-container">
+    <div class="v-dialog-footer">
+        <div class="v-dialog-footer__buttons-container">
             <VButtonFlat @click.native="$emit('cancel')">取消</VButtonFlat>
             <VButtonFlat @click.native="$emit('confirm')">确认</VButtonFlat>
         </div>
@@ -12,8 +12,8 @@
     @import "~@/assets/styles/dimens";
     @import "~@/assets/styles/mixins";
 
-    .v-the-dialog-footer {
-        height: $header-height;
+    .v-dialog-footer {
+        height: $dialog-header-height;
         border-radius: 0 0 $border-radius $border-radius;
 
         &__buttons-container {
