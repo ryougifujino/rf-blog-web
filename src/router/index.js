@@ -8,6 +8,7 @@ import Archives from '@/views/Archives.vue';
 import Share from '@/views/Shares.vue';
 import About from '@/views/About.vue';
 import PostEdit from '@/views/PostEdit.vue';
+import Post from '@/views/Post.vue';
 
 export default new Router({
     routes: [
@@ -16,6 +17,7 @@ export default new Router({
         {path: '/share', component: Share},
         {path: '/about', component: About},
         {path: '/post-edit', component: PostEdit},
+        {path: '/post/:id', component: Post},
         {path: '/', redirect: '/home'}
     ]
 

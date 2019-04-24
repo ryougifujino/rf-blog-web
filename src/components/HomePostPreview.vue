@@ -1,5 +1,5 @@
 <template>
-    <section class="home-post-preview">
+    <section class="home-post-preview" @click="showPost(post.id)">
         <h2 class="home-post-preview__title">{{post.title}}</h2>
         <div class="home-post-preview__body" v-if="bodyPreview">
             <MarkdownPreviewer :markdown-input="bodyPreview"></MarkdownPreviewer>
@@ -23,6 +23,11 @@
         computed: {
             bodyPreview() {
                 return this.post.body.substring(0, BODY_MAX_LENGTH).trim();
+            }
+        },
+        methods: {
+            showPost(postId) {
+                this.$router.push({path: `/post/${postId}`});
             }
         }
     }
