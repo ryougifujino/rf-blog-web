@@ -33,8 +33,10 @@ const actions = {
         if (difference(tagSet, rootState.tags.map(tag => tag.name)).size) {
             rootState.isTagsDirty = true;
         }
-        delete post.body;
-        rootState.posts.unshift(post);
+        rootState.home.posts.unshift(post);
+        const postCopy = Object.create(post);
+        delete postCopy.body;
+        rootState.posts.unshift(postCopy);
         commit(POST_EDIT_RESET_STATE);
     }
 };
