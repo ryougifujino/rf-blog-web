@@ -1,5 +1,5 @@
 <template>
-    <div class="v-the-dialog-header">
+    <div class="v-dialog-header">
         <slot></slot>
     </div>
 </template>
@@ -8,7 +8,7 @@
     @import "~@/assets/styles/theme";
     @import "~@/assets/styles/dimens";
 
-    .v-the-dialog-header {
+    .v-dialog-header {
         font-size: 16px;
         color: $text-color-primary;
         height: $dialog-header-height;
