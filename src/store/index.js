@@ -9,6 +9,7 @@ import home from '@/store/modules/home';
 import archives from '@/store/modules/archives';
 import shares from '@/store/modules/shares';
 import postEdit from '@/store/modules/post-edit';
+import post from '@/store/modules/post';
 
 const state = {
     albums: [],
@@ -25,6 +26,7 @@ export default new Vuex.Store({
         home,
         archives,
         shares,
-        postEdit
+        postEdit,
+        post
     }
 });

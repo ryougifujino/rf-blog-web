@@ -5,6 +5,10 @@ const _ = axios.create({
     baseURL: API_BASE_URL
 });
 
+export function fetchPost(postId) {
+    return _.get(`/posts/${postId}`);
+}
+
 export function fetchPostPreviews(offset, limit) {
     return _.get(`/posts?offset=${offset}&limit=${limit}`);
 }
