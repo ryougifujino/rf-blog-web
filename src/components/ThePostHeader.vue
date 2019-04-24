@@ -13,6 +13,9 @@
 </template>
 
 <script>
+    import {mapActions} from "vuex";
+    import {DELETE_POST} from "@/store/action-types";
+
     export default {
         data() {
             return {
@@ -21,10 +24,13 @@
             };
         },
         methods: {
+            ...mapActions([DELETE_POST]),
             showDeleteConfirm() {
                 this.isShowDeleteConfirm = true;
             },
             deleteThePost() {
+                this[DELETE_POST](this.postId);
+                this.$router.back();
             },
             editPost() {
             }

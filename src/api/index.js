@@ -62,3 +62,7 @@ export function createShare(title, url, shareCategoryId) {
 export function createShareCategory(name) {
     return _.post('/share-categories', {share_category: {name}});
 }
+
+export function deletePost(postId) {
+    return _.delete(`/posts/${postId}`);
+}

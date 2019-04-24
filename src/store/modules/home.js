@@ -2,7 +2,8 @@ import {
     FETCH_POST_PREVIEWS
 } from '@/store/action-types';
 import {
-    ADD_POST_PREVIEWS
+    ADD_POST_PREVIEWS,
+    REMOVE_POST
 } from '@/store/mutation-types';
 import {
     fetchPostPreviews
@@ -42,6 +43,11 @@ const mutations = {
         state.posts.push(...posts.filter(post => !state.postIdSet.has(post.id)));
         posts.forEach(({id}) => state.postIdSet.add(id));
     },
+    [REMOVE_POST]({posts}, postId) {
+        postId = parseInt(postId);
+        const index = posts.findIndex(post => post.id === postId);
+        index !== -1 && posts.splice(index, 1);
+    }
 };
 
 export default {

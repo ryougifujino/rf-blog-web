@@ -1,12 +1,15 @@
 import {
-    FETCH_POST
+    FETCH_POST,
+    DELETE_POST
 } from '@/store/action-types';
 import {
     POST_SET,
-    POST_RESET_STATE
+    POST_RESET_STATE,
+    REMOVE_POST
 } from '@/store/mutation-types';
 import {
-    fetchPost
+    fetchPost,
+    deletePost
 } from "@/api";
 
 const initialState = {
@@ -24,9 +27,17 @@ const state = {...initialState};
 const actions = {
     async [FETCH_POST]({state, commit}, {postId}) {
         commit(POST_RESET_STATE);
-        const {data: post} = await fetchPost(postId);
-        commit(POST_SET, {post});
-        state.isLoading = false;
+        try {
+            const {data: post} = await fetchPost(postId);
+            commit(POST_SET, {post});
+        } finally {
+            state.isLoading = false;
+        }
+
+    },
+    async [DELETE_POST]({commit}, postId) {
+        await deletePost(postId);
+        commit(REMOVE_POST, postId);
     }
 };
 

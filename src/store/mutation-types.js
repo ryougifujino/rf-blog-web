@@ -5,6 +5,7 @@ export const ADD_TAGS = "ADD_TAGS";
 export const ADD_SHARE = "ADD_SHARE";
 export const ADD_SHARES = "ADD_SHARES";
 export const ADD_SHARE_CATEGORIES = "ADD_SHARE_CATEGORIES";
+export const REMOVE_POST = "REMOVE_POST";
 export const POST_EDIT_SET_TITLE = "POST_EDIT_SET_TITLE";
 export const POST_EDIT_SET_BODY = "POST_EDIT_SET_BODY";
 export const POST_EDIT_SET_IS_PRIVATE = "POST_EDIT_SET_IS_PRIVATE";

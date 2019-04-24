@@ -9,3 +9,4 @@ export const CREATE_ALBUM = "CREATE_ALBUM";
 export const CREATE_POST = "CREATE_POST";
 export const CREATE_SHARE = "CREATE_SHARE";
 export const CREATE_SHARE_CATEGORY = "CREATE_SHARE_CATEGORY";
+export const DELETE_POST = "DELETE_POST";
