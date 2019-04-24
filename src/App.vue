@@ -93,16 +93,7 @@
             align-items: center;
 
             > img {
-                width: 24px;
-                height: 24px;
-                padding: 8px;
-                margin-right: 8px;
-                border-radius: 50%;
-
-                @include sm("&:active", "&:hover") {
-                    cursor: pointer;
-                    background-color: $text-color-secondary-light2;
-                }
+                @extend %icon;
 
                 &:nth-of-type(3) {
                     width: 40px;

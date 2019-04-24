@@ -13,7 +13,7 @@
     @import "~@/assets/styles/mixins";
 
     .v-the-dialog-footer {
-        height: $header-height;
+        height: $dialog-header-height;
         border-radius: 0 0 $border-radius $border-radius;
 
         &__buttons-container {

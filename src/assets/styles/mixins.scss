@@ -80,3 +80,16 @@
   position: relative;
   box-sizing: border-box;
 }
+
+%icon {
+  width: 24px;
+  height: 24px;
+  padding: 8px;
+  margin-right: 8px;
+  border-radius: 50%;
+
+  @include sm("&:active", "&:hover") {
+    cursor: pointer;
+    background-color: $text-color-secondary-light2;
+  }
+}
