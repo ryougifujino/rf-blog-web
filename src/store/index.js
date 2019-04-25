@@ -14,6 +14,8 @@ import post from '@/store/modules/post';
 const state = {
     albums: [],
     posts: [],
+    isPostsDirty: true,
+    isPostsLoading: false,
     tags: [],
     isTagsDirty: true
 };

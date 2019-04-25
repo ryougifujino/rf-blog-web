@@ -22,17 +22,18 @@
             HomePostPreview
         },
         computed: {
-            ...mapModuleState('home', ['posts', 'isLoading', 'isShowLoadMoreBar', 'pageNumber'])
+            ...mapModuleState('home', ['posts', 'isLoading', 'isShowLoadMoreBar', 'pageNumber',
+                'isPostsDirty'])
         },
         methods: {
             ...mapActions([FETCH_POST_PREVIEWS]),
-            loadMore() {
-                this[FETCH_POST_PREVIEWS]().catch(() => this.$showToast('加载失败'));
+            loadMore(forced) {
+                this[FETCH_POST_PREVIEWS](forced).catch(() => this.$showToast('加载失败'));
             }
         },
         created() {
-            if (this.pageNumber === 1) {
-                this.loadMore();
+            if (this.pageNumber === 1 || this.isPostsDirty) {
+                this.loadMore(true);
             }
         }
     }

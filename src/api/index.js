@@ -66,3 +66,15 @@ export function createShareCategory(name) {
 export function deletePost(postId) {
     return _.delete(`/posts/${postId}`);
 }
+
+export function updatePost(postId, title, body, isPrivate, albumId, tagNames) {
+    return _.patch(`/posts/${postId}`, {
+        post: {
+            title,
+            body,
+            is_private: isPrivate,
+            album_id: albumId,
+            tag_names: tagNames
+        }
+    });
+}

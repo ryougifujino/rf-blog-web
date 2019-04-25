@@ -35,9 +35,11 @@ const actions = {
         }
 
     },
-    async [DELETE_POST]({commit}, postId) {
+    async [DELETE_POST]({commit, rootState}, postId) {
         await deletePost(postId);
         commit(REMOVE_POST, postId);
+        rootState.home.isPostsDirty = true;
+        rootState.isPostsDirty = true;
     }
 };
 

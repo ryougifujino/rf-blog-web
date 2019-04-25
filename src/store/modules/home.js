@@ -2,7 +2,7 @@ import {
     FETCH_POST_PREVIEWS
 } from '@/store/action-types';
 import {
-    ADD_POST_PREVIEWS,
+    ADD_POST_PREVIEWS, HOME_RESET_STATE,
     REMOVE_POST
 } from '@/store/mutation-types';
 import {
@@ -11,30 +11,45 @@ import {
 
 const LIMIT = 5;
 
-const state = {
+const initialState = {
     posts: [],
+    isPostsDirty: true,
     postIdSet: new Set(),
     pageNumber: 1,
     reachedEnd: false,
     isLoading: false,
     isShowLoadMoreBar: true
+
 };
 
+const state = {...initialState};
+
 const actions = {
-    async [FETCH_POST_PREVIEWS]({state, commit}) {
-        if (state.isLoading || state.reachedEnd) {
+    async [FETCH_POST_PREVIEWS]({state, commit}, forced) {
+        if (state.isLoading) {
             return;
         }
+        if (state.reachedEnd && !forced) {
+            return;
+        }
+        if (state.isPostsDirty) {
+            commit(HOME_RESET_STATE);
+        }
+
         state.isLoading = true;
         const offset = (state.pageNumber - 1) * LIMIT;
-        const {data: {items: posts}} = await fetchPostPreviews(offset, LIMIT);
-        state.pageNumber++;
-        if (posts.length < LIMIT) {
-            state.isShowLoadMoreBar = false;
-            state.reachedEnd = true;
+        try {
+            const {data: {items: posts}} = await fetchPostPreviews(offset, LIMIT);
+            state.pageNumber++;
+            if (posts.length < LIMIT) {
+                state.isShowLoadMoreBar = false;
+                state.reachedEnd = true;
+            }
+            commit(ADD_POST_PREVIEWS, {posts});
+            state.isPostsDirty = false;
+        } finally {
+            state.isLoading = false;
         }
-        commit(ADD_POST_PREVIEWS, {posts});
-        state.isLoading = false;
     }
 };
 
@@ -47,6 +62,17 @@ const mutations = {
         postId = parseInt(postId);
         const index = posts.findIndex(post => post.id === postId);
         index !== -1 && posts.splice(index, 1);
+    },
+    [HOME_RESET_STATE](state) {
+        Object.keys(initialState).forEach(key => {
+            let value = initialState[key];
+            if (Array.isArray(value)) {
+                value = [];
+            } else if (value instanceof Set) {
+                value = new Set();
+            }
+            state[key] = value;
+        });
     }
 };
 

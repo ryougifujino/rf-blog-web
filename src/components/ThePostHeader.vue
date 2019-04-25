@@ -33,6 +33,7 @@
                 this.$router.back();
             },
             editPost() {
+                this.$router.push({path: `/post-edit/${this.postId}`});
             }
         }
     }
