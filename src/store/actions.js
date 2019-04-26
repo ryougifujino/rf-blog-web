@@ -13,7 +13,8 @@ import {
 import {
     ADD_ALBUMS,
     ADD_POST_TITLES,
-    ADD_TAGS
+    ADD_TAGS,
+    EMPTY_POST_TITLES
 } from "@/store/mutation-types";
 
 export default {
@@ -29,11 +30,18 @@ export default {
         state.albums.unshift(newAlbum);
     },
     async [FETCH_POST_TITLES]({state, commit}) {
-        if (state.posts.length !== 0) {
+        if (!state.isPostsDirty || state.isPostsLoading) {
             return;
         }
-        const {data: {items: posts}} = await fetchPostTitles();
-        commit(ADD_POST_TITLES, {posts});
+        commit(EMPTY_POST_TITLES);
+        state.isPostsLoading = true;
+        try {
+            const {data: {items: posts}} = await fetchPostTitles();
+            commit(ADD_POST_TITLES, {posts});
+            state.isPostsDirty = false;
+        } finally {
+            state.isPostsLoading = false;
+        }
     },
     async [FETCH_TAGS]({state, commit}) {
         if (!state.isTagsDirty) {

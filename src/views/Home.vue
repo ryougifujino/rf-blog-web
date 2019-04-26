@@ -1,9 +1,9 @@
 <template>
     <div class="home" v-scroll-bottom:home="loadMore">
-        <template v-for="post of posts">
+        <div v-for="post of posts" :key="post.id">
             <HomePostPreview :post="post"/>
             <hr>
-        </template>
+        </div>
         <VLoadMoreBar :is-loading="isLoading"
                       v-if="isShowLoadMoreBar"
                       @click="loadMore">
@@ -21,22 +21,20 @@
         components: {
             HomePostPreview
         },
-        data: () => ({
-            pageNumber: 1,
-        }),
         computed: {
-            ...mapModuleState('home', ['posts', 'isLoading', 'isShowLoadMoreBar'])
+            ...mapModuleState('home', ['posts', 'isLoading', 'isShowLoadMoreBar', 'pageNumber',
+                'isPostsDirty'])
         },
         methods: {
             ...mapActions([FETCH_POST_PREVIEWS]),
-            loadMore() {
-                this[FETCH_POST_PREVIEWS](this.pageNumber)
-                    .then(() => this.pageNumber++)
-                    .catch(() => this.$showToast('加载失败'));
+            loadMore(forced) {
+                this[FETCH_POST_PREVIEWS](forced).catch(() => this.$showToast('加载失败'));
             }
         },
         created() {
-            this.loadMore();
+            if (this.pageNumber === 1 || this.isPostsDirty) {
+                this.loadMore(true);
+            }
         }
     }
 </script>

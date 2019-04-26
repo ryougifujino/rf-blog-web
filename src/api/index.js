@@ -5,6 +5,10 @@ const _ = axios.create({
     baseURL: API_BASE_URL
 });
 
+export function fetchPost(postId) {
+    return _.get(`/posts/${postId}`);
+}
+
 export function fetchPostPreviews(offset, limit) {
     return _.get(`/posts?offset=${offset}&limit=${limit}`);
 }
@@ -57,4 +61,20 @@ export function createShare(title, url, shareCategoryId) {
 
 export function createShareCategory(name) {
     return _.post('/share-categories', {share_category: {name}});
+}
+
+export function deletePost(postId) {
+    return _.delete(`/posts/${postId}`);
+}
+
+export function updatePost(postId, title, body, isPrivate, albumId, tagNames) {
+    return _.patch(`/posts/${postId}`, {
+        post: {
+            title,
+            body,
+            is_private: isPrivate,
+            album_id: albumId,
+            tag_names: tagNames
+        }
+    });
 }

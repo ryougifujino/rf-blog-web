@@ -11,6 +11,13 @@
     let editor;
     export default {
         props: ['value'],
+        watch: {
+            value(newValue) {
+                if (newValue !== editor.getValue()) {
+                    editor.session.setValue(newValue);
+                }
+            }
+        },
         mounted() {
             editor = ace.edit(this.$el, {
                 showLineNumbers: false,
@@ -40,7 +47,6 @@
                 }
             });
 
-            editor.session.setValue(this.value);
             editor.session.on('change', () => this.$emit('input', editor.getValue()));
         }
     }

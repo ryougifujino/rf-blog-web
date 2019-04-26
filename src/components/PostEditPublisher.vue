@@ -47,7 +47,7 @@
 </template>
 
 <script>
-    import {CREATE_POST, FETCH_ALBUMS, CREATE_ALBUM} from '@/store/action-types';
+    import {PUBLISH_POST, FETCH_ALBUMS, CREATE_ALBUM} from '@/store/action-types';
     import {mapActions, mapMutations, mapState} from 'vuex';
     import {mapModuleState} from '@/util/mapStateUtils';
     import {
@@ -93,7 +93,7 @@
             }
         },
         methods: {
-            ...mapActions([CREATE_POST, FETCH_ALBUMS, CREATE_ALBUM]),
+            ...mapActions([PUBLISH_POST, FETCH_ALBUMS, CREATE_ALBUM]),
             ...mapMutations([POST_EDIT_SET_IS_PRIVATE, POST_EDIT_SET_ALBUM_ID, POST_EDIT_ADD_TAG,
                 POST_EDIT_REMOVE_TAG]),
             cancel() {
@@ -101,7 +101,7 @@
             },
             confirm() {
                 this.isPublishing = true;
-                this[CREATE_POST]()
+                this[PUBLISH_POST](this.$route.params.id)
                     .then(() => {
                         this.$showToast("发布成功");
                         this.$router.replace('/home');

@@ -17,6 +17,7 @@ export default new Router({
         {path: '/share', component: Share},
         {path: '/about', component: About},
         {path: '/post-edit', component: PostEdit},
+        {path: '/post-edit/:id', component: PostEdit},
         {path: '/post/:id', component: Post},
         {path: '/', redirect: '/home'}
     ]

@@ -19,6 +19,11 @@
                            :scroll-ratio="previewerScrollRatio">
         </MarkdownPreviewer>
         <PostEditPublisher :visible.sync="isShowPublisher"></PostEditPublisher>
+        <VProgressBar class="post-edit__progress-bar"
+                      v-if="isPostLoading"
+                      transparent
+                      colored>
+        </VProgressBar>
     </div>
 </template>
 
@@ -27,10 +32,17 @@
     import MarkdownPreviewer from '@/components/MarkdownPreviewer.vue';
     import PostEditPublisher from '@/components/PostEditPublisher.vue';
     import {mapModuleState} from '@/util/mapStateUtils';
-    import {mapMutations} from 'vuex';
+    import {mapActions, mapMutations} from 'vuex';
     import {POST_EDIT_SET_TITLE, POST_EDIT_SET_BODY} from '@/store/mutation-types';
+    import {POST_EDIT_INITIALIZE} from "@/store/action-types";
 
     export default {
+        props: {
+            post: {
+                type: Object,
+                required: false
+            }
+        },
         components: {
             MarkdownEditor,
             MarkdownPreviewer,
@@ -41,7 +53,7 @@
             isShowPublisher: false
         }),
         computed: {
-            ...mapModuleState('postEdit', ['title', 'body']),
+            ...mapModuleState('postEdit', ['title', 'body', 'isPostLoading']),
             _title: {
                 get() {
                     return this.title;
@@ -60,6 +72,7 @@
             }
         },
         methods: {
+            ...mapActions([POST_EDIT_INITIALIZE]),
             ...mapMutations([POST_EDIT_SET_TITLE, POST_EDIT_SET_BODY]),
             computeRatio: (t) => {
                 return t.scrollTop / (t.scrollHeight - t.offsetHeight);
@@ -74,6 +87,10 @@
                 }
                 this.isShowPublisher = true;
             }
+        },
+        created() {
+            this[POST_EDIT_INITIALIZE](this.$route.params.id)
+                .catch(() => this.$showToast("获取博文信息失败"));
         }
     }
 </script>
@@ -133,5 +150,8 @@
             padding: 0 16px 16px 16px;
         }
 
+        &__progress-bar {
+            position: fixed;
+        }
     }
 </style>
