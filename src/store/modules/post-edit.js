@@ -51,10 +51,10 @@ const actions = {
         }
     },
     async [POST_EDIT_INITIALIZE]({state, commit}, postId) {
+        commit(POST_EDIT_RESET_STATE);
         if (!postId) {
             return;
         }
-        commit(POST_EDIT_RESET_STATE);
         state.isPostLoading = true;
         try {
             const {data: post} = await fetchPost(postId);
