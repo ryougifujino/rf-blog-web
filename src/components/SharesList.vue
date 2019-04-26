@@ -4,10 +4,19 @@
             v-for="specificCategoryShares of categorizedShares"
             :key="specificCategoryShares.category">
             <h3>{{specificCategoryShares.category}}</h3>
-            <h4 v-for="share of specificCategoryShares.shares"
-                :key="share.id"
-                @click="openLink(share.url)">{{share.title}}
-            </h4>
+            <div class="shares-list__link-container"
+                 v-for="share of specificCategoryShares.shares"
+                 :key="share.id">
+                <h4 class="shares-list__link" @click="openLink(share.url)">{{share.title}}</h4>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"></path>
+                    <path d="M0 0h24v24H0z" fill="none"></path>
+                </svg>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"></path>
+                    <path d="M0 0h24v24H0z" fill="none"></path>
+                </svg>
+            </div>
         </li>
     </ul>
 </template>
@@ -42,27 +51,48 @@
     @import "~@/assets/styles/mixins";
 
     .shares-list {
-        text-align: center;
 
         &__specific-category-shares {
             > h3 {
                 margin: 16px 0 4px;
             }
+        }
 
-            > h4 {
-                color: $text-color-primary-light;
-                margin-bottom: 4px;
-                font-weight: normal;
-                white-space: nowrap;
-                text-overflow: ellipsis;
-                overflow: hidden;
-                line-height: 20px;
+        &__link-container {
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+
+            > svg {
+                padding: 4px;
+                border-radius: 50%;
+                width: 24px;
+                height: 24px;
+                fill: $text-color-secondary;
 
                 @include sm("&:active", "&:hover") {
-                    text-decoration: underline;
                     cursor: pointer;
+                    fill: $text-color-primary-light;
+                    background: $text-color-secondary-light2;
                 }
             }
         }
+
+        &__link {
+            color: $text-color-primary-light;
+            font-weight: normal;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            line-height: 20px;
+            margin-right: 4px;
+            flex: 1;
+
+            @include sm("&:active", "&:hover") {
+                text-decoration: underline;
+                cursor: pointer;
+            }
+        }
+
     }
 </style>
