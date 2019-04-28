@@ -12,7 +12,7 @@
                     <VIcon name="baseline-delete-24px"
                            @click.native="showDeleteConfirm(share.id)">
                     </VIcon>
-                    <VIcon name="baseline-edit-24px"></VIcon>
+                    <VIcon name="baseline-edit-24px" @click.native="showShareEdit(share)"></VIcon>
                 </div>
             </li>
         </ul>
@@ -25,7 +25,14 @@
 
 <script>
     import {FETCH_SHARES, FETCH_SHARE_CATEGORIES, DELETE_SHARE} from '@/store/action-types';
-    import {mapActions, mapGetters} from "vuex";
+    import {mapActions, mapGetters, mapMutations} from "vuex";
+    import {
+        SHARES_SET_PUBLISHER_VISIBLE,
+        SHARES_SET_PUBLISHING_SHARE_ID,
+        SHARES_SET_SHARE_CATEGORY_ID,
+        SHARES_SET_TITLE,
+        SHARES_SET_URL
+    } from "@/store/mutation-types";
 
     const RE_URL = /^https?:\/\//;
     export default {
@@ -38,6 +45,8 @@
         },
         methods: {
             ...mapActions([FETCH_SHARES, FETCH_SHARE_CATEGORIES, DELETE_SHARE]),
+            ...mapMutations([SHARES_SET_PUBLISHER_VISIBLE, SHARES_SET_SHARE_CATEGORY_ID,
+                SHARES_SET_TITLE, SHARES_SET_URL, SHARES_SET_PUBLISHING_SHARE_ID]),
             openLink(url) {
                 if (!RE_URL.test(url)) {
                     url = "http://" + url;
@@ -57,6 +66,13 @@
                 this[DELETE_SHARE](this.deletingShareId)
                     .then(() => this.$showToast('删除成功'))
                     .catch(() => this.$showToast('删除失败'));
+            },
+            showShareEdit({id, share_category_id, title, url}) {
+                this[SHARES_SET_PUBLISHING_SHARE_ID](id);
+                this[SHARES_SET_SHARE_CATEGORY_ID](share_category_id);
+                this[SHARES_SET_TITLE](title);
+                this[SHARES_SET_URL](url);
+                this[SHARES_SET_PUBLISHER_VISIBLE](true);
             }
         },
         created() {

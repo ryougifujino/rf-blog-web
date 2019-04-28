@@ -1,5 +1,5 @@
 <template>
-    <div class="mask" v-if="visible">
+    <div class="mask" v-if="isPublisherVisible">
         <div class="shares-publisher">
             <VDialogHeader>发布分享</VDialogHeader>
             <div class="shares-publisher__form">
@@ -31,8 +31,7 @@
                 </div>
             </div>
             <VDialogFooter @cancel="cancel" @confirm="confirm"></VDialogFooter>
-            <VProgressBar class="shares-publisher__progress-bar"
-                          v-if="isPublishing"></VProgressBar>
+            <VProgressBar class="shares-publisher__progress-bar" v-if="isPublishing"></VProgressBar>
         </div>
     </div>
 </template>
@@ -41,24 +40,20 @@
     import {mapModuleState} from "@/util/mapStateUtils";
     import {mapActions, mapMutations} from "vuex";
     import {
+        SHARES_SET_PUBLISHER_VISIBLE,
         SHARES_SET_SHARE_CATEGORY_ID,
         SHARES_SET_TITLE,
         SHARES_SET_URL
     } from "@/store/mutation-types";
-    import {CREATE_SHARE, CREATE_SHARE_CATEGORY} from "@/store/action-types";
+    import {PUBLISH_SHARE, CREATE_SHARE_CATEGORY} from "@/store/action-types";
 
     export default {
-        props: {
-            visible: {
-                type: Boolean,
-                default: false
-            }
-        },
         data: () => ({
             isPublishing: false
         }),
         computed: {
-            ...mapModuleState('shares', ['shareCategories', 'shareCategoryId', 'title', 'url']),
+            ...mapModuleState('shares', ['shareCategories', 'shareCategoryId', 'title', 'url',
+                'isPublisherVisible']),
             _shareCategoryId: {
                 get() {
                     return this.shareCategoryId;
@@ -85,10 +80,11 @@
             }
         },
         methods: {
-            ...mapActions([CREATE_SHARE, CREATE_SHARE_CATEGORY]),
-            ...mapMutations([SHARES_SET_SHARE_CATEGORY_ID, SHARES_SET_TITLE, SHARES_SET_URL]),
+            ...mapActions([PUBLISH_SHARE, CREATE_SHARE_CATEGORY]),
+            ...mapMutations([SHARES_SET_SHARE_CATEGORY_ID, SHARES_SET_TITLE, SHARES_SET_URL,
+                SHARES_SET_PUBLISHER_VISIBLE]),
             cancel() {
-                this.$emit('update:visible', false);
+                this[SHARES_SET_PUBLISHER_VISIBLE](false);
             },
             confirm() {
                 if (!this.title.trim()) {
@@ -100,10 +96,10 @@
                     return;
                 }
                 this.isPublishing = true;
-                this[CREATE_SHARE]()
+                this[PUBLISH_SHARE]()
                     .then(() => {
                         this.$showToast("发布成功");
-                        this.$emit('update:visible', false);
+                        this[SHARES_SET_PUBLISHER_VISIBLE](false);
                     })
                     .catch(() => this.$showToast("发布失败"))
                     .finally(() => this.isPublishing = false);

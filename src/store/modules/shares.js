@@ -2,7 +2,7 @@ import Vue from "vue";
 import {
     FETCH_SHARES,
     FETCH_SHARE_CATEGORIES,
-    CREATE_SHARE,
+    PUBLISH_SHARE,
     CREATE_SHARE_CATEGORY,
     DELETE_SHARE
 } from "@/store/action-types";
@@ -13,18 +13,21 @@ import {
     SHARES_SET_SHARE_CATEGORY_ID,
     SHARES_SET_TITLE,
     SHARES_SET_URL,
-    SHARES_RESET_STATE,
-    REMOVE_SHARE
+    SHARES_SET_PUBLISHER_VISIBLE,
+    SHARES_SET_PUBLISHING_SHARE_ID,
+    SHARES_RESET_PUBLISHER_STATE,
+    REMOVE_SHARE, SHARES_UPDATE_SHARE
 } from "@/store/mutation-types";
 import {
     fetchShares,
     fetchShareCategories,
     createShare,
     createShareCategory,
-    deleteShare
+    deleteShare,
+    updateShare
 } from "@/api";
 
-const initialState = {
+const initialPublisherState = {
     shareCategoryId: null,
     title: '',
     url: '',
@@ -33,7 +36,9 @@ const initialState = {
 const state = {
     shares: [],
     shareCategories: [],
-    ...initialState
+    isPublisherVisible: false,
+    publishingShareId: '',
+    ...initialPublisherState
 };
 
 const actions = {
@@ -51,10 +56,15 @@ const actions = {
         const {data: {items: shareCategories}} = await fetchShareCategories();
         commit(ADD_SHARE_CATEGORIES, {shareCategories});
     },
-    async [CREATE_SHARE]({commit, state: {shareCategoryId, title, url}}) {
-        const {data: share} = await createShare(title, url, shareCategoryId);
-        commit(ADD_SHARE, {share});
-        commit(SHARES_RESET_STATE);
+    async [PUBLISH_SHARE]({commit, state: {shareCategoryId, title, url, publishingShareId}}) {
+        if (!publishingShareId) {
+            const {data: share} = await createShare(title, url, shareCategoryId);
+            commit(ADD_SHARE, {share});
+        } else {
+            await updateShare(publishingShareId, title, url, shareCategoryId);
+            commit(SHARES_UPDATE_SHARE, {shareId: publishingShareId, shareCategoryId, url, title});
+        }
+        commit(SHARES_RESET_PUBLISHER_STATE);
     },
     async [CREATE_SHARE_CATEGORY]({state, commit}, {newShareCategoryName}) {
         const {data: shareCategory} = await createShareCategory(newShareCategoryName);
@@ -85,9 +95,24 @@ const mutations = {
     [SHARES_SET_URL](state, url) {
         state.url = url;
     },
-    [SHARES_RESET_STATE](state) {
-        Object.keys(initialState).forEach(key => {
-            Vue.set(state, key, initialState[key]);
+    [SHARES_SET_PUBLISHER_VISIBLE](state, visible) {
+        state.isPublisherVisible = visible;
+    },
+    [SHARES_SET_PUBLISHING_SHARE_ID](state, publishingShareId) {
+        state.publishingShareId = publishingShareId ? publishingShareId : '';
+    },
+    [SHARES_UPDATE_SHARE]({shares}, {shareId, shareCategoryId, title, url}) {
+        shareId = parseInt(shareId);
+        const share = shares.find(share => share.id === shareId);
+        if (share) {
+            share.share_category_id = shareCategoryId;
+            share.title = title;
+            share.url = url;
+        }
+    },
+    [SHARES_RESET_PUBLISHER_STATE](state) {
+        Object.keys(initialPublisherState).forEach(key => {
+            Vue.set(state, key, initialPublisherState[key]);
         });
     },
     [REMOVE_SHARE]({shares}, shareId) {

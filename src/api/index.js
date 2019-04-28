@@ -82,3 +82,13 @@ export function updatePost(postId, title, body, isPrivate, albumId, tagNames) {
         }
     });
 }
+
+export function updateShare(shareId, title, url, shareCategoryId) {
+    return _.patch(`/shares/${shareId}`, {
+        share: {
+            title,
+            url,
+            share_category_id: shareCategoryId
+        }
+    });
+}
