@@ -1,36 +1,62 @@
 <template>
-    <ul class="shares-list">
-        <li class="shares-list__specific-category-shares"
-            v-for="specificCategoryShares of categorizedShares"
-            :key="specificCategoryShares.category">
-            <h3>{{specificCategoryShares.category}}</h3>
-            <div class="shares-list__link-container"
-                 v-for="share of specificCategoryShares.shares"
-                 :key="share.id">
-                <h4 class="shares-list__link" @click="openLink(share.url)">{{share.title}}</h4>
-                <VIcon name="baseline-delete-24px"></VIcon>
-                <VIcon name="baseline-edit-24px"></VIcon>
-            </div>
-        </li>
-    </ul>
+    <div>
+        <ul class="shares-list">
+            <li class="shares-list__specific-category-shares"
+                v-for="specificCategoryShares of categorizedShares"
+                :key="specificCategoryShares.category">
+                <h3>{{specificCategoryShares.category}}</h3>
+                <div class="shares-list__link-container"
+                     v-for="share of specificCategoryShares.shares"
+                     :key="share.id">
+                    <h4 class="shares-list__link" @click="openLink(share.url)">{{share.title}}</h4>
+                    <VIcon name="baseline-delete-24px"
+                           @click.native="showDeleteConfirm(share.id)">
+                    </VIcon>
+                    <VIcon name="baseline-edit-24px"></VIcon>
+                </div>
+            </li>
+        </ul>
+        <VDialogSimple :visible.sync="isShowDeleteConfirm" @confirm="deleteTheShare">
+            <template v-slot:header>删除确认</template>
+            <template v-slot:body>确定要删除本分享吗？</template>
+        </VDialogSimple>
+    </div>
 </template>
 
 <script>
-    import {FETCH_SHARES, FETCH_SHARE_CATEGORIES} from '@/store/action-types';
+    import {FETCH_SHARES, FETCH_SHARE_CATEGORIES, DELETE_SHARE} from '@/store/action-types';
     import {mapActions, mapGetters} from "vuex";
 
     const RE_URL = /^https?:\/\//;
     export default {
+        data: () => ({
+            isShowDeleteConfirm: false,
+            deletingShareId: ''
+        }),
         computed: {
             ...mapGetters(['categorizedShares'])
         },
         methods: {
-            ...mapActions([FETCH_SHARES, FETCH_SHARE_CATEGORIES]),
+            ...mapActions([FETCH_SHARES, FETCH_SHARE_CATEGORIES, DELETE_SHARE]),
             openLink(url) {
                 if (!RE_URL.test(url)) {
                     url = "http://" + url;
                 }
                 window.open(url);
+            },
+            showDeleteConfirm(shareId) {
+                this.deletingShareId = shareId;
+                this.isShowDeleteConfirm = true;
+            },
+            deleteTheShare() {
+                if (!this.deletingShareId) {
+                    console.error('Unexpected share id:', this.deletingShareId);
+                    return;
+                }
+                this.isShowDeleteConfirm = false;
+                this[DELETE_SHARE](this.deletingShareId)
+                    .then(() => this.$showToast('删除成功'))
+                    .catch(() => this.$showToast('删除失败'));
             }
         },
         created() {

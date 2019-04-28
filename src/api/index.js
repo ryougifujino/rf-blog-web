@@ -67,6 +67,10 @@ export function deletePost(postId) {
     return _.delete(`/posts/${postId}`);
 }
 
+export function deleteShare(shareId) {
+    return _.delete(`/shares/${shareId}`);
+}
+
 export function updatePost(postId, title, body, isPrivate, albumId, tagNames) {
     return _.patch(`/posts/${postId}`, {
         post: {

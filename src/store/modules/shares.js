@@ -3,7 +3,8 @@ import {
     FETCH_SHARES,
     FETCH_SHARE_CATEGORIES,
     CREATE_SHARE,
-    CREATE_SHARE_CATEGORY
+    CREATE_SHARE_CATEGORY,
+    DELETE_SHARE
 } from "@/store/action-types";
 import {
     ADD_SHARE,
@@ -12,13 +13,15 @@ import {
     SHARES_SET_SHARE_CATEGORY_ID,
     SHARES_SET_TITLE,
     SHARES_SET_URL,
-    SHARES_RESET_STATE
+    SHARES_RESET_STATE,
+    REMOVE_SHARE
 } from "@/store/mutation-types";
 import {
     fetchShares,
     fetchShareCategories,
     createShare,
-    createShareCategory
+    createShareCategory,
+    deleteShare
 } from "@/api";
 
 const initialState = {
@@ -56,6 +59,10 @@ const actions = {
     async [CREATE_SHARE_CATEGORY]({state, commit}, {newShareCategoryName}) {
         const {data: shareCategory} = await createShareCategory(newShareCategoryName);
         state.shareCategories.unshift(shareCategory);
+    },
+    async [DELETE_SHARE]({commit}, shareId) {
+        await deleteShare(shareId);
+        commit(REMOVE_SHARE, shareId);
     }
 };
 
@@ -82,6 +89,11 @@ const mutations = {
         Object.keys(initialState).forEach(key => {
             Vue.set(state, key, initialState[key]);
         });
+    },
+    [REMOVE_SHARE]({shares}, shareId) {
+        shareId = parseInt(shareId);
+        const index = shares.findIndex(share => share.id === shareId);
+        index !== -1 && shares.splice(index, 1);
     }
 };
 

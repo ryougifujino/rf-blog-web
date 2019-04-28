@@ -6,6 +6,7 @@ export const ADD_SHARE = "ADD_SHARE";
 export const ADD_SHARES = "ADD_SHARES";
 export const ADD_SHARE_CATEGORIES = "ADD_SHARE_CATEGORIES";
 export const REMOVE_POST = "REMOVE_POST";
+export const REMOVE_SHARE = "REMOVE_SHARE";
 export const EMPTY_POST_TITLES = "EMPTY_POST_TITLES";
 export const POST_EDIT_SET = "POST_EDIT_SET";
 export const POST_EDIT_SET_TITLE = "POST_EDIT_SET_TITLE";
