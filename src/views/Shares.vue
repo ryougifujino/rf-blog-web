@@ -1,23 +1,35 @@
 <template>
     <div class="shares">
-        <div class="shares__add-new" @click="isShowPublisher = true">新增分享</div>
+        <div class="shares__add-new" @click="showPublisher">新增分享</div>
         <SharesList></SharesList>
-        <SharesPublisher :visible.sync="isShowPublisher"></SharesPublisher>
+        <SharesPublisher></SharesPublisher>
     </div>
 </template>
 
 <script>
     import SharesList from "@/components/SharesList.vue";
     import SharesPublisher from "@/components/SharesPublisher.vue";
+    import {mapMutations} from "vuex";
+    import {
+        SHARES_SET_PUBLISHING_SHARE_ID,
+        SHARES_RESET_PUBLISHER_STATE,
+        SHARES_SET_PUBLISHER_VISIBLE
+    } from "@/store/mutation-types";
 
     export default {
         components: {
             SharesList,
             SharesPublisher
         },
-        data: () => ({
-            isShowPublisher: false
-        })
+        methods: {
+            ...mapMutations([SHARES_SET_PUBLISHER_VISIBLE, SHARES_RESET_PUBLISHER_STATE,
+                SHARES_SET_PUBLISHING_SHARE_ID]),
+            showPublisher() {
+                this[SHARES_SET_PUBLISHER_VISIBLE](true);
+                this[SHARES_RESET_PUBLISHER_STATE]();
+                this[SHARES_SET_PUBLISHING_SHARE_ID]();
+            }
+        }
     }
 </script>
 

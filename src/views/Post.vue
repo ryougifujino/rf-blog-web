@@ -10,7 +10,7 @@
                     <VTag class="post__tag" v-for="tag of tags" :key="tag.id">{{tag.name}}</VTag>
                 </div>
                 <div class="post__album" v-if="album">
-                    <img src="~images/baseline-book-24px.svg">
+                    <VIcon name="baseline-book-24px"></VIcon>
                     <span class="post__album-text">{{album.name}}</span>
                 </div>
                 <div class="post__created_on">
@@ -95,8 +95,9 @@
             align-items: center;
             margin-top: 16px;
 
-            > img {
+            > .v-icon {
                 margin-right: 4px;
+                fill: $text-color-primary-light;
             }
 
             &-text {

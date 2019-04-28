@@ -38,6 +38,14 @@ requireComponent.keys().forEach(fileName => {
     )
 });
 
+const requireIcon = require.context(
+    './assets/icons',
+    false,
+    /\.svg$/
+);
+requireIcon.keys().forEach(requireIcon);
+// <=> requireIcon.keys().forEach(fileName => requireIcon(fileName));
+
 new Vue({
     router,
     store,

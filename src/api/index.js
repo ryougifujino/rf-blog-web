@@ -67,6 +67,10 @@ export function deletePost(postId) {
     return _.delete(`/posts/${postId}`);
 }
 
+export function deleteShare(shareId) {
+    return _.delete(`/shares/${shareId}`);
+}
+
 export function updatePost(postId, title, body, isPrivate, albumId, tagNames) {
     return _.patch(`/posts/${postId}`, {
         post: {
@@ -75,6 +79,16 @@ export function updatePost(postId, title, body, isPrivate, albumId, tagNames) {
             is_private: isPrivate,
             album_id: albumId,
             tag_names: tagNames
+        }
+    });
+}
+
+export function updateShare(shareId, title, url, shareCategoryId) {
+    return _.patch(`/shares/${shareId}`, {
+        share: {
+            title,
+            url,
+            share_category_id: shareCategoryId
         }
     });
 }

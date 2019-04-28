@@ -3,9 +3,8 @@
         <header class="header-bar" v-if="headersSeen">
             <h1 class="header-bar__title">{{title}}
                 <span class="header-bar__menu">
-                    <img src="./assets/images/baseline-search-24px.svg" alt="Search">
-                    <img src="./assets/images/baseline-create-24px.svg" alt="Edit"
-                         @click="go('/post-edit')">
+                    <VIcon name="baseline-search-24px"></VIcon>
+                    <VIcon name="baseline-create-24px" @click.native="go('/post-edit')"></VIcon>
                     <img src="./assets/images/logo.png" alt="Logo">
                 </span>
             </h1>
@@ -92,14 +91,15 @@
             display: inline-flex;
             align-items: center;
 
+            > .v-icon {
+                @extend %icon;
+            }
+
             > img {
                 @extend %icon;
-
-                &:nth-of-type(3) {
-                    width: 40px;
-                    height: 40px;
-                    padding: 0;
-                }
+                width: 40px;
+                height: 40px;
+                padding: 0;
             }
         }
 

@@ -26,7 +26,13 @@ module.exports = {
             },
             {
                 test: /\.(jpg|jpeg|gif|svg|png)$/,
-                use: 'file-loader'
+                use: 'file-loader',
+                exclude: path.resolve(__dirname, 'src/assets/icons')
+            },
+            {
+                test: /\.svg$/,
+                use: 'svg-sprite-loader',
+                include: path.resolve(__dirname, 'src/assets/icons')
             }
         ]
     },
