@@ -2,8 +2,8 @@
     <div class="the-post-header">
         <div class="the-post-header__content">
             <h2 class="the-post-header__title" @click="$router.back()">ryougifujino</h2>
-            <img src="~images/baseline-delete-24px.svg" @click="showDeleteConfirm" alt="删除">
-            <img src="~images/baseline-edit-24px.svg" @click="editPost" alt="编辑">
+            <VIcon name="baseline-delete-24px" @click.native="showDeleteConfirm"></VIcon>
+            <VIcon name="baseline-edit-24px" @click.native="editPost"></VIcon>
         </div>
         <VDialogSimple :visible.sync="isShowDeleteConfirm" @confirm="deleteThePost">
             <template v-slot:header>删除确认</template>
@@ -55,7 +55,7 @@
             display: flex;
             align-items: center;
 
-            > img {
+            > .v-icon {
                 @extend %icon;
             }
         }
