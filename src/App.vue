@@ -3,7 +3,7 @@
         <header class="header-bar" v-if="headersSeen">
             <h1 class="header-bar__title">{{title}}
                 <span class="header-bar__menu">
-                    <VIcon name="baseline-search-24px"></VIcon>
+                    <VIcon name="baseline-search-24px" @click.native="go('/search')"></VIcon>
                     <VIcon name="baseline-create-24px" @click.native="go('/post-edit')"></VIcon>
                     <img src="./assets/images/logo.png" alt="Logo">
                 </span>
