@@ -3,7 +3,7 @@
         <div class="search__header">
             <div class="search__input-container">
                 <VIcon name="baseline-search-24px"></VIcon>
-                <input v-model="searchKey" spellcheck="false" class="search__input">
+                <input ref="input" v-model="searchKey" spellcheck="false" class="search__input">
             </div>
         </div>
         <div class="search__result">
@@ -70,6 +70,9 @@
             Promise.all([this[FETCH_POST_TITLES](), this[FETCH_SHARES]()])
                 .catch(() => this.$showToast("加载结果失败"))
                 .finally(() => this.isLoading = false);
+        },
+        mounted() {
+            this.$refs.input.focus();
         }
     }
 </script>
