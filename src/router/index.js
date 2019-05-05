@@ -9,6 +9,7 @@ import Share from '@/views/Shares.vue';
 import About from '@/views/About.vue';
 import PostEdit from '@/views/PostEdit.vue';
 import Post from '@/views/Post.vue';
+import Search from '@/views/Search.vue';
 
 export default new Router({
     routes: [
@@ -19,6 +20,7 @@ export default new Router({
         {path: '/post-edit', component: PostEdit},
         {path: '/post-edit/:id', component: PostEdit},
         {path: '/post/:id', component: Post},
+        {path: '/search', component: Search},
         {path: '/', redirect: '/home'}
     ]
 
