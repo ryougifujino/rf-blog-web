@@ -16,6 +16,7 @@
         color: $text-color-secondary;
         font-weight: bold;
         user-select: none;
+        white-space: nowrap;
     }
 
     @include sm(".v-flat-button:active", ".v-flat-button:hover") {
