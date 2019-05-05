@@ -33,6 +33,10 @@ export function fetchShareCategories() {
     return _.get('/share-categories');
 }
 
+export function fetchPostComments(postId, offset, limit) {
+    return _.get(`/comments/${postId}?offset=${offset}&limit=${limit}`);
+}
+
 export function createAlbum(name) {
     return _.post('/albums', {album: {name}});
 }
@@ -61,6 +65,16 @@ export function createShare(title, url, shareCategoryId) {
 
 export function createShareCategory(name) {
     return _.post('/share-categories', {share_category: {name}});
+}
+
+export function createPostComment(postId, content, fromUser) {
+    return _.post('/comments', {
+        comment: {
+            post_id: postId,
+            content,
+            from_user: fromUser
+        }
+    });
 }
 
 export function deletePost(postId) {

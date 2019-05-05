@@ -1,6 +1,8 @@
 import {
     FETCH_POST,
-    DELETE_POST
+    FETCH_POST_COMMENTS,
+    DELETE_POST,
+    CREATE_POST_COMMENT
 } from '@/store/action-types';
 import {
     POST_SET,
@@ -9,9 +11,12 @@ import {
 } from '@/store/mutation-types';
 import {
     fetchPost,
-    deletePost
+    fetchPostComments,
+    deletePost,
+    createPostComment
 } from "@/api";
 
+const COMMENTS_LIMIT = 5;
 const initialState = {
     title: '',
     body: '',
@@ -19,7 +24,10 @@ const initialState = {
     album: null,
     createdOn: null,
     tags: [],
-    isLoading: true
+    isLoading: true,
+    comments: [],
+    commentIdSet: new Set(),
+    commentPageNumber: 1
 };
 
 const state = {...initialState};
@@ -40,6 +48,17 @@ const actions = {
         commit(REMOVE_POST, postId);
         rootState.home.isPostsDirty = true;
         rootState.isPostsDirty = true;
+    },
+    async [FETCH_POST_COMMENTS]({state, commit}, postId) {
+        const offset = (state.commentPageNumber - 1) * COMMENTS_LIMIT;
+        const {data: {items: comments}} = await fetchPostComments(postId, offset, COMMENTS_LIMIT);
+        const filteredComments = comments.filter(({id}) => !state.commentIdSet.has(id));
+        filteredComments.forEach(({id}) => state.commentIdSet.add(id));
+        state.comments.push(...filteredComments);
+    },
+    async [CREATE_POST_COMMENT]({state}, {postId, content, fromUser}) {
+        const {data: comment} = await createPostComment(postId, content, fromUser);
+        state.comments.unshift(comment);
     }
 };
 
@@ -55,7 +74,13 @@ const mutations = {
     [POST_RESET_STATE](state) {
         Object.keys(state).forEach(key => {
             const value = state[key];
-            state[key] = Array.isArray(value) ? [] : initialState[key];
+            if (Array.isArray(value)) {
+                state[key] = [];
+            } else if (value instanceof Set) {
+                state[key] = new Set();
+            } else {
+                state[key] = initialState[key];
+            }
         });
     }
 };

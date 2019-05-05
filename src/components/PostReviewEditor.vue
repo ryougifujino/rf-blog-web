@@ -1,18 +1,22 @@
 <template>
     <div class="post-review-editor">
-        <textarea class="post-review-editor__editor"
-                  :placeholder="'新增' + keyword"
-                  :maxlength="contentMaxLength"
-                  :value="content"
-                  spellcheck="false">
-        </textarea>
+        <div class="post-review-editor__editor-container">
+            <textarea class="post-review-editor__editor"
+                      :placeholder="'新增' + keyword"
+                      :maxlength="contentMaxLength"
+                      :value="content"
+                      @input="$emit('update:content', $event.target.value)"
+                      spellcheck="false">
+            </textarea>
+        </div>
         <div class="post-review-editor__footer">
             <input class="post-review-editor__from-user"
                    :placeholder="keyword + '昵称'"
                    :maxlength="fromUserMaxLength"
                    :value="fromUser"
+                   @input="$emit('update:fromUser', $event.target.value)"
                    spellcheck="false">
-            <VButtonFlat @click="$emit('publish', content, fromUser)">发表</VButtonFlat>
+            <VButtonFlat @click.native="$emit('publish')">发表</VButtonFlat>
         </div>
         <VProgressBar transparent colored v-if="isPublishing"></VProgressBar>
     </div>
@@ -51,19 +55,26 @@
 
 <style lang="scss">
     @import "~@/assets/styles/theme";
+    @import "~@/assets/styles/mixins";
 
     .post-review-editor {
         position: relative;
+
+        &__editor-container {
+            overflow: hidden;
+            border-radius: 16px;
+            border: 1px solid $text-color-secondary-light;
+        }
 
         &__editor {
             width: 100%;
             box-sizing: border-box;
             height: 135px;
             padding: 12px;
-            border-radius: 16px;
-            border-color: $text-color-secondary-light;
+            border: none;
             resize: none;
             outline: none;
+            @extend %scrollbar;
         }
 
         &__footer {
