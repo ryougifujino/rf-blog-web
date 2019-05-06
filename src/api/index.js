@@ -99,6 +99,10 @@ export function deletePostReply(replyId) {
     return _.delete(`/replies/${replyId}`);
 }
 
+export function deletePostComment(commentId) {
+    return _.delete(`/comments/${commentId}`);
+}
+
 export function updatePost(postId, title, body, isPrivate, albumId, tagNames) {
     return _.patch(`/posts/${postId}`, {
         post: {

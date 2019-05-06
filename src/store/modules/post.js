@@ -3,6 +3,7 @@ import {
     FETCH_POST_COMMENTS,
     DELETE_POST,
     DELETE_POST_REPLY,
+    DELETE_POST_COMMENT,
     CREATE_POST_COMMENT,
     CREATE_POST_REPLY
 } from '@/store/action-types';
@@ -16,6 +17,7 @@ import {
     fetchPostComments,
     deletePost,
     deletePostReply,
+    deletePostComment,
     createPostComment,
     createPostReply
 } from "@/api";
@@ -68,6 +70,14 @@ const actions = {
             if (deletingReplyIndex !== -1) {
                 comment.replies.splice(deletingReplyIndex, 1);
             }
+        }
+    },
+    async [DELETE_POST_COMMENT]({state}, commentId) {
+        await deletePostComment(commentId);
+        const deletingCommentIndex = state.comments.findIndex(({id}) => id === commentId);
+        if (deletingCommentIndex !== -1) {
+            state.comments.splice(deletingCommentIndex, 1);
+            state.commentIdSet.delete(commentId)
         }
     },
     async [CREATE_POST_COMMENT]({state}, {postId, content, fromUser}) {

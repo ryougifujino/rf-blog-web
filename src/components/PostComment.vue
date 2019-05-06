@@ -1,12 +1,12 @@
 <template>
-    <div class="post-comment">
+    <div :class="['post-comment', {'post-comment--collapsed': commentIsDeleting}]">
         <h4 class="post-comment__from-user">{{comment.from_user}}
             <span class="post-comment__created-on"> · {{comment.created_on | localDate}}</span>
         </h4>
         <div class="post-comment__content">{{comment.content}}</div>
         <div class="post-comment__actions">
             <a @click="expandReplyBox(comment.id)">回复</a>
-            <a @click="deletePost">删除</a>
+            <a @click="deleteComment">删除</a>
         </div>
         <PostReviewEditor class="post-comment__reply-editor post-comment__reply-editor--text-small"
                           v-if="activeReplyBoxId === String(comment.id)"
@@ -43,6 +43,7 @@
                 </PostReviewEditor>
             </div>
         </div>
+        <VProgressBar v-if="commentIsDeleting"></VProgressBar>
     </div>
 </template>
 
@@ -50,7 +51,7 @@
     import PostReviewEditor from "@/components/PostReviewEditor.vue";
     import {LOCAL_KEY_FROM_USER} from "@/common/constants";
     import {mapActions} from "vuex";
-    import {CREATE_POST_REPLY, DELETE_POST_REPLY} from "@/store/action-types";
+    import {CREATE_POST_REPLY, DELETE_POST_COMMENT, DELETE_POST_REPLY} from "@/store/action-types";
 
     const DEFAULT_FROM_USER = localStorage.getItem(LOCAL_KEY_FROM_USER) || '';
     export default {
@@ -70,10 +71,11 @@
         data: () => ({
             newReply: '',
             newReplyFrom: DEFAULT_FROM_USER,
-            newReplyIsPublishing: false
+            newReplyIsPublishing: false,
+            commentIsDeleting: false
         }),
         methods: {
-            ...mapActions([CREATE_POST_REPLY, DELETE_POST_REPLY]),
+            ...mapActions([CREATE_POST_REPLY, DELETE_POST_REPLY, DELETE_POST_COMMENT]),
             expandReplyBox(boxId, replyTo) {
                 if (this.newReplyIsPublishing) {
                     this.$showToast('正在发布回复中，请稍后再试');
@@ -100,11 +102,17 @@
                     .catch(() => this.$showToast('发表回复失败'))
                     .finally(() => this.newReplyIsPublishing = false);
             },
-            deletePost() {
+            deleteComment() {
                 if (this.newReplyIsPublishing) {
                     this.$showToast('正在发布回复中，请稍后再试');
                     return;
                 }
+                this.commentIsDeleting = true;
+                this[DELETE_POST_COMMENT](this.comment.id)
+                    .then(() => this.$showToast('删除成功'))
+                    .catch(() => this.$showToast('删除失败'))
+                    .finally(() => this.commentIsDeleting = false);
+
             },
             deleteReply(replyId) {
                 this[DELETE_POST_REPLY]({commentId: this.comment.id, replyId})
@@ -118,6 +126,13 @@
 <style lang="scss">
     @import "~@/assets/styles/theme";
     @import "~@/assets/styles/mixins";
+
+    .post-comment--collapsed {
+        position: relative;
+        height: 100px;
+        overflow: hidden;
+        border-radius: 16px;
+    }
 
     .post-comment {
         padding: 12px 8px;
