@@ -5,9 +5,19 @@
         </h4>
         <div class="post-comment__content">{{comment.content}}</div>
         <div class="post-comment__actions">
-            <a @click="reply">回复</a>
+            <a @click="expandReplyBox(comment.id)">回复</a>
             <a @click="deletePost">删除</a>
         </div>
+        <PostReviewEditor class="post-comment__reply-editor"
+                          v-if="activeReplyBoxId === String(comment.id)"
+                          keyword="回复"
+                          content-max-length="1000"
+                          from-user-max-length="20"
+                          :content.sync="newReply"
+                          :from-user.sync="newReplyFrom"
+                          :is-publishing="newReplyIsPublishing"
+                          @publish="publishReply">
+        </PostReviewEditor>
         <div class="post-comment__replies">
 
         </div>
@@ -15,15 +25,42 @@
 </template>
 
 <script>
+    import PostReviewEditor from "@/components/PostReviewEditor.vue";
+    import {LOCAL_KEY_FROM_USER} from "@/common/constants";
+
+    const DEFAULT_FROM_USER = localStorage.getItem(LOCAL_KEY_FROM_USER) || '';
     export default {
+        components: {
+            PostReviewEditor
+        },
         props: {
             comment: {
                 type: Object,
                 require: true
+            },
+            activeReplyBoxId: {
+                type: String,
+                require: true
             }
         },
+        data: () => ({
+            newReply: '',
+            newReplyFrom: DEFAULT_FROM_USER,
+            newReplyIsPublishing: false
+        }),
         methods: {
-            reply() {
+            expandReplyBox(boxId) {
+                if (this.newReplyIsPublishing){
+                    this.$showToast('正在发布回复中，请稍后再试');
+                    return;
+                }
+                if (boxId !== this.activeReplyBoxId) {
+                    this.newReply = '';
+                    this.newReplyFrom = '';
+                }
+                this.$emit('update:activeReplyBoxId', String(boxId));
+            },
+            publishReply() {
 
             },
             deletePost() {
@@ -72,8 +109,12 @@
             }
         }
 
-        &__replies {
+        &__reply-editor {
+            margin-top: 12px;
+        }
 
+        &__replies {
+            background-color: $color-background-dark;
         }
     }
 </style>

@@ -11,7 +11,8 @@
         </PostReviewEditor>
         <PostComment v-for="comment of comments"
                      :key="comment.id"
-                     :comment="comment">
+                     :comment="comment"
+                     :active-reply-box-id.sync="activeReplyBoxId">
         </PostComment>
     </div>
 </template>
@@ -22,9 +23,9 @@
     import {mapModuleState} from "@/util/mapStateUtils";
     import {CREATE_POST_COMMENT, FETCH_POST_COMMENTS} from "@/store/action-types";
     import {mapActions} from "vuex";
+    import {LOCAL_KEY_FROM_USER} from "@/common/constants";
 
-    const FROM_USER_LOCAL_KEY = "FROM_USER_LOCAL_KEY";
-    const DEFAULT_FROM_USER = localStorage.getItem(FROM_USER_LOCAL_KEY) || '';
+    const DEFAULT_FROM_USER = localStorage.getItem(LOCAL_KEY_FROM_USER) || '';
     export default {
         components: {
             PostComment,
@@ -34,9 +35,7 @@
             newComment: '',
             newCommentFrom: DEFAULT_FROM_USER,
             newCommentIsPublishing: false,
-            newReply: '',
-            newReplyFrom: DEFAULT_FROM_USER,
-            newReplyIsPublishing: false
+            activeReplyBoxId: ''
         }),
         computed: {
             ...mapModuleState('post', ['comments'])
@@ -44,14 +43,6 @@
         methods: {
             ...mapActions([CREATE_POST_COMMENT, FETCH_POST_COMMENTS]),
             publishComment() {
-                if (!this.newComment) {
-                    this.$showToast('评论不能为空');
-                    return;
-                }
-                if (!this.newCommentFrom) {
-                    this.$showToast('评论昵称不能为空');
-                    return;
-                }
                 this.newCommentIsPublishing = true;
                 this[CREATE_POST_COMMENT]({
                     postId: this.$route.params.id,
@@ -60,13 +51,10 @@
                 })
                     .then(() => {
                         this.newComment = '';
-                        localStorage.setItem(FROM_USER_LOCAL_KEY, this.newCommentFrom);
+                        localStorage.setItem(LOCAL_KEY_FROM_USER, this.newCommentFrom);
                     })
                     .catch(() => this.$showToast('发表评论失败'))
                     .finally(() => this.newCommentIsPublishing = false);
-            },
-            publishReply(content, fromUser) {
-
             }
         },
         created() {

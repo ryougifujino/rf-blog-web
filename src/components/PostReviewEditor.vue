@@ -16,7 +16,7 @@
                    :value="fromUser"
                    @input="$emit('update:fromUser', $event.target.value)"
                    spellcheck="false">
-            <VButtonFlat @click.native="$emit('publish')">发表</VButtonFlat>
+            <VButtonFlat @click.native="publish">发表</VButtonFlat>
         </div>
         <VProgressBar transparent colored v-if="isPublishing"></VProgressBar>
     </div>
@@ -48,6 +48,19 @@
             isPublishing: {
                 type: Boolean,
                 default: false
+            }
+        },
+        methods: {
+            publish() {
+                if (!this.content) {
+                    this.$showToast(this.keyword + '不能为空');
+                    return;
+                }
+                if (!this.fromUser) {
+                    this.$showToast(this.keyword + '昵称不能为空');
+                    return;
+                }
+                this.$emit('publish');
             }
         }
     }
