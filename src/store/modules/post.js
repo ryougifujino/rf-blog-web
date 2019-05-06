@@ -2,7 +2,9 @@ import {
     FETCH_POST,
     FETCH_POST_COMMENTS,
     DELETE_POST,
-    CREATE_POST_COMMENT
+    DELETE_POST_REPLY,
+    CREATE_POST_COMMENT,
+    CREATE_POST_REPLY
 } from '@/store/action-types';
 import {
     POST_SET,
@@ -13,7 +15,9 @@ import {
     fetchPost,
     fetchPostComments,
     deletePost,
-    createPostComment
+    deletePostReply,
+    createPostComment,
+    createPostReply
 } from "@/api";
 
 const COMMENTS_LIMIT = 5;
@@ -43,12 +47,6 @@ const actions = {
         }
 
     },
-    async [DELETE_POST]({commit, rootState}, postId) {
-        await deletePost(postId);
-        commit(REMOVE_POST, postId);
-        rootState.home.isPostsDirty = true;
-        rootState.isPostsDirty = true;
-    },
     async [FETCH_POST_COMMENTS]({state, commit}, postId) {
         const offset = (state.commentPageNumber - 1) * COMMENTS_LIMIT;
         const {data: {items: comments}} = await fetchPostComments(postId, offset, COMMENTS_LIMIT);
@@ -56,9 +54,35 @@ const actions = {
         filteredComments.forEach(({id}) => state.commentIdSet.add(id));
         state.comments.push(...filteredComments);
     },
+    async [DELETE_POST]({commit, rootState}, postId) {
+        await deletePost(postId);
+        commit(REMOVE_POST, postId);
+        rootState.home.isPostsDirty = true;
+        rootState.isPostsDirty = true;
+    },
+    async [DELETE_POST_REPLY]({state}, {commentId, replyId}) {
+        await deletePostReply(replyId);
+        const comment = state.comments.find(comment => comment.id === commentId);
+        if (comment) {
+            const deletingReplyIndex = comment.replies.findIndex(({id}) => id === replyId);
+            if (deletingReplyIndex !== -1) {
+                comment.replies.splice(deletingReplyIndex, 1);
+            }
+        }
+    },
     async [CREATE_POST_COMMENT]({state}, {postId, content, fromUser}) {
         const {data: comment} = await createPostComment(postId, content, fromUser);
+        comment.replies = [];
+        state.commentIdSet.add(comment.id);
         state.comments.unshift(comment);
+    },
+    async [CREATE_POST_REPLY]({state: {comments}}, {commentId, content, fromUser}) {
+        const {data: reply} = await createPostReply(commentId, content, fromUser);
+        const comment = comments.find(({id}) => id === commentId);
+        if (!comment) {
+            throw new Error('Can not find comment!');
+        }
+        comment.replies.push(reply);
     }
 };
 

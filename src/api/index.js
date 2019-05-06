@@ -77,12 +77,26 @@ export function createPostComment(postId, content, fromUser) {
     });
 }
 
+export function createPostReply(commentId, content, fromUser) {
+    return _.post('/replies', {
+        reply: {
+            comment_id: commentId,
+            content,
+            from_user: fromUser
+        }
+    });
+}
+
 export function deletePost(postId) {
     return _.delete(`/posts/${postId}`);
 }
 
 export function deleteShare(shareId) {
     return _.delete(`/shares/${shareId}`);
+}
+
+export function deletePostReply(replyId) {
+    return _.delete(`/replies/${replyId}`);
 }
 
 export function updatePost(postId, title, body, isPrivate, albumId, tagNames) {

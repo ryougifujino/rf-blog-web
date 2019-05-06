@@ -8,7 +8,7 @@
             <a @click="expandReplyBox(comment.id)">回复</a>
             <a @click="deletePost">删除</a>
         </div>
-        <PostReviewEditor class="post-comment__reply-editor"
+        <PostReviewEditor class="post-comment__reply-editor post-comment__reply-editor--text-small"
                           v-if="activeReplyBoxId === String(comment.id)"
                           keyword="回复"
                           content-max-length="1000"
@@ -18,8 +18,30 @@
                           :is-publishing="newReplyIsPublishing"
                           @publish="publishReply">
         </PostReviewEditor>
-        <div class="post-comment__replies">
-
+        <div class="post-comment__replies" v-if="comment.replies.length">
+            <div class="post-comment__reply" v-for="reply of comment.replies" :key="reply.id">
+                <div class="post-comment__reply-content">{{reply.content}}</div>
+                <div class="post-comment__reply-footer">
+                    <div class="post-comment__reply-from-user">— {{reply.from_user}}</div>
+                    {{reply.created_on | localDate}}
+                    <span> · </span>
+                    <a class="post-comment__reply-action"
+                       @click="expandReplyBox(comment.id + '#' + reply.id, reply.from_user)">回复</a>
+                    <span> · </span>
+                    <a class="post-comment__reply-action"
+                       @click="deleteReply(reply.id)">删除</a>
+                </div>
+                <PostReviewEditor class="post-comment__reply-editor"
+                                  v-if="activeReplyBoxId === comment.id + '#' + reply.id"
+                                  keyword="回复"
+                                  content-max-length="1000"
+                                  from-user-max-length="20"
+                                  :content.sync="newReply"
+                                  :from-user.sync="newReplyFrom"
+                                  :is-publishing="newReplyIsPublishing"
+                                  @publish="publishReply">
+                </PostReviewEditor>
+            </div>
         </div>
     </div>
 </template>
@@ -27,6 +49,8 @@
 <script>
     import PostReviewEditor from "@/components/PostReviewEditor.vue";
     import {LOCAL_KEY_FROM_USER} from "@/common/constants";
+    import {mapActions} from "vuex";
+    import {CREATE_POST_REPLY, DELETE_POST_REPLY} from "@/store/action-types";
 
     const DEFAULT_FROM_USER = localStorage.getItem(LOCAL_KEY_FROM_USER) || '';
     export default {
@@ -49,22 +73,43 @@
             newReplyIsPublishing: false
         }),
         methods: {
-            expandReplyBox(boxId) {
-                if (this.newReplyIsPublishing){
+            ...mapActions([CREATE_POST_REPLY, DELETE_POST_REPLY]),
+            expandReplyBox(boxId, replyTo) {
+                if (this.newReplyIsPublishing) {
                     this.$showToast('正在发布回复中，请稍后再试');
                     return;
                 }
                 if (boxId !== this.activeReplyBoxId) {
-                    this.newReply = '';
-                    this.newReplyFrom = '';
+                    this.newReply = replyTo ? `回复 ${replyTo}：` : '';
                 }
                 this.$emit('update:activeReplyBoxId', String(boxId));
             },
             publishReply() {
-
+                this.newReplyIsPublishing = true;
+                this[CREATE_POST_REPLY]({
+                    commentId: this.comment.id,
+                    content: this.newReply,
+                    fromUser: this.newReplyFrom
+                })
+                    .then(() => {
+                        this.newReply = '';
+                        this.$emit('update:activeReplyBoxId', '');
+                        this.$showToast('回复成功');
+                        localStorage.setItem(LOCAL_KEY_FROM_USER, this.newReplyFrom);
+                    })
+                    .catch(() => this.$showToast('发表回复失败'))
+                    .finally(() => this.newReplyIsPublishing = false);
             },
             deletePost() {
-
+                if (this.newReplyIsPublishing) {
+                    this.$showToast('正在发布回复中，请稍后再试');
+                    return;
+                }
+            },
+            deleteReply(replyId) {
+                this[DELETE_POST_REPLY]({commentId: this.comment.id, replyId})
+                    .then(() => this.$showToast('删除成功'))
+                    .catch(() => this.$showToast('删除失败'));
             }
         }
     }
@@ -111,10 +156,58 @@
 
         &__reply-editor {
             margin-top: 12px;
+
+            .post-review-editor__editor {
+                height: 100px;
+            }
+
+            &--text-small {
+                font-size: 0.9em;
+            }
+
+            .region-mask--transparent {
+                background: #ff000000;
+            }
         }
 
         &__replies {
+            margin-top: 12px;
+            border-radius: 8px;
+            overflow: hidden;
+            font-size: 0.9em;
+            padding: 12px 0;
             background-color: $color-background-dark;
+
+            * {
+                background-color: $color-background-dark;
+            }
+        }
+
+        &__reply {
+            padding: 8px 12px 8px 10%;
+
+            &-content {
+                color: $text-color-primary-light;
+                white-space: pre-line;
+                @extend %word-break;
+            }
+
+            &-footer {
+                font-size: 0.9em;
+                color: $text-color-secondary;
+                margin-top: 4px;
+            }
+
+            &-from-user {
+                margin-bottom: 4px;
+            }
+
+            &-action {
+                cursor: pointer;
+                @include sm("&:active", "&:hover") {
+                    color: $text-color-primary-light;
+                }
+            }
         }
     }
 </style>
