@@ -6,7 +6,10 @@
         <div class="post-comment__content">{{comment.content}}</div>
         <div class="post-comment__actions">
             <a @click="reply">回复</a>
-            <a @click="del">删除</a>
+            <a @click="deletePost">删除</a>
+        </div>
+        <div class="post-comment__replies">
+
         </div>
     </div>
 </template>
@@ -23,7 +26,7 @@
             reply() {
 
             },
-            del() {
+            deletePost() {
 
             }
         }
@@ -67,6 +70,10 @@
                     color: $text-color-primary-light;
                 }
             }
+        }
+
+        &__replies {
+
         }
     }
 </style>

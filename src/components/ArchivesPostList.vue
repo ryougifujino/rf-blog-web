@@ -45,7 +45,7 @@
             padding: 8px;
 
             @include sm("&:active, &:active *", "&:hover, &:hover *") {
-                background: $color-accent-dark;
+                background: $color-background-dark;
             }
 
             > h4 {

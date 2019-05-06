@@ -42,7 +42,7 @@
 
         @include sm("&:active, &:active *", "&:hover, &:hover *") {
             cursor: pointer;
-            background: $color-accent-dark;
+            background: $color-background-dark;
         }
 
         @include sm("&:active", "&:hover") {

@@ -46,7 +46,7 @@
 
     .the-post-header {
         height: $view-header-height;
-        border-bottom: 1px solid $color-accent-dark;
+        border-bottom: 1px solid $color-background-dark;
         z-index: 100;
 
         &__content {

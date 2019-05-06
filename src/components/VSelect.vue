@@ -203,7 +203,7 @@
         }
 
         @include sm("&__add-button:active", "&__add-button:hover") {
-            background-color: $color-accent-dark;
+            background-color: $color-background-dark;
         }
 
         &__add-message {
@@ -255,7 +255,7 @@
             }
 
             @include sm("> li:active", "> li:hover") {
-                background-color: $color-accent-dark;
+                background-color: $color-background-dark;
             }
         }
     }

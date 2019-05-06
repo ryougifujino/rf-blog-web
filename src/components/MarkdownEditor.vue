@@ -65,13 +65,13 @@
     }
 
     .ace_search {
-        background-color: $color-accent;
+        background-color: $color-background;
         padding: 8px;
         position: fixed;
         top: 0;
 
         .ace_replace_form, .ace_search_options, .ace_button, .ace_search_counter {
-            background-color: $color-accent;
+            background-color: $color-background;
         }
 
         .ace_button {

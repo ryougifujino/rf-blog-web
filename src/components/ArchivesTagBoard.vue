@@ -44,7 +44,7 @@
         padding: 12px;
         border-radius: 16px;
         margin-top: 16px;
-        background-color: $color-accent-dark;
+        background-color: $color-background-dark;
         color: $text-color-primary-light;
 
         > h3 {
@@ -68,7 +68,7 @@
             margin: 8px 8px 0 0;
 
             @include sm("&:active, &--checked", "&:hover, &--checked") {
-                background: $color-accent-dark;
+                background: $color-background-dark;
             }
 
             &--checked {

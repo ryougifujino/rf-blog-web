@@ -80,7 +80,7 @@
 
         &__info-bar {
             margin-top: 32px;
-            border-bottom: 1px solid $color-accent-dark;
+            border-bottom: 1px solid $color-background-dark;
             padding-bottom: 16px;
         }
 

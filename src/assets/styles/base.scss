@@ -5,7 +5,7 @@
 * {
   margin: 0;
   padding: 0;
-  background-color: $color-accent;
+  background-color: $color-background;
 }
 
 body {
@@ -25,7 +25,7 @@ ul li {
 hr {
   display: block;
   border: 0;
-  border-top: 1px solid $color-accent-dark;
+  border-top: 1px solid $color-background-dark;
 }
 
 %mask {
