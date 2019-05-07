@@ -12,7 +12,8 @@
         <PostComment v-for="comment of comments"
                      :key="comment.id"
                      :comment="comment"
-                     :active-reply-box-id.sync="activeReplyBoxId">
+                     :active-reply-box-id.sync="activeReplyBoxId"
+                     :active-delete-button-id.sync="activeDeleteButtonId">
         </PostComment>
     </div>
 </template>
@@ -35,7 +36,8 @@
             newComment: '',
             newCommentFrom: DEFAULT_FROM_USER,
             newCommentIsPublishing: false,
-            activeReplyBoxId: ''
+            activeReplyBoxId: '',
+            activeDeleteButtonId: ''
         }),
         computed: {
             ...mapModuleState('post', ['comments'])

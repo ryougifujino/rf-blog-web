@@ -6,7 +6,9 @@
         <div class="post-comment__content">{{comment.content}}</div>
         <div class="post-comment__actions">
             <a @click="expandReplyBox(comment.id)">回复</a>
-            <a @click="deleteComment">删除</a>
+            <a :class="deleteButtonClass(comment.id)"
+               v-click-outside:delete="deactivateDeleteButton"
+               @click="requestDelete(comment.id)">{{deleteButtonText(comment.id)}}</a>
         </div>
         <PostReviewEditor class="post-comment__reply-editor post-comment__reply-editor--text-small"
                           v-if="activeReplyBoxId === String(comment.id)"
@@ -29,7 +31,11 @@
                        @click="expandReplyBox(comment.id + '#' + reply.id, reply.from_user)">回复</a>
                     <span> · </span>
                     <a class="post-comment__reply-action"
-                       @click="deleteReply(reply.id)">删除</a>
+                       :class="deleteButtonClass(comment.id + '#' + reply.id)"
+                       v-click-outside:delete="deactivateDeleteButton"
+                       @click="requestDelete(comment.id + '#' + reply.id, reply.id)">
+                        {{deleteButtonText(comment.id + '#' + reply.id)}}
+                    </a>
                 </div>
                 <PostReviewEditor class="post-comment__reply-editor"
                                   v-if="activeReplyBoxId === comment.id + '#' + reply.id"
@@ -66,6 +72,10 @@
             activeReplyBoxId: {
                 type: String,
                 require: true
+            },
+            activeDeleteButtonId: {
+                type: String,
+                require: true
             }
         },
         data: () => ({
@@ -74,6 +84,18 @@
             newReplyIsPublishing: false,
             commentIsDeleting: false
         }),
+        computed: {
+            deleteButtonClass() {
+                return deleteButtonId => {
+                    const isActive = this.activeDeleteButtonId === String(deleteButtonId);
+                    return {'post-comment__delete-confirm': isActive};
+                };
+            },
+            deleteButtonText() {
+                return deleteButtonId =>
+                    this.activeDeleteButtonId === String(deleteButtonId) ? "确认" : "删除";
+            }
+        },
         methods: {
             ...mapActions([CREATE_POST_REPLY, DELETE_POST_REPLY, DELETE_POST_COMMENT]),
             expandReplyBox(boxId, replyTo) {
@@ -102,6 +124,18 @@
                     .catch(() => this.$showToast('发表回复失败'))
                     .finally(() => this.newReplyIsPublishing = false);
             },
+            requestDelete(deleteButtonId, replyId) {
+                deleteButtonId = String(deleteButtonId);
+                if (this.activeDeleteButtonId === deleteButtonId) {
+                    if (!replyId) {
+                        this.deleteComment();
+                    } else {
+                        this.deleteReply(replyId);
+                    }
+                } else {
+                    this.$emit('update:activeDeleteButtonId', deleteButtonId);
+                }
+            },
             deleteComment() {
                 if (this.newReplyIsPublishing) {
                     this.$showToast('正在发布回复中，请稍后再试');
@@ -118,6 +152,9 @@
                 this[DELETE_POST_REPLY]({commentId: this.comment.id, replyId})
                     .then(() => this.$showToast('删除成功'))
                     .catch(() => this.$showToast('删除失败'));
+            },
+            deactivateDeleteButton() {
+                this.$emit('update:activeDeleteButtonId', '');
             }
         }
     }
@@ -159,10 +196,10 @@
         &__actions {
             color: $text-color-secondary;
             font-size: 0.9em;
-            cursor: pointer;
 
             > a {
                 margin-right: 8px;
+                cursor: pointer;
                 @include sm("&:active", "&:hover") {
                     color: $text-color-primary-light;
                 }
@@ -222,6 +259,14 @@
                 @include sm("&:active", "&:hover") {
                     color: $text-color-primary-light;
                 }
+            }
+        }
+
+        &__delete-confirm {
+            color: $color-danger;
+
+            @include sm("&:active", "&:hover") {
+                color: $color-danger !important;
             }
         }
     }
