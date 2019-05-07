@@ -123,7 +123,7 @@
                 border-radius: 30px;
                 padding: 8px 16px;
                 color: $text-color-secondary;
-                border: $color-accent 1px solid;
+                border: $color-background 1px solid;
                 white-space: nowrap;
 
                 @include sm("&:active", "&:hover") {

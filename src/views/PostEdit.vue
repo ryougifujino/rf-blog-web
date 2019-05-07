@@ -110,7 +110,7 @@
 
         &__toolbar {
             height: $toolbar-height;
-            border-bottom: 1px solid $color-accent-dark;
+            border-bottom: 1px solid $color-background-dark;
             padding: 0 16px;
             font-size: 0;
         }
@@ -141,7 +141,7 @@
 
         &__markdown-input {
             @extend %markdown;
-            border-right: 1px solid $color-accent-dark;
+            border-right: 1px solid $color-background-dark;
         }
 
         &__markdown-preview {

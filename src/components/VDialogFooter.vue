@@ -22,13 +22,13 @@
             right: 16px;
 
             > div {
-                background-color: $color-accent;
+                background-color: $color-background;
                 font-weight: normal;
                 font-size: 14px;
             }
 
             @include sm("> div:active", "> div:hover") {
-                background-color: $color-accent-dark;
+                background-color: $color-background-dark;
                 color: $text-color-secondary;
             }
         }

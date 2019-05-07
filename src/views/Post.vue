@@ -19,6 +19,7 @@
                 </div>
             </div>
         </div>
+        <PostComments></PostComments>
         <VProgressBar class="post__progress-bar"
                       v-if="isLoading"
                       transparent
@@ -30,6 +31,7 @@
 <script>
     import ThePostHeader from '@/components/ThePostHeader.vue';
     import MarkdownPreviewer from "@/components/MarkdownPreviewer.vue";
+    import PostComments from "@/components/PostComments.vue";
     import {mapModuleState} from "@/util/mapStateUtils";
     import {mapActions} from "vuex";
     import {FETCH_POST} from "@/store/action-types";
@@ -37,7 +39,8 @@
     export default {
         components: {
             ThePostHeader,
-            MarkdownPreviewer
+            MarkdownPreviewer,
+            PostComments
         },
         computed: {
             ...mapModuleState('post', ['title', 'body', 'isPrivate', 'album', 'createdOn',
@@ -77,7 +80,7 @@
 
         &__info-bar {
             margin-top: 32px;
-            border-bottom: 1px solid $color-accent-dark;
+            border-bottom: 1px solid $color-background-dark;
             padding-bottom: 16px;
         }
 

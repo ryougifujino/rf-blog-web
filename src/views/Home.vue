@@ -1,5 +1,5 @@
 <template>
-    <div class="home" v-scroll-bottom:home="loadMore">
+    <div class="home" v-scroll-bottom="loadMore">
         <div v-for="post of posts" :key="post.id">
             <HomePostPreview :post="post"/>
             <hr>

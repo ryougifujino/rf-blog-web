@@ -33,6 +33,10 @@ export function fetchShareCategories() {
     return _.get('/share-categories');
 }
 
+export function fetchPostComments(postId, offset, limit) {
+    return _.get(`/comments/${postId}?offset=${offset}&limit=${limit}`);
+}
+
 export function createAlbum(name) {
     return _.post('/albums', {album: {name}});
 }
@@ -63,12 +67,40 @@ export function createShareCategory(name) {
     return _.post('/share-categories', {share_category: {name}});
 }
 
+export function createPostComment(postId, content, fromUser) {
+    return _.post('/comments', {
+        comment: {
+            post_id: postId,
+            content,
+            from_user: fromUser
+        }
+    });
+}
+
+export function createPostReply(commentId, content, fromUser) {
+    return _.post('/replies', {
+        reply: {
+            comment_id: commentId,
+            content,
+            from_user: fromUser
+        }
+    });
+}
+
 export function deletePost(postId) {
     return _.delete(`/posts/${postId}`);
 }
 
 export function deleteShare(shareId) {
     return _.delete(`/shares/${shareId}`);
+}
+
+export function deletePostReply(replyId) {
+    return _.delete(`/replies/${replyId}`);
+}
+
+export function deletePostComment(commentId) {
+    return _.delete(`/comments/${commentId}`);
 }
 
 export function updatePost(postId, title, body, isPrivate, albumId, tagNames) {

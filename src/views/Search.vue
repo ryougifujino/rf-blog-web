@@ -94,13 +94,13 @@
             max-width: 750px;
             width: 100%;
             height: 44px;
-            background-color: $color-accent-dark;
+            background-color: $color-background-dark;
             border-radius: 16px;
             display: flex;
             align-items: center;
 
             .v-icon {
-                background-color: $color-accent-dark;
+                background-color: $color-background-dark;
                 margin-left: 8px;
             }
         }
@@ -111,7 +111,7 @@
             outline: none;
             border: none;
             line-height: 20px;
-            background: $color-accent-dark;
+            background: $color-background-dark;
         }
 
         &__result {
@@ -131,7 +131,7 @@
 
                 @include sm("&:active", "&:hover") {
                     cursor: pointer;
-                    background-color: $color-accent-dark;
+                    background-color: $color-background-dark;
                     border-radius: 8px;
                 }
             }

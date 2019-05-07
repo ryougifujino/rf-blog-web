@@ -14,7 +14,7 @@
         height: $dialog-header-height;
         line-height: $dialog-header-height;
         border-radius: $border-radius $border-radius 0 0;
-        border-bottom: 1px solid $color-accent-dark;
+        border-bottom: 1px solid $color-background-dark;
         text-align: center;
     }
 </style>

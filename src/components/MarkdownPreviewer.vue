@@ -57,7 +57,7 @@
         }
 
         pre, span {
-            background-color: $color-accent;
+            background-color: $color-background;
         }
 
         pre {
@@ -65,7 +65,7 @@
         }
 
         img {
-            background-color: $color-accent;
+            background-color: $color-background;
         }
     }
 

@@ -43,8 +43,8 @@
         &__add-new {
             padding: 8px 16px;
             border-radius: 16px;
-            border: 1px solid $color-accent-dark;
-            background: $color-accent-dark;
+            border: 1px solid $color-background-dark;
+            background: $color-background-dark;
             margin-top: 16px;
             text-align: center;
 
