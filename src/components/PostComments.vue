@@ -1,5 +1,5 @@
 <template>
-    <div class="post-comments">
+    <div class="post-comments" v-scroll-bottom="loadMore">
         <PostReviewEditor class="post-comments__comment-editor"
                           keyword="评论"
                           content-max-length="5000"
@@ -15,6 +15,10 @@
                      :active-reply-box-id.sync="activeReplyBoxId"
                      :active-delete-button-id.sync="activeDeleteButtonId">
         </PostComment>
+        <VLoadMoreBar :is-loading="isLoadingComments"
+                      v-if="isShowLoadMoreBar"
+                      @click="loadMore">
+        </VLoadMoreBar>
     </div>
 </template>
 
@@ -40,7 +44,7 @@
             activeDeleteButtonId: ''
         }),
         computed: {
-            ...mapModuleState('post', ['comments'])
+            ...mapModuleState('post', ['comments', 'isLoadingComments', 'isShowLoadMoreBar'])
         },
         methods: {
             ...mapActions([CREATE_POST_COMMENT, FETCH_POST_COMMENTS]),
@@ -57,11 +61,14 @@
                     })
                     .catch(() => this.$showToast('发表评论失败'))
                     .finally(() => this.newCommentIsPublishing = false);
+            },
+            loadMore() {
+                this[FETCH_POST_COMMENTS](this.$route.params.id)
+                    .catch(() => this.$showToast('加载评论失败'));
             }
         },
         created() {
-            this[FETCH_POST_COMMENTS](this.$route.params.id)
-                .catch(() => this.$showToast('加载评论失败'));
+            this.loadMore();
         }
 
     }

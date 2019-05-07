@@ -22,7 +22,7 @@ import {
     createPostReply
 } from "@/api";
 
-const COMMENTS_LIMIT = 5;
+const COMMENTS_LIMIT = 10;
 const initialState = {
     title: '',
     body: '',
@@ -31,9 +31,14 @@ const initialState = {
     createdOn: null,
     tags: [],
     isLoading: true,
+
+    // comments
     comments: [],
     commentIdSet: new Set(),
-    commentPageNumber: 1
+    commentPageNumber: 1,
+    reachedEnd: false,
+    isLoadingComments: false,
+    isShowLoadMoreBar: true
 };
 
 const state = {...initialState};
@@ -50,11 +55,28 @@ const actions = {
 
     },
     async [FETCH_POST_COMMENTS]({state, commit}, postId) {
+        if (state.isLoadingComments) {
+            return;
+        }
+        if (state.reachedEnd) {
+            return;
+        }
+
         const offset = (state.commentPageNumber - 1) * COMMENTS_LIMIT;
-        const {data: {items: comments}} = await fetchPostComments(postId, offset, COMMENTS_LIMIT);
-        const filteredComments = comments.filter(({id}) => !state.commentIdSet.has(id));
-        filteredComments.forEach(({id}) => state.commentIdSet.add(id));
-        state.comments.push(...filteredComments);
+        try {
+            state.isLoadingComments = true;
+            const {data: {items: comments}} = await fetchPostComments(postId, offset, COMMENTS_LIMIT);
+            state.commentPageNumber++;
+            if (comments.length < COMMENTS_LIMIT) {
+                state.reachedEnd = true;
+                state.isShowLoadMoreBar = false;
+            }
+            const filteredComments = comments.filter(({id}) => !state.commentIdSet.has(id));
+            filteredComments.forEach(({id}) => state.commentIdSet.add(id));
+            state.comments.push(...filteredComments);
+        } finally {
+            state.isLoadingComments = false;
+        }
     },
     async [DELETE_POST]({commit, rootState}, postId) {
         await deletePost(postId);
