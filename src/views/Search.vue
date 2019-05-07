@@ -34,7 +34,6 @@
     import {FETCH_POST_TITLES, FETCH_SHARES} from "@/store/action-types";
 
     const RE_URL = /^https?:\/\//;
-    const RESULT_LIMIT = 20;
     export default {
         data: () => ({
             searchKey: '',
@@ -47,10 +46,10 @@
                 return new RegExp(this.searchKey.trim(), 'i');
             },
             filteredPosts() {
-                return this.posts.filter(({title}) => this.searchKeyRE.test(title)).slice(0, RESULT_LIMIT);
+                return this.posts.filter(({title}) => this.searchKeyRE.test(title));
             },
             filteredShares() {
-                return this.shares.filter(({title}) => this.searchKeyRE.test(title)).slice(0, RESULT_LIMIT);
+                return this.shares.filter(({title}) => this.searchKeyRE.test(title));
             }
         },
         methods: {
