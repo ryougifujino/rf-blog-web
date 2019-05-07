@@ -2,12 +2,10 @@ export default {
     install(Vue) {
 
         !function () {
+            let scrollListener;
             Vue.directive('scroll-bottom', {
-                inserted(el, binding, vnode) {
-                    document.addEventListener('scroll', () => {
-                        if (vnode.context.$route.path !== `/${binding.arg}`) {
-                            return;
-                        }
+                inserted(el, binding) {
+                    scrollListener = () => {
                         const [root, body] = [document.documentElement, document.body];
                         const scrollTop = root.scrollTop || body.scrollTop;
                         const visibleHeight = root.clientHeight || body.clientHeight;
@@ -15,7 +13,11 @@ export default {
                         if (scrollTop + visibleHeight === scrollHeight) {
                             binding.value();
                         }
-                    });
+                    };
+                    document.addEventListener('scroll', scrollListener);
+                },
+                unbind() {
+                    document.removeEventListener('scroll', scrollListener);
                 }
             });
         }();
