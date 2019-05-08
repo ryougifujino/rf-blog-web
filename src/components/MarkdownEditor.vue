@@ -34,6 +34,8 @@
                 useSoftTabs: true,
                 scrollPastEnd: true
             });
+            editor.container.style.lineHeight = "1.25";
+            editor.renderer.updateFontSize();
             const lineHeight = document.querySelector(".ace_active-line").offsetHeight;
             let lastScrollTop;
             editor.session.on("changeScrollTop", scrollTop => {
