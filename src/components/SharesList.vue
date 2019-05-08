@@ -91,6 +91,8 @@
         &__specific-category-shares {
             > h3 {
                 margin: 16px 0 4px;
+                overflow: hidden;
+                text-overflow: ellipsis;
             }
         }
 
