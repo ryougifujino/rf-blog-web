@@ -38,6 +38,7 @@
         flex-direction: column;
         align-items: center;
         padding: 16px;
+        color: $text-color-primary-light;
 
         &__item {
             line-height: 3;

@@ -51,6 +51,7 @@
             > h4 {
                 font-weight: 500;
                 @extend %word-break;
+                color: $text-color-primary-light;
             }
         }
 
