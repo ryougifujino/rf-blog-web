@@ -106,13 +106,13 @@
         height: 100vh;
         overflow: hidden; // otherwise textarea will expand its container div
         $toolbar-height: 64px;
-        $toolbar-right-width: 64px + 8px;
 
         &__toolbar {
             height: $toolbar-height;
             border-bottom: 1px solid $color-background-dark;
             padding: 0 16px;
-            font-size: 0;
+            display: flex;
+            align-items: center;
         }
 
         &__title {
@@ -120,17 +120,12 @@
             outline: none;
             font-weight: bold;
             font-size: 24px;
-            width: calc(100% - #{$toolbar-right-width});
-            line-height: $toolbar-height;
-            vertical-align: middle;
+            min-width: 100px;
+            flex: 1;
         }
 
         &__toolbar-right {
-            display: inline-block;
-            vertical-align: middle;
-            text-align: right;
-            width: $toolbar-right-width;
-            font-size: 16px;
+            margin-left: 12px;
         }
 
         %markdown {
