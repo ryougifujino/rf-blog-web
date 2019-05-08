@@ -54,6 +54,7 @@
 
 <style lang="scss">
     @import "~@/assets/styles/theme";
+    @import "~@/assets/styles/mixins";
 
     .ace_heading {
         color: black;
@@ -100,5 +101,8 @@
         border-radius: 6px;
     }
 
+    .ace_scrollbar-v {
+        @extend %scrollbar;
+    }
 
 </style>

@@ -48,6 +48,7 @@
 
 <style lang="scss">
     @import "~@/assets/styles/theme";
+    @import "~@/assets/styles/mixins";
     @import "~github-markdown-css";
 
     .markdown-previewer__content {
@@ -62,11 +63,14 @@
 
         pre {
             border: 2px dashed $text-color-secondary-light;
+            @extend %scrollbar;
         }
 
         img {
             background-color: $color-background;
         }
+
+        @extend %scrollbar;
     }
 
 </style>
