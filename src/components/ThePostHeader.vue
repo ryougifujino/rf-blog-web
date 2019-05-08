@@ -1,7 +1,7 @@
 <template>
     <div class="the-post-header">
         <div class="the-post-header__content">
-            <h2 class="the-post-header__title" @click="$router.back()">ryougifujino</h2>
+            <h2 class="the-post-header__title" @click="$router.back()">{{title}}</h2>
             <VIcon name="baseline-delete-24px" @click.native="showDeleteConfirm"></VIcon>
             <VIcon name="baseline-edit-24px" @click.native="editPost"></VIcon>
         </div>
@@ -15,6 +15,7 @@
 <script>
     import {mapActions} from "vuex";
     import {DELETE_POST} from "@/store/action-types";
+    import {mapModuleState} from "@/util/mapStateUtils";
 
     export default {
         data() {
@@ -22,6 +23,9 @@
                 isShowDeleteConfirm: false,
                 postId: this.$route.params.id
             };
+        },
+        computed: {
+            ...mapModuleState('post', ['title'])
         },
         methods: {
             ...mapActions([DELETE_POST]),
@@ -64,6 +68,9 @@
         &__title {
             line-height: $view-header-height;
             user-select: none;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
             flex: 1;
 
             &:hover {
