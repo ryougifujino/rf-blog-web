@@ -104,7 +104,7 @@
         }
 
         &__subtitle {
-            color: $text-color-primary-light;
+            color: $text-color-primary;
         }
     }
 
@@ -122,7 +122,7 @@
                 text-decoration: none;
                 border-radius: 30px;
                 padding: 8px 16px;
-                color: $text-color-secondary;
+                color: $text-color-primary-light;
                 border: $color-background 1px solid;
                 white-space: nowrap;
 

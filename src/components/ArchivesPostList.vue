@@ -59,6 +59,7 @@
             display: flex;
             flex-direction: row-reverse;
             margin-top: 6px;
+            color: $text-color-secondary;
         }
     }
 
