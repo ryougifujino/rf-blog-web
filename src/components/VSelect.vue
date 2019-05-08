@@ -1,9 +1,12 @@
 <template>
     <div class="v-select" @click.self="toggleContent">
-        <span class="v-select__value"
-              @click="toggleContent">{{selectedItemName}}</span>
+        <div class="v-select__value-container" @click="toggleContent">
+            <span class="v-select__value">{{selectedItemName}}</span>
+            <VIcon name="baseline-keyboard_arrow_down-24px" class="v-select__icon"></VIcon>
+        </div>
         <div class="v-select__content" v-show="isContentVisible">
             <div class="v-select__search">
+                <VIcon name="baseline-search-24px" class="v-select__icon"></VIcon>
                 <input :placeholder="`查找${keyword}`" spellcheck="false" v-model="searchKey">
             </div>
             <div class="v-select__list-container">
@@ -11,7 +14,9 @@
                     <VProgressBar v-if="isAdding"></VProgressBar>
                     <div class="v-select__add-button"
                          v-if="!isAddInputVisible"
-                         @click="isAddInputVisible = true">新增{{keyword}}
+                         @click="isAddInputVisible = true">
+                        <VIcon name="baseline-add-24px" class="v-select__icon"></VIcon>
+                        新增{{keyword}}
                     </div>
                     <div v-if="isAddInputVisible">
                         <div :class="addMessageClass" v-if="addMessage">{{addMessage}}</div>
@@ -152,14 +157,30 @@
             box-sizing: border-box;
         }
 
+        &__value-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 100%;
+            border-radius: $border-radius;
+
+            .v-select__icon {
+                margin-right: 8px;
+                background-color: inherit;
+            }
+
+            @include sm("&:active", "&:hover") {
+                background-color: $color-background-dark;
+            }
+        }
+
         &__value {
-            display: inline-block;
-            line-height: $select-height - 2px;
-            max-width: calc(100% - 50px);
             white-space: nowrap;
             text-overflow: ellipsis;
             overflow: hidden;
-            margin-left: 8px;
+            margin: 0 8px;
+            background-color: inherit;
+            flex: 1;
         }
 
         &__content {
@@ -176,12 +197,14 @@
             border-bottom: 1px solid $text-color-secondary;
             padding: 0 8px;
             height: $search-height;
+            display: flex;
+            align-items: center;
 
             > input {
                 border: none;
                 outline: none;
-                width: 100%;
-                line-height: $search-height - 1px;
+                flex: 1;
+                margin-left: 8px;
             }
         }
 
@@ -200,6 +223,13 @@
         &__add-button {
             padding: 8px;
             color: $text-color-primary-light;
+            display: flex;
+            align-items: center;
+
+            > svg {
+                margin-right: 8px;
+                background-color: inherit;
+            }
         }
 
         @include sm("&__add-button:active", "&__add-button:hover") {
@@ -257,6 +287,12 @@
             @include sm("> li:active", "> li:hover") {
                 background-color: $color-background-dark;
             }
+        }
+
+        &__icon {
+            fill: $text-color-secondary;
+            width: 20px;
+            height: 20px;
         }
     }
 </style>
