@@ -1,5 +1,5 @@
 <template>
-    <div class="v-select" @click.self="toggleContent">
+    <div class="v-select" v-click-outside="hideContent">
         <div class="v-select__value-container" @click="toggleContent">
             <span class="v-select__value">{{selectedItemName}}</span>
             <VIcon name="baseline-keyboard_arrow_down-24px" class="v-select__icon"></VIcon>
@@ -74,6 +74,9 @@
             isAdding: false
         }),
         methods: {
+            hideContent() {
+                this.isContentVisible = false;
+            },
             toggleContent() {
                 this.isContentVisible = !this.isContentVisible;
             },
