@@ -99,10 +99,6 @@
     @import "~@/assets/styles/theme";
 
     .post-edit {
-        * {
-            box-sizing: border-box;
-        }
-
         height: 100vh;
         overflow: hidden; // otherwise textarea will expand its container div
         $toolbar-height: 64px;
@@ -132,6 +128,7 @@
             height: calc(100% - #{$toolbar-height});
             width: 50%;
             float: left;
+            box-sizing: border-box;
         }
 
         &__markdown-input {
