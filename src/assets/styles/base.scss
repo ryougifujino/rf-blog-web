@@ -12,8 +12,8 @@ body {
   margin-left: calc(100vw - 100%);
   -webkit-tap-highlight-color: transparent;
   @extend %scrollbar;
-  font-family: "Helvetica Neue", Helvetica, Arial, "PingFang SC", "Hiragino Sans GB", "Heiti SC",
-  "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;
+  font-family: "PingFang SC", "Hiragino Sans GB", "Heiti SC", "Microsoft YaHei",
+  "WenQuanYi Micro Hei", sans-serif;
 }
 
 input, textarea {

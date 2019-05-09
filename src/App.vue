@@ -8,8 +8,6 @@
                     <img src="./assets/images/logo.png" alt="Logo">
                 </span>
             </h1>
-
-            <h3 class="header-bar__subtitle">the blog</h3>
         </header>
         <nav class="header-nav" v-if="headersSeen">
             <div class="header-nav__menu">
@@ -50,7 +48,7 @@
                 return ({'app--width-limited': this.headersSeen});
             },
             title() {
-                return this.windowWidth <= 450 ? "rf" : "ryougifujino";
+                return this.windowWidth <= 450 ? "RF" : "RF THE BLOG";
             }
         },
         methods: {
@@ -101,10 +99,6 @@
                 height: 40px;
                 padding: 0;
             }
-        }
-
-        &__subtitle {
-            color: $text-color-primary;
         }
     }
 
