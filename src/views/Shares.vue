@@ -1,6 +1,6 @@
 <template>
     <div class="shares">
-        <div class="shares__add-new" @click="showPublisher">新增分享</div>
+        <div v-if="isAuthenticated" class="shares__add-new" @click="showPublisher">新增分享</div>
         <SharesList></SharesList>
         <SharesPublisher></SharesPublisher>
     </div>
@@ -9,6 +9,7 @@
 <script>
     import SharesList from "@/components/SharesList.vue";
     import SharesPublisher from "@/components/SharesPublisher.vue";
+    import {mapModuleState} from "@/util/mapStateUtils";
     import {mapMutations} from "vuex";
     import {
         SHARES_SET_PUBLISHING_SHARE_ID,
@@ -20,6 +21,9 @@
         components: {
             SharesList,
             SharesPublisher
+        },
+        computed: {
+            ...mapModuleState('auth', ['isAuthenticated'])
         },
         methods: {
             ...mapMutations([SHARES_SET_PUBLISHER_VISIBLE, SHARES_RESET_PUBLISHER_STATE,

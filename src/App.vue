@@ -4,7 +4,10 @@
             <h1 class="header-bar__title">{{title}}
                 <span class="header-bar__menu">
                     <VIcon name="baseline-search-24px" @click.native="go('/search')"></VIcon>
-                    <VIcon name="baseline-create-24px" @click.native="go('/post-edit')"></VIcon>
+                    <VIcon v-if="isAuthenticated"
+                           name="baseline-create-24px"
+                           @click.native="go('/post-edit')">
+                    </VIcon>
                     <img src="./assets/images/logo.png" alt="Logo">
                 </span>
             </h1>
@@ -24,6 +27,10 @@
 </template>
 
 <script>
+    import {CHECK_AUTH} from "@/store/action-types";
+    import {mapActions} from "vuex";
+    import {mapModuleState} from "@/util/mapStateUtils";
+
     const MAIN_VIEW_PATHS = ['/home', '/archives', '/share', '/about'];
     export default {
         data() {
@@ -38,6 +45,7 @@
             }
         },
         computed: {
+            ...mapModuleState('auth', ['isAuthenticated']),
             checkedNavTabClass() {
                 return path => ({"header-nav__item--checked": this.currentNavTab.includes(path)});
             },
@@ -52,9 +60,13 @@
             }
         },
         methods: {
+            ...mapActions([CHECK_AUTH]),
             go(location) {
                 this.$router.push(location);
             }
+        },
+        created() {
+            this[CHECK_AUTH]();
         },
         mounted() {
             window.addEventListener('resize', () => {

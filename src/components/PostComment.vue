@@ -6,7 +6,8 @@
         <div class="post-comment__content">{{comment.content}}</div>
         <div class="post-comment__actions">
             <a @click="expandReplyBox(comment.id)">回复</a>
-            <a :class="deleteButtonClass(comment.id)"
+            <a v-if="isAuthenticated"
+               :class="deleteButtonClass(comment.id)"
                v-click-outside:delete="deactivateDeleteButton"
                @click="requestDelete(comment.id)">{{deleteButtonText(comment.id)}}</a>
         </div>
@@ -29,12 +30,13 @@
                     <span> · </span>
                     <a class="post-comment__reply-action"
                        @click="expandReplyBox(comment.id + '#' + reply.id, reply.from_user)">回复</a>
-                    <span> · </span>
-                    <a class="post-comment__reply-action"
+                    <span v-if="isAuthenticated"> · </span>
+                    <a v-if="isAuthenticated"
+                       class="post-comment__reply-action"
                        :class="deleteButtonClass(comment.id + '#' + reply.id)"
                        v-click-outside:delete="deactivateDeleteButton"
                        @click="requestDelete(comment.id + '#' + reply.id, reply.id)">
-                        {{deleteButtonText(comment.id + '#' + reply.id)}}
+                    {{deleteButtonText(comment.id + '#' + reply.id)}}
                     </a>
                 </div>
                 <PostReviewEditor class="post-comment__reply-editor"
@@ -56,6 +58,7 @@
 <script>
     import PostReviewEditor from "@/components/PostReviewEditor.vue";
     import {LOCAL_KEY_FROM_USER} from "@/common/constants";
+    import {mapModuleState} from "@/util/mapStateUtils";
     import {mapActions} from "vuex";
     import {CREATE_POST_REPLY, DELETE_POST_COMMENT, DELETE_POST_REPLY} from "@/store/action-types";
 
@@ -85,6 +88,7 @@
             commentIsDeleting: false
         }),
         computed: {
+            ...mapModuleState('auth', ['isAuthenticated']),
             deleteButtonClass() {
                 return deleteButtonId => {
                     const isActive = this.activeDeleteButtonId === String(deleteButtonId);
