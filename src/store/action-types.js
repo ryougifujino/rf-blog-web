@@ -17,3 +17,7 @@ export const DELETE_POST_REPLY = "DELETE_POST_REPLY";
 export const DELETE_POST_COMMENT = "DELETE_POST_COMMENT";
 export const DELETE_SHARE = "DELETE_SHARE";
 export const POST_EDIT_INITIALIZE = "POST_EDIT_INITIALIZE";
+export const LOGIN = "LOGIN";
+export const LOGOUT = "LOGOUT";
+export const CHECK_AUTH = "CHECK_AUTH";
+

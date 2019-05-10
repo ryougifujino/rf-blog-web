@@ -37,6 +37,10 @@ export function fetchPostComments(postId, offset, limit) {
     return _.get(`/comments/${postId}?offset=${offset}&limit=${limit}`);
 }
 
+export function fetchToken() {
+    return _.get('/token');
+}
+
 export function createAlbum(name) {
     return _.post('/albums', {album: {name}});
 }
@@ -87,6 +91,12 @@ export function createPostReply(commentId, content, fromUser) {
     });
 }
 
+export function createToken(credential) {
+    return _.post('/token', {
+        credential
+    });
+}
+
 export function deletePost(postId) {
     return _.delete(`/posts/${postId}`);
 }
@@ -101,6 +111,10 @@ export function deletePostReply(replyId) {
 
 export function deletePostComment(commentId) {
     return _.delete(`/comments/${commentId}`);
+}
+
+export function deleteToken() {
+    return _.delete('/token');
 }
 
 export function updatePost(postId, title, body, isPrivate, albumId, tagNames) {
