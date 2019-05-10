@@ -3,8 +3,8 @@ import {
 } from '@/common/constants';
 
 import {
-    LOGIN,
-    LOGOUT,
+    LOG_IN,
+    LOG_OUT,
     CHECK_AUTH
 } from '@/store/action-types';
 
@@ -24,11 +24,11 @@ const state = {
 };
 
 const actions = {
-    async [LOGIN]({commit}, credential) {
+    async [LOG_IN]({commit}, credential) {
         await createToken(credential);
         commit(SET_AUTH);
     },
-    async [LOGOUT]({commit}) {
+    async [LOG_OUT]({commit}) {
         await deleteToken();
         commit(REMOVE_AUTH);
     },
