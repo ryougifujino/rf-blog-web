@@ -23,16 +23,21 @@
             <hr>
         </nav>
         <router-view></router-view>
+        <AuthDialog></AuthDialog>
     </div>
 </template>
 
 <script>
+    import AuthDialog from '@/components/AuthDialog.vue';
     import {CHECK_AUTH} from "@/store/action-types";
     import {mapActions} from "vuex";
     import {mapModuleState} from "@/util/mapStateUtils";
 
     const MAIN_VIEW_PATHS = ['/home', '/archives', '/share', '/about'];
     export default {
+        components: {
+            AuthDialog
+        },
         data() {
             return {
                 currentNavTab: this.$route.path,
