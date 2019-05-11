@@ -8,7 +8,7 @@
                            name="baseline-create-24px"
                            @click.native="go('/post-edit')">
                     </VIcon>
-                    <img src="./assets/images/logo.png" alt="Logo">
+                    <img @click="executeAuthAction" src="./assets/images/logo.png" alt="Logo">
                 </span>
             </h1>
         </header>
@@ -23,13 +23,13 @@
             <hr>
         </nav>
         <router-view></router-view>
-        <AuthDialog></AuthDialog>
+        <AuthDialog :visible.sync="isShowAuthDialog"></AuthDialog>
     </div>
 </template>
 
 <script>
     import AuthDialog from '@/components/AuthDialog.vue';
-    import {CHECK_AUTH} from "@/store/action-types";
+    import {CHECK_AUTH, LOG_OUT} from "@/store/action-types";
     import {mapActions} from "vuex";
     import {mapModuleState} from "@/util/mapStateUtils";
 
@@ -41,7 +41,8 @@
         data() {
             return {
                 currentNavTab: this.$route.path,
-                windowWidth: window.innerWidth
+                windowWidth: window.innerWidth,
+                isShowAuthDialog: false
             };
         },
         watch: {
@@ -65,9 +66,16 @@
             }
         },
         methods: {
-            ...mapActions([CHECK_AUTH]),
+            ...mapActions([CHECK_AUTH, LOG_OUT]),
             go(location) {
                 this.$router.push(location);
+            },
+            executeAuthAction() {
+                if (!this.isAuthenticated) {
+                    this.isShowAuthDialog = true;
+                } else {
+                    this[LOG_OUT]();
+                }
             }
         },
         created() {

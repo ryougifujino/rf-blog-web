@@ -1,13 +1,44 @@
 <template>
-    <div class="mask">
+    <div class="mask" v-if="visible" @click.self="hideAuthDialog">
         <div class="auth-dialog">
-            <textarea></textarea>
+            <textarea @keyup.shift.space="logIn" v-model="credential"></textarea>
         </div>
     </div>
 </template>
 
 <script>
-    export default {}
+    import {mapActions} from "vuex";
+    import {LOG_IN} from "@/store/action-types";
+
+    export default {
+        props: {
+            visible: {
+                type: Boolean,
+                default: false
+            }
+        },
+        data: () => ({
+            credential: '',
+            lock: false
+        }),
+        methods: {
+            ...mapActions([LOG_IN]),
+            hideAuthDialog() {
+                this.$emit('update:visible', false);
+            },
+            logIn() {
+                if (this.lock) {
+                    return;
+                }
+                this.lock = true;
+                this.credential = this.credential.trim();
+                this[LOG_IN](this.credential)
+                    .then(() => this.hideAuthDialog())
+                    .catch(() => this.$showToast('登录失败'))
+                    .finally(() => setTimeout(() => this.lock = false, 2000));
+            }
+        }
+    }
 </script>
 
 <style lang="scss">
