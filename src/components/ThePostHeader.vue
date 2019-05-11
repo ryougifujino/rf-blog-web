@@ -2,8 +2,14 @@
     <div class="the-post-header">
         <div class="the-post-header__content">
             <h2 class="the-post-header__title" @click="$router.back()">{{title}}</h2>
-            <VIcon name="baseline-delete-24px" @click.native="showDeleteConfirm"></VIcon>
-            <VIcon name="baseline-edit-24px" @click.native="editPost"></VIcon>
+            <VIcon v-if="isAuthenticated"
+                   name="baseline-delete-24px"
+                   @click.native="showDeleteConfirm">
+            </VIcon>
+            <VIcon v-if="isAuthenticated"
+                   name="baseline-edit-24px"
+                   @click.native="editPost">
+            </VIcon>
         </div>
         <VDialogSimple :visible.sync="isShowDeleteConfirm" @confirm="deleteThePost">
             <template v-slot:header>删除确认</template>
@@ -25,7 +31,8 @@
             };
         },
         computed: {
-            ...mapModuleState('post', ['title'])
+            ...mapModuleState('post', ['title']),
+            ...mapModuleState('auth', ['isAuthenticated'])
         },
         methods: {
             ...mapActions([DELETE_POST]),

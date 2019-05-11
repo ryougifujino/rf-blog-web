@@ -9,10 +9,14 @@
                      v-for="share of specificCategoryShares.shares"
                      :key="share.id">
                     <h4 class="shares-list__link" @click="openLink(share.url)">{{share.title}}</h4>
-                    <VIcon name="baseline-delete-24px"
+                    <VIcon v-if="isAuthenticated"
+                           name="baseline-delete-24px"
                            @click.native="showDeleteConfirm(share.id)">
                     </VIcon>
-                    <VIcon name="baseline-edit-24px" @click.native="showShareEdit(share)"></VIcon>
+                    <VIcon v-if="isAuthenticated"
+                           name="baseline-edit-24px"
+                           @click.native="showShareEdit(share)">
+                    </VIcon>
                 </div>
             </li>
         </ul>
@@ -25,6 +29,7 @@
 
 <script>
     import {FETCH_SHARES, FETCH_SHARE_CATEGORIES, DELETE_SHARE} from '@/store/action-types';
+    import {mapModuleState} from "@/util/mapStateUtils";
     import {mapActions, mapGetters, mapMutations} from "vuex";
     import {
         SHARES_SET_PUBLISHER_VISIBLE,
@@ -41,7 +46,8 @@
             deletingShareId: ''
         }),
         computed: {
-            ...mapGetters(['categorizedShares'])
+            ...mapGetters(['categorizedShares']),
+            ...mapModuleState('auth', ['isAuthenticated'])
         },
         methods: {
             ...mapActions([FETCH_SHARES, FETCH_SHARE_CATEGORIES, DELETE_SHARE]),

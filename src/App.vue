@@ -4,8 +4,11 @@
             <h1 class="header-bar__title">{{title}}
                 <span class="header-bar__menu">
                     <VIcon name="baseline-search-24px" @click.native="go('/search')"></VIcon>
-                    <VIcon name="baseline-create-24px" @click.native="go('/post-edit')"></VIcon>
-                    <img src="./assets/images/logo.png" alt="Logo">
+                    <VIcon v-if="isAuthenticated"
+                           name="baseline-create-24px"
+                           @click.native="go('/post-edit')">
+                    </VIcon>
+                    <img @click="executeAuthAction" src="./assets/images/logo.png" alt="Logo">
                 </span>
             </h1>
         </header>
@@ -20,16 +23,26 @@
             <hr>
         </nav>
         <router-view></router-view>
+        <AuthDialog :visible.sync="isShowAuthDialog"></AuthDialog>
     </div>
 </template>
 
 <script>
+    import AuthDialog from '@/components/AuthDialog.vue';
+    import {CHECK_AUTH, LOG_OUT} from "@/store/action-types";
+    import {mapActions} from "vuex";
+    import {mapModuleState} from "@/util/mapStateUtils";
+
     const MAIN_VIEW_PATHS = ['/home', '/archives', '/share', '/about'];
     export default {
+        components: {
+            AuthDialog
+        },
         data() {
             return {
                 currentNavTab: this.$route.path,
-                windowWidth: window.innerWidth
+                windowWidth: window.innerWidth,
+                isShowAuthDialog: false
             };
         },
         watch: {
@@ -38,6 +51,7 @@
             }
         },
         computed: {
+            ...mapModuleState('auth', ['isAuthenticated']),
             checkedNavTabClass() {
                 return path => ({"header-nav__item--checked": this.currentNavTab.includes(path)});
             },
@@ -52,9 +66,20 @@
             }
         },
         methods: {
+            ...mapActions([CHECK_AUTH, LOG_OUT]),
             go(location) {
                 this.$router.push(location);
+            },
+            executeAuthAction() {
+                if (!this.isAuthenticated) {
+                    this.isShowAuthDialog = true;
+                } else {
+                    this[LOG_OUT]();
+                }
             }
+        },
+        created() {
+            this[CHECK_AUTH]();
         },
         mounted() {
             window.addEventListener('resize', () => {
