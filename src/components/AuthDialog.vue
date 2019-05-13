@@ -2,6 +2,7 @@
     <div class="mask" v-if="visible" @click.self="hideAuthDialog">
         <div class="auth-dialog">
             <textarea @keyup.shift.space="logIn" v-model="credential"></textarea>
+            <div class="auth-dialog__login-button" @click="logIn">登录</div>
         </div>
     </div>
 </template>
@@ -43,6 +44,7 @@
 
 <style lang="scss">
     @import "~@/assets/styles/theme";
+    @import "~@/assets/styles/dimens";
     @import "~@/assets/styles/mixins";
 
     .auth-dialog {
@@ -60,6 +62,22 @@
             resize: none;
             outline: none;
             border: none;
+        }
+
+        &__login-button {
+            font-size: 16px;
+            text-align: center;
+            cursor: pointer;
+            user-select: none;
+            line-height: 45px;
+            border-radius: 16px;
+            margin: 8px;
+            color: $text-color-primary-light;
+            background: $color-background-dark;
+
+            @include sm("&:active", "&:hover") {
+                background: $color-background-darker;
+            }
         }
     }
 </style>
