@@ -5,9 +5,9 @@
   "private": false,
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "webpack --mode production",
-    "watch": "webpack --watch",
-    "start": "webpack-dev-server --host 0.0.0.0"
+    "build": "webpack --config build/webpack.prod.js",
+    "watch": "webpack --watch --config build/webpack.dev.js",
+    "start": "webpack-dev-server --host 0.0.0.0 --config build/webpack.dev.js"
   },
   "repository": {
     "type": "git",
@@ -33,7 +33,8 @@
     "vue-template-compiler": "^2.6.8",
     "webpack": "^4.29.6",
     "webpack-cli": "^3.2.3",
-    "webpack-dev-server": "^3.2.1"
+    "webpack-dev-server": "^3.2.1",
+    "webpack-merge": "^4.2.1"
   },
   "dependencies": {
     "ace-builds": "^1.4.3",

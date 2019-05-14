@@ -2,14 +2,13 @@ const path = require('path');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const webpack = require('webpack');
 
-const config = {
+module.exports = {
     entry: {
         app: './src/main.js'
     },
     output: {
-        path: path.resolve(__dirname, 'dist')
+        path: path.resolve(__dirname, '../dist')
     },
     module: {
         rules: [
@@ -24,12 +23,12 @@ const config = {
             {
                 test: /\.(jpg|jpeg|gif|svg|png)$/,
                 use: 'file-loader',
-                exclude: path.resolve(__dirname, 'src/assets/icons')
+                exclude: path.resolve(__dirname, '../src/assets/icons')
             },
             {
                 test: /\.svg$/,
                 use: 'svg-sprite-loader',
-                include: path.resolve(__dirname, 'src/assets/icons')
+                include: path.resolve(__dirname, '../src/assets/icons')
             }
         ]
     },
@@ -43,28 +42,8 @@ const config = {
     ],
     resolve: {
         alias: {
-            '@': path.resolve(__dirname, 'src'),
-            'images': path.resolve(__dirname, 'src/assets/images'),
+            '@': path.resolve(__dirname, '../src'),
+            'images': path.resolve(__dirname, '../src/assets/images'),
         }
     }
-};
-
-module.exports = (env, argv) => {
-    config.mode = argv.mode === 'production' ? 'production' : 'development';
-
-    if (config.mode === 'development') {
-        config.devtool = "inline-source-map";
-        config.output.filename = '[name].bundle.js';
-        config.plugins.push(new webpack.HotModuleReplacementPlugin());
-        config.devServer = {
-            contentBase: './dist',
-            hot: true
-        };
-    }
-
-    if (config.mode === 'production') {
-        config.output.filename = '[name].[contenthash].js';
-    }
-
-    return config;
 };
