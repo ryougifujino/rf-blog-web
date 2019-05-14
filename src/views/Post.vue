@@ -30,7 +30,6 @@
 
 <script>
     import ThePostHeader from '@/components/ThePostHeader.vue';
-    import MarkdownPreviewer from "@/components/MarkdownPreviewer.vue";
     import PostComments from "@/components/PostComments.vue";
     import {mapModuleState} from "@/util/mapStateUtils";
     import {mapActions} from "vuex";
@@ -39,7 +38,7 @@
     export default {
         components: {
             ThePostHeader,
-            MarkdownPreviewer,
+            MarkdownPreviewer: () => import("@/components/MarkdownPreviewer.vue"),
             PostComments
         },
         computed: {

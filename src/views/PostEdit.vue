@@ -28,8 +28,6 @@
 </template>
 
 <script>
-    import MarkdownEditor from '@/components/MarkdownEditor.vue';
-    import MarkdownPreviewer from '@/components/MarkdownPreviewer.vue';
     import PostEditPublisher from '@/components/PostEditPublisher.vue';
     import {mapModuleState} from '@/util/mapStateUtils';
     import {mapActions, mapMutations} from 'vuex';
@@ -44,8 +42,8 @@
             }
         },
         components: {
-            MarkdownEditor,
-            MarkdownPreviewer,
+            MarkdownEditor: () => import('@/components/MarkdownEditor.vue'),
+            MarkdownPreviewer: () => import("@/components/MarkdownPreviewer.vue"),
             PostEditPublisher
         },
         data: () => ({
