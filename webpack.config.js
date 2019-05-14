@@ -4,15 +4,12 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
 
-module.exports = {
-    mode: "development",
-    devtool: "inline-source-map",
+const config = {
     entry: {
         app: './src/main.js'
     },
     output: {
-        path: path.resolve(__dirname, 'dist'),
-        filename: "[name].bundle.js"
+        path: path.resolve(__dirname, 'dist')
     },
     module: {
         rules: [
@@ -42,17 +39,32 @@ module.exports = {
         new HtmlWebpackPlugin({
             title: "rf's Blog",
             template: "./index.html"
-        }),
-        new webpack.HotModuleReplacementPlugin()
+        })
     ],
     resolve: {
         alias: {
             '@': path.resolve(__dirname, 'src'),
             'images': path.resolve(__dirname, 'src/assets/images'),
         }
-    },
-    devServer: {
-        contentBase: './dist',
-        hot: true
     }
+};
+
+module.exports = (env, argv) => {
+    config.mode = argv.mode === 'production' ? 'production' : 'development';
+
+    if (config.mode === 'development') {
+        config.devtool = "inline-source-map";
+        config.output.filename = '[name].bundle.js';
+        config.plugins.push(new webpack.HotModuleReplacementPlugin());
+        config.devServer = {
+            contentBase: './dist',
+            hot: true
+        };
+    }
+
+    if (config.mode === 'production') {
+        config.output.filename = '[name].[contenthash].js';
+    }
+
+    return config;
 };
