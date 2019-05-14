@@ -3,13 +3,13 @@ import Router from 'vue-router';
 
 Vue.use(Router);
 
-import Home from '@/views/Home.vue';
-import Archives from '@/views/Archives.vue';
-import Share from '@/views/Shares.vue';
-import About from '@/views/About.vue';
-import PostEdit from '@/views/PostEdit.vue';
-import Post from '@/views/Post.vue';
-import Search from '@/views/Search.vue';
+const Home = () => import('@/views/Home.vue');
+const Archives = () => import('@/views/Archives.vue');
+const Share = () => import('@/views/Shares.vue');
+const About = () => import('@/views/About.vue');
+const PostEdit = () => import('@/views/PostEdit.vue');
+const Post = () => import('@/views/Post.vue');
+const Search = () => import('@/views/Search.vue');
 
 export default new Router({
     routes: [
