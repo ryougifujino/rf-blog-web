@@ -29,6 +29,11 @@ module.exports = {
                 test: /\.svg$/,
                 use: 'svg-sprite-loader',
                 include: path.resolve(__dirname, '../src/assets/icons')
+            },
+            {
+                test: /\.js$/,
+                exclude: /node_modules/,
+                use: 'babel-loader'
             }
         ]
     },
