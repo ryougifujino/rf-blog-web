@@ -2,15 +2,47 @@ function padNumber(targetNum, maxLength) {
     return String(targetNum).padStart(maxLength, '0');
 }
 
+const UTC_STRING_RE = /^\d{4}-\d{2}-\d{2}( \d{2}:\d{2}:\d{2}(\.\d{3})?)?$/;
+
+/**
+ * in order to be compatible with IE (dateString with time part cannot be parsed by new Date())
+ * @param dateString - like 2019-03-21[ 12:46:22[.556]]
+ */
+function parseDateString(dateString) {
+    if (typeof dateString !== 'string') {
+        return new Error('wrong type of dateString');
+    }
+    if (!UTC_STRING_RE.test(dateString)) {
+        return new Error('wrong format of dateString');
+    }
+    const result = new Date();
+    const dateArr = dateString.split(' ');
+    const [year, month, dayOfMonth] = dateArr[0].split('-');
+    result.setFullYear(Number(year));
+    result.setMonth(Number(month) - 1);
+    result.setDate(Number(dayOfMonth));
+    if (dateArr[1]) {
+        const [hours, minutes, secondsMilliseconds] = dateArr[1].split(':');
+        const [seconds, milliseconds] = secondsMilliseconds.split('.');
+        result.setHours(Number(hours));
+        result.setMinutes(Number(minutes));
+        result.setSeconds(Number(seconds));
+        if (milliseconds) {
+            result.setMilliseconds(Number(milliseconds));
+        }
+    }
+    return result;
+}
+
 /**
  * convert a UTC date string to local string
- * @param utcString - like 2019-03-21 12:46:22.556; any string can be put in new Date().
+ * @param utcString - like 2019-03-21[ 12:46:22[.556]]
  */
 export const utcStringToLocal = utcString => {
     if (typeof utcString !== 'string') {
         return utcString;
     }
-    let utcDate = new Date(utcString);
+    let utcDate = parseDateString(utcString);
     if (isNaN(utcDate.getTime())) {
         throw new Error("wrong UTC string format");
     }

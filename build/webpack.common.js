@@ -18,7 +18,7 @@ module.exports = {
             },
             {
                 test: /\.s?css$/,
-                use: ['vue-style-loader', 'css-loader', 'sass-loader']
+                use: ['vue-style-loader', 'css-loader', 'postcss-loader', 'sass-loader']
             },
             {
                 test: /\.(jpg|jpeg|gif|svg|png)$/,
@@ -29,6 +29,11 @@ module.exports = {
                 test: /\.svg$/,
                 use: 'svg-sprite-loader',
                 include: path.resolve(__dirname, '../src/assets/icons')
+            },
+            {
+                test: /\.js$/,
+                exclude: /node_modules/,
+                use: 'babel-loader'
             }
         ]
     },
@@ -44,6 +49,11 @@ module.exports = {
         alias: {
             '@': path.resolve(__dirname, '../src'),
             'images': path.resolve(__dirname, '../src/assets/images'),
+        }
+    },
+    optimization: {
+        splitChunks: {
+            chunks: "all"
         }
     }
 };
