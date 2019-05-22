@@ -19,6 +19,7 @@ module.exports = merge(common, {
         'vue': 'Vue',
         'vue-router': 'VueRouter',
         'vuex': 'Vuex',
-        'markdown-it': 'markdownit'
+        'markdown-it': 'markdownit',
+        'ace-builds': 'ace'
     }
 });

@@ -50,7 +50,6 @@
     import nginx from 'highlight.js/lib/languages/nginx';
     import objectivec from 'highlight.js/lib/languages/objectivec';
     import perl from 'highlight.js/lib/languages/perl';
-    import pgsql from 'highlight.js/lib/languages/pgsql';
     import php from 'highlight.js/lib/languages/php';
     import plaintext from 'highlight.js/lib/languages/plaintext';
     import powershell from 'highlight.js/lib/languages/powershell';
@@ -121,7 +120,6 @@
     hljs.registerLanguage('nginx', nginx);
     hljs.registerLanguage('objectivec', objectivec);
     hljs.registerLanguage('perl', perl);
-    hljs.registerLanguage('pgsql', pgsql);
     hljs.registerLanguage('php', php);
     hljs.registerLanguage('plaintext', plaintext);
     hljs.registerLanguage('powershell', powershell);

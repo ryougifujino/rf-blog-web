@@ -1,12 +1,14 @@
+const CDN_MARKDOWN_IT = "https://cdn.jsdelivr.net/npm/markdown-it@8.4.2/dist/markdown-it.min.js";
 export const JS = {
     '/home': [
-        "https://cdn.jsdelivr.net/npm/markdown-it@8.4.2/dist/markdown-it.min.js"
+        CDN_MARKDOWN_IT
     ],
     '/post/:id': [
-        "https://cdn.jsdelivr.net/npm/markdown-it@8.4.2/dist/markdown-it.min.js"
+        CDN_MARKDOWN_IT
     ],
     ...mapLibs(['/post-edit', '/post-edit/:id'], [
-        "https://cdn.jsdelivr.net/npm/markdown-it@8.4.2/dist/markdown-it.min.js"
+        CDN_MARKDOWN_IT,
+        "https://cdn.jsdelivr.net/npm/ace-builds@1.4.3/src-min-noconflict/ace.js"
     ])
 };
 
