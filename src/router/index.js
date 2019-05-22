@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import Router from 'vue-router';
+import {JS, attachLibs} from "@/common/cdn";
 
 Vue.use(Router);
 
@@ -11,17 +12,31 @@ const PostEdit = () => import('@/views/PostEdit.vue');
 const Post = () => import('@/views/Post.vue');
 const Search = () => import('@/views/Search.vue');
 
-export default new Router({
-    routes: [
-        {path: '/home', component: Home},
-        {path: '/archives', component: Archives},
-        {path: '/share', component: Share},
-        {path: '/about', component: About},
-        {path: '/post-edit', component: PostEdit},
-        {path: '/post-edit/:id', component: PostEdit},
-        {path: '/post/:id', component: Post},
-        {path: '/search', component: Search},
-        {path: '/', redirect: '/home'}
-    ]
+const routes = [
+    {path: '/home', component: Home},
+    {path: '/archives', component: Archives},
+    {path: '/share', component: Share},
+    {path: '/about', component: About},
+    {path: '/post-edit', component: PostEdit},
+    {path: '/post-edit/:id', component: PostEdit},
+    {path: '/post/:id', component: Post},
+    {path: '/search', component: Search},
+    {path: '/', redirect: '/home'}
+];
 
+if (process.env.NODE_ENV === 'production') {
+    routes.forEach(route => {
+        const libs = JS[route.path];
+        if (!libs) {
+            return;
+        }
+        route.beforeEnter = async (to, from, next) => {
+            await attachLibs(libs);
+            next();
+        };
+    });
+}
+
+export default new Router({
+    routes
 });
