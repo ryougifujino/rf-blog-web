@@ -24,16 +24,18 @@ const routes = [
     {path: '/', redirect: '/home'}
 ];
 
-routes.forEach(route => {
-    const libs = JS[route.path];
-    if (!libs) {
-        return;
-    }
-    route.beforeEnter = async (to, from, next) => {
-        await attachLibs(libs);
-        next();
-    };
-});
+if (process.env.NODE_ENV === 'production') {
+    routes.forEach(route => {
+        const libs = JS[route.path];
+        if (!libs) {
+            return;
+        }
+        route.beforeEnter = async (to, from, next) => {
+            await attachLibs(libs);
+            next();
+        };
+    });
+}
 
 export default new Router({
     routes
