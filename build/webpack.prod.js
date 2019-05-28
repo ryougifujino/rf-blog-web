@@ -6,7 +6,8 @@ const COMMON_JS = require('../src/common/common-cdn');
 module.exports = merge(common, {
     mode: "production",
     output: {
-        filename: '[name].[contenthash].js'
+        filename: '[name].[contenthash].js',
+        publicPath: "/"
     },
     plugins: [
         new HtmlWebpackPlugin({
