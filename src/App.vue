@@ -62,7 +62,7 @@
                 return ({'app--width-limited': this.headersSeen});
             },
             title() {
-                return this.windowWidth <= 450 ? "RF" : "RF THE BLOG";
+                return this.windowWidth <= 450 ? "RF" : "RF's Blog";
             }
         },
         methods: {
