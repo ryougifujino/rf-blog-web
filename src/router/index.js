@@ -38,6 +38,6 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 export default new Router({
-    mode: process.env.NODE_ENV === 'production' ? 'history' : '',
+    mode: process.env.NODE_ENV === 'production' ? 'history' : 'hash',
     routes
 });
