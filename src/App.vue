@@ -53,7 +53,7 @@
         computed: {
             ...mapModuleState('auth', ['isAuthenticated']),
             checkedNavTabClass() {
-                return path => ({"header-nav__item--checked": this.currentNavTab.includes(path)});
+                return path => (["header-nav__item", {"header-nav__item--checked": this.currentNavTab.includes(path)}]);
             },
             headersSeen() {
                 return MAIN_VIEW_PATHS.some(path => this.currentNavTab.includes(path));
@@ -136,25 +136,24 @@
             display: flex;
             justify-content: space-between;
             padding: 16px 0;
+        }
 
-            > a {
-                text-decoration: none;
-                border-radius: 30px;
-                padding: 8px 16px;
-                color: $text-color-primary-light;
-                border: $color-background 1px solid;
-                white-space: nowrap;
+        &__item {
+            text-decoration: none;
+            border-radius: 30px;
+            padding: 8px 16px;
+            color: $text-color-secondary-light;
+            font-weight: bold;
+            font-size: 1.2em;
+            white-space: nowrap;
 
-                @include sm("&:active", "&:hover") {
-                    cursor: pointer;
-                    border: $text-color-secondary 1px solid;
-                }
+            @include sm("&:active", "&:hover") {
+                cursor: pointer;
             }
         }
 
         &__item--checked {
-            background-color: $text-color-secondary-light2;
-            color: $text-color-primary;
+            color: $text-color-primary-light;
         }
     }
 
