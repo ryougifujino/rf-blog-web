@@ -1,6 +1,6 @@
 const CDN_MARKDOWN_IT = "https://cdn.jsdelivr.net/npm/markdown-it@8.4.2/dist/markdown-it.min.js";
 export const JS = {
-    '/home': [
+    '/': [
         CDN_MARKDOWN_IT
     ],
     '/post/:id': [

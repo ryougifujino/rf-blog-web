@@ -104,7 +104,7 @@
                 this[PUBLISH_POST](this.$route.params.id)
                     .then(() => {
                         this.$showToast("发布成功");
-                        this.$router.replace('/home');
+                        this.$router.replace('/');
                     })
                     .catch(() => this.$showToast("发布失败"))
                     .finally(() => this.isPublishing = false);

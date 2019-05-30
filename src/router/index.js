@@ -13,7 +13,6 @@ const Post = () => import('@/views/Post.vue');
 const Search = () => import('@/views/Search.vue');
 
 const routes = [
-    {path: '/home', component: Home},
     {path: '/archives', component: Archives},
     {path: '/share', component: Share},
     {path: '/about', component: About},
@@ -21,7 +20,7 @@ const routes = [
     {path: '/post-edit/:id', component: PostEdit},
     {path: '/post/:id', component: Post},
     {path: '/search', component: Search},
-    {path: '/', redirect: '/home'}
+    {path: '/', component: Home}
 ];
 
 if (process.env.NODE_ENV === 'production') {

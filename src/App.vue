@@ -14,7 +14,7 @@
         </header>
         <nav class="header-nav" v-if="headersSeen">
             <div class="header-nav__menu">
-                <router-link to="/home" :class="checkedNavTabClass('/home')">主页</router-link>
+                <router-link to="/" :class="checkedNavTabClass('/')">主页</router-link>
                 <router-link to="/archives" :class="checkedNavTabClass('/archives')">档案
                 </router-link>
                 <router-link to="/share" :class="checkedNavTabClass('/share')">分享</router-link>
@@ -33,7 +33,7 @@
     import {mapActions} from "vuex";
     import {mapModuleState} from "@/util/mapStateUtils";
 
-    const MAIN_VIEW_PATHS = ['/home', '/archives', '/share', '/about'];
+    const MAIN_VIEW_PATHS = new Set(['/', '/archives', '/share', '/about']);
     export default {
         components: {
             AuthDialog
@@ -53,10 +53,10 @@
         computed: {
             ...mapModuleState('auth', ['isAuthenticated']),
             checkedNavTabClass() {
-                return path => (["header-nav__item", {"header-nav__item--checked": this.currentNavTab.includes(path)}]);
+                return path => (["header-nav__item", {"header-nav__item--checked": this.currentNavTab === path}]);
             },
             headersSeen() {
-                return MAIN_VIEW_PATHS.some(path => this.currentNavTab.includes(path));
+                return MAIN_VIEW_PATHS.has(this.currentNavTab);
             },
             appWidthClass() {
                 return ({'app--width-limited': this.headersSeen});
@@ -142,7 +142,7 @@
             text-decoration: none;
             border-radius: 30px;
             padding: 8px 16px;
-            color: $text-color-secondary-light;
+            color: $text-color-secondary;
             font-weight: bold;
             font-size: 1.2em;
             white-space: nowrap;
