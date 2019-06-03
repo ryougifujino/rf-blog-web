@@ -13,7 +13,7 @@
                     <VIcon name="baseline-book-24px"></VIcon>
                     <span class="post__album-text">{{album.name}}</span>
                 </div>
-                <div class="post__created_on">
+                <div class="post__created-on">
                     <span>{{isPrivate ? "私有" : ""}}</span>
                     <span>{{createdOn | localDate}}</span>
                 </div>
@@ -112,7 +112,7 @@
             }
         }
 
-        &__created_on {
+        &__created-on {
             display: flex;
             justify-content: space-between;
             margin-top: 8px;
