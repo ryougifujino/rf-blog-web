@@ -8,7 +8,7 @@
                            name="baseline-create-24px"
                            @click.native="go('/post-edit')">
                     </VIcon>
-                    <img @click="executeAuthAction" src="./assets/images/logo.png" alt="Logo">
+                    <img @click="executeAuthAction" src="/public/logo-128.png" alt="Logo">
                 </span>
             </h1>
         </header>
