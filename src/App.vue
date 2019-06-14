@@ -22,16 +22,16 @@
             </div>
             <hr>
         </nav>
-        <FadeTransition>
+        <TransitionFade>
             <router-view></router-view>
-        </FadeTransition>
+        </TransitionFade>
         <AuthDialog :visible.sync="isShowAuthDialog"></AuthDialog>
     </div>
 </template>
 
 <script>
     import AuthDialog from '@/components/AuthDialog.vue';
-    import FadeTransition from "@/components/FadeTransition.vue";
+    import TransitionFade from "@/components/TransitionFade.vue";
     import {CHECK_AUTH, LOG_OUT} from "@/store/action-types";
     import {mapActions} from "vuex";
     import {mapModuleState} from "@/util/mapStateUtils";
@@ -40,7 +40,7 @@
     export default {
         components: {
             AuthDialog,
-            FadeTransition
+            TransitionFade
         },
         data() {
             return {
@@ -138,6 +138,8 @@
         }
 
         &__item {
+            transition: color .5s;
+            user-select: none;
             text-decoration: none;
             border-radius: 30px;
             padding: 8px 16px;
