@@ -1,35 +1,42 @@
 <template>
-    <div :class="['region-mask', {'region-mask--transparent': isTransparent}]">
-        <svg xmlns="http://www.w3.org/2000/svg"
-             class="v-progress-bar"
-             viewBox="0 0 100 100"
-             :width="baseSize * scale"
-             :height="baseSize * scale"
-             preserveAspectRatio="xMidYMid">
-            <circle cx="50"
-                    cy="50"
-                    fill="none"
-                    :stroke="strokeColor"
-                    stroke-width="10"
-                    r="35"
-                    stroke-dasharray="164.93361431346415 56.97787143782138"
-                    transform="rotate(227.962 50 50)">
-                <animateTransform attributeName="transform"
-                                  type="rotate"
-                                  calcMode="linear"
-                                  values="0 50 50;360 50 50"
-                                  keyTimes="0;1"
-                                  dur="1s"
-                                  begin="0s"
-                                  repeatCount="indefinite">
-                </animateTransform>
-            </circle>
-        </svg>
-    </div>
+    <TransitionFade>
+        <div :class="['region-mask', {'region-mask--transparent': isTransparent}]">
+            <svg xmlns="http://www.w3.org/2000/svg"
+                 class="v-progress-bar"
+                 viewBox="0 0 100 100"
+                 :width="baseSize * scale"
+                 :height="baseSize * scale"
+                 preserveAspectRatio="xMidYMid">
+                <circle cx="50"
+                        cy="50"
+                        fill="none"
+                        :stroke="strokeColor"
+                        stroke-width="10"
+                        r="35"
+                        stroke-dasharray="164.93361431346415 56.97787143782138"
+                        transform="rotate(227.962 50 50)">
+                    <animateTransform attributeName="transform"
+                                      type="rotate"
+                                      calcMode="linear"
+                                      values="0 50 50;360 50 50"
+                                      keyTimes="0;1"
+                                      dur="1s"
+                                      begin="0s"
+                                      repeatCount="indefinite">
+                    </animateTransform>
+                </circle>
+            </svg>
+        </div>
+    </TransitionFade>
 </template>
 
 <script>
+    import TransitionFade from "@/components/TransitionFade.vue";
+
     export default {
+        components: {
+            TransitionFade
+        },
         props: {
             scale: {
                 type: Number,
