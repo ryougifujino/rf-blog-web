@@ -23,11 +23,14 @@
 </script>
 
 <style lang="scss">
+    @import "~@/assets/styles/mixins";
 
     .archives {
+        @extend %width-limit;
         display: flex;
         flex-wrap: wrap;
-        margin: 16px;
+        margin: 16px auto;
+        padding: 0 16px;
 
         $list-min-width: 300px;
         $aside-min-width: 200px;

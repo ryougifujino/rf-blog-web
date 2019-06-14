@@ -34,6 +34,7 @@
     @import "~@/assets/styles/mixins";
 
     .about {
+        @extend %width-limit;
         display: flex;
         flex-direction: column;
         align-items: center;

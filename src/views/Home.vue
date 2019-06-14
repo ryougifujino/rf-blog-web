@@ -2,7 +2,7 @@
     <div class="home" v-scroll-bottom="loadMore">
         <div v-for="post of posts" :key="post.id">
             <HomePostPreview :post="post"/>
-            <hr>
+            <hr class="home__post-divider">
         </div>
         <VLoadMoreBar :is-loading="isLoading"
                       v-if="isShowLoadMoreBar"
@@ -38,3 +38,16 @@
         }
     }
 </script>
+
+<style lang="scss">
+    @import "~@/assets/styles/mixins";
+
+    .home {
+        @extend %width-limit;
+
+        &__post-divider {
+            margin: 0 16px;
+        }
+    }
+
+</style>

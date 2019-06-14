@@ -42,6 +42,7 @@
     @import "~@/assets/styles/mixins";
 
     .shares {
+        @extend %width-limit;
         padding: 0 16px 16px;
 
         &__add-new {
