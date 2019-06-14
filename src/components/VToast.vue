@@ -1,9 +1,16 @@
 <template>
-    <div class="v-toast" v-show="visible">{{text}}</div>
+    <TransitionFade>
+        <div class="v-toast" v-show="visible">{{text}}</div>
+    </TransitionFade>
 </template>
 
 <script>
+    import TransitionFade from "@/components/TransitionFade.vue";
+
     export default {
+        components: {
+            TransitionFade
+        },
         data: () => ({
             text: '',
             visible: false
