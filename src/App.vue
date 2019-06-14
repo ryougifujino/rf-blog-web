@@ -1,8 +1,9 @@
 <template>
     <div id="app">
-        <header class="header-bar" v-if="headersSeen">
-            <h1 class="header-bar__title">{{title}}
-                <span class="header-bar__menu">
+        <transition name="slide">
+            <header class="header-bar" v-if="headersSeen">
+                <h1 class="header-bar__title">{{title}}
+                    <span class="header-bar__menu">
                     <VIcon name="baseline-search-24px" @click.native="go('/search')"></VIcon>
                     <VIcon v-if="isAuthenticated"
                            name="baseline-create-24px"
@@ -10,8 +11,9 @@
                     </VIcon>
                     <img @click="executeAuthAction" src="/public/logo-128.png" alt="Logo">
                 </span>
-            </h1>
-        </header>
+                </h1>
+            </header>
+        </transition>
         <nav class="header-nav" v-if="headersSeen">
             <div class="header-nav__menu">
                 <router-link to="/" :class="checkedNavTabClass('/')">主页</router-link>
@@ -156,6 +158,14 @@
         &__item--checked {
             color: $text-color-primary-light;
         }
+    }
+
+    .slide-enter-active {
+        transition: transform .5s;
+    }
+
+    .slide-enter {
+        transform: translateY(-200%);
     }
 
 </style>
