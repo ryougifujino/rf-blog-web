@@ -1,52 +1,55 @@
 <template>
-    <div class="mask" v-if="visible">
-        <div class="post-edit-publisher">
-            <VDialogHeader>发布博文</VDialogHeader>
-            <div class="post-edit-publisher__form">
-                <div class="post-edit-publisher__item">
-                    <VRadioGroup class="post-edit-publisher__privacy"
-                                 :items="privacyItems"
-                                 v-model="_isPrivate">
-                    </VRadioGroup>
-                </div>
-                <div class="post-edit-publisher__item">
-                    <div class="post-edit-publisher__item-title">专辑</div>
-                    <VSelect v-model="_albumId"
-                             keyword="专辑"
-                             :maxlength="200"
-                             :items="albums"
-                             @add-new="createAlbum">
-                    </VSelect>
-                </div>
-                <div class="post-edit-publisher__item">
-                    <div class="post-edit-publisher__item-title">标签</div>
-                    <div class="post-edit-publisher__tag-input-container">
-                        <VInput placeholder="添加标签"
-                                maxlength="20"
-                                max-width
-                                v-model="tagInput"
-                                @keyup.enter.native="confirmTag"></VInput>
-                        <div class="post-edit-publisher__tag-confirm-container">
-                            <VButtonFlat @click.native="confirmTag">确认</VButtonFlat>
+    <TransitionFade>
+        <div class="mask" v-if="visible">
+            <div class="post-edit-publisher">
+                <VDialogHeader>发布博文</VDialogHeader>
+                <div class="post-edit-publisher__form">
+                    <div class="post-edit-publisher__item">
+                        <VRadioGroup class="post-edit-publisher__privacy"
+                                     :items="privacyItems"
+                                     v-model="_isPrivate">
+                        </VRadioGroup>
+                    </div>
+                    <div class="post-edit-publisher__item">
+                        <div class="post-edit-publisher__item-title">专辑</div>
+                        <VSelect v-model="_albumId"
+                                 keyword="专辑"
+                                 :maxlength="200"
+                                 :items="albums"
+                                 @add-new="createAlbum">
+                        </VSelect>
+                    </div>
+                    <div class="post-edit-publisher__item">
+                        <div class="post-edit-publisher__item-title">标签</div>
+                        <div class="post-edit-publisher__tag-input-container">
+                            <VInput placeholder="添加标签"
+                                    maxlength="20"
+                                    max-width
+                                    v-model="tagInput"
+                                    @keyup.enter.native="confirmTag"></VInput>
+                            <div class="post-edit-publisher__tag-confirm-container">
+                                <VButtonFlat @click.native="confirmTag">确认</VButtonFlat>
+                            </div>
                         </div>
                     </div>
+                    <div class="post-edit-publisher__item post-edit-publisher__tags">
+                        <VTag class="post-edit-publisher__tag"
+                              v-for="tag of tags"
+                              :key="tag"
+                              @click.native="removeTag(tag)">{{tag}}
+                        </VTag>
+                    </div>
                 </div>
-                <div class="post-edit-publisher__item post-edit-publisher__tags">
-                    <VTag class="post-edit-publisher__tag"
-                          v-for="tag of tags"
-                          :key="tag"
-                          @click.native="removeTag(tag)">{{tag}}
-                    </VTag>
-                </div>
+                <VDialogFooter @cancel="cancel" @confirm="confirm"></VDialogFooter>
+                <VProgressBar class="post-edit-publisher__progress-bar"
+                              v-if="isPublishing"></VProgressBar>
             </div>
-            <VDialogFooter @cancel="cancel" @confirm="confirm"></VDialogFooter>
-            <VProgressBar class="post-edit-publisher__progress-bar"
-                          v-if="isPublishing"></VProgressBar>
         </div>
-    </div>
+    </TransitionFade>
 </template>
 
 <script>
+    import TransitionFade from "@/components/TransitionFade.vue";
     import {PUBLISH_POST, FETCH_ALBUMS, CREATE_ALBUM} from '@/store/action-types';
     import {mapActions, mapMutations, mapState} from 'vuex';
     import {mapModuleState} from '@/util/mapStateUtils';
@@ -58,6 +61,9 @@
     } from '@/store/mutation-types';
 
     export default {
+        components: {
+            TransitionFade
+        },
         props: {
             visible: {
                 type: Boolean,
