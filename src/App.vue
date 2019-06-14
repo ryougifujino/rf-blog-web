@@ -1,8 +1,9 @@
 <template>
-    <div id="app" :class="appWidthClass">
-        <header class="header-bar" v-if="headersSeen">
-            <h1 class="header-bar__title">{{title}}
-                <span class="header-bar__menu">
+    <div id="app">
+        <transition name="slide">
+            <header class="header-bar" v-if="headersSeen">
+                <h1 class="header-bar__title">{{title}}
+                    <span class="header-bar__menu">
                     <VIcon name="baseline-search-24px" @click.native="go('/search')"></VIcon>
                     <VIcon v-if="isAuthenticated"
                            name="baseline-create-24px"
@@ -10,8 +11,9 @@
                     </VIcon>
                     <img @click="executeAuthAction" src="/public/logo-128.png" alt="Logo">
                 </span>
-            </h1>
-        </header>
+                </h1>
+            </header>
+        </transition>
         <nav class="header-nav" v-if="headersSeen">
             <div class="header-nav__menu">
                 <router-link to="/" :class="checkedNavTabClass('/')">主页</router-link>
@@ -22,13 +24,16 @@
             </div>
             <hr>
         </nav>
-        <router-view></router-view>
+        <TransitionFade>
+            <router-view></router-view>
+        </TransitionFade>
         <AuthDialog :visible.sync="isShowAuthDialog"></AuthDialog>
     </div>
 </template>
 
 <script>
     import AuthDialog from '@/components/AuthDialog.vue';
+    import TransitionFade from "@/components/TransitionFade.vue";
     import {CHECK_AUTH, LOG_OUT} from "@/store/action-types";
     import {mapActions} from "vuex";
     import {mapModuleState} from "@/util/mapStateUtils";
@@ -36,7 +41,8 @@
     const MAIN_VIEW_PATHS = new Set(['/', '/archives', '/share', '/about']);
     export default {
         components: {
-            AuthDialog
+            AuthDialog,
+            TransitionFade
         },
         data() {
             return {
@@ -57,9 +63,6 @@
             },
             headersSeen() {
                 return MAIN_VIEW_PATHS.has(this.currentNavTab);
-            },
-            appWidthClass() {
-                return ({'app--width-limited': this.headersSeen});
             },
             title() {
                 return this.windowWidth <= 450 ? "RF" : "RF's Blog";
@@ -94,14 +97,10 @@
     @import "~@/assets/styles/theme";
     @import "~@/assets/styles/mixins";
 
-    .app--width-limited {
-        margin: 0 auto;
-        max-width: 750px;
-    }
-
     .header-bar {
+        @extend %width-limit;
         padding: 0 16px;
-        margin: 32px 0 16px;
+        margin: 32px auto 16px;
 
         &__title {
             display: flex;
@@ -128,6 +127,8 @@
     }
 
     .header-nav {
+        @extend %width-limit;
+        z-index: 10;
         padding: 0 16px;
         position: sticky;
         top: 0;
@@ -139,6 +140,8 @@
         }
 
         &__item {
+            transition: color .5s;
+            user-select: none;
             text-decoration: none;
             border-radius: 30px;
             padding: 8px 16px;
@@ -155,6 +158,14 @@
         &__item--checked {
             color: $text-color-primary-light;
         }
+    }
+
+    .slide-enter-active {
+        transition: transform .5s;
+    }
+
+    .slide-enter {
+        transform: translateY(-200%);
     }
 
 </style>

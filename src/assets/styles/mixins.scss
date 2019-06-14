@@ -93,3 +93,8 @@
     background-color: $text-color-secondary-light2;
   }
 }
+
+%width-limit {
+  margin: 0 auto;
+  max-width: 750px;
+}

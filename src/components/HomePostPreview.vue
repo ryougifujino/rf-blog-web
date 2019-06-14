@@ -9,11 +9,13 @@
 
 <script>
 
+    import MarkdownPreviewer from "@/components/MarkdownPreviewer.vue";
+
     const BODY_MAX_LENGTH = 200;
 
     export default {
         components: {
-            MarkdownPreviewer: () => import("@/components/MarkdownPreviewer.vue")
+            MarkdownPreviewer
         },
         props: {
             post: {

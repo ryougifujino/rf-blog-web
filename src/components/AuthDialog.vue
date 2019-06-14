@@ -1,17 +1,23 @@
 <template>
-    <div class="mask" v-if="visible" @click.self="hideAuthDialog">
-        <div class="auth-dialog">
-            <textarea @keyup.shift.space="logIn" v-model="credential"></textarea>
-            <div class="auth-dialog__login-button" @click="logIn">登录</div>
+    <TransitionFade>
+        <div class="mask" v-if="visible" @click.self="hideAuthDialog">
+            <div class="auth-dialog">
+                <textarea @keyup.shift.space="logIn" v-model="credential"></textarea>
+                <div class="auth-dialog__login-button" @click="logIn">登录</div>
+            </div>
         </div>
-    </div>
+    </TransitionFade>
 </template>
 
 <script>
+    import TransitionFade from "@/components/TransitionFade.vue";
     import {mapActions} from "vuex";
     import {LOG_IN} from "@/store/action-types";
 
     export default {
+        components: {
+            TransitionFade
+        },
         props: {
             visible: {
                 type: Boolean,

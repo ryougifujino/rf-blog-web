@@ -1,42 +1,46 @@
 <template>
-    <div class="mask" v-if="isPublisherVisible">
-        <div class="shares-publisher">
-            <VDialogHeader>发布分享</VDialogHeader>
-            <div class="shares-publisher__form">
-                <div class="shares-publisher__item">
-                    <div class="shares-publisher__item-title">分类</div>
-                    <VSelect v-model="_shareCategoryId"
-                             :items="shareCategories"
-                             keyword="分类"
-                             :maxlength="100"
-                             @add-new="createShareCategory">
-                    </VSelect>
+    <TransitionFade>
+        <div class="mask" v-if="isPublisherVisible">
+            <div class="shares-publisher">
+                <VDialogHeader>发布分享</VDialogHeader>
+                <div class="shares-publisher__form">
+                    <div class="shares-publisher__item">
+                        <div class="shares-publisher__item-title">分类</div>
+                        <VSelect v-model="_shareCategoryId"
+                                 :items="shareCategories"
+                                 keyword="分类"
+                                 :maxlength="100"
+                                 @add-new="createShareCategory">
+                        </VSelect>
+                    </div>
+                    <div class="shares-publisher__item">
+                        <div class="shares-publisher__item-title">分享标题</div>
+                        <VInput v-model="_title"
+                                class="shares-publisher__item-input"
+                                placeholder="添加分享标题"
+                                max-width
+                                maxlength="200">
+                        </VInput>
+                    </div>
+                    <div class="shares-publisher__item">
+                        <div class="shares-publisher__item-title">分享URL</div>
+                        <VInput v-model="_url"
+                                class="shares-publisher__item-input"
+                                placeholder="添加分享URL"
+                                max-width>
+                        </VInput>
+                    </div>
                 </div>
-                <div class="shares-publisher__item">
-                    <div class="shares-publisher__item-title">分享标题</div>
-                    <VInput v-model="_title"
-                            class="shares-publisher__item-input"
-                            placeholder="添加分享标题"
-                            max-width
-                            maxlength="200">
-                    </VInput>
-                </div>
-                <div class="shares-publisher__item">
-                    <div class="shares-publisher__item-title">分享URL</div>
-                    <VInput v-model="_url"
-                            class="shares-publisher__item-input"
-                            placeholder="添加分享URL"
-                            max-width>
-                    </VInput>
-                </div>
+                <VDialogFooter @cancel="cancel" @confirm="confirm"></VDialogFooter>
+                <VProgressBar class="shares-publisher__progress-bar"
+                              v-if="isPublishing"></VProgressBar>
             </div>
-            <VDialogFooter @cancel="cancel" @confirm="confirm"></VDialogFooter>
-            <VProgressBar class="shares-publisher__progress-bar" v-if="isPublishing"></VProgressBar>
         </div>
-    </div>
+    </TransitionFade>
 </template>
 
 <script>
+    import TransitionFade from "@/components/TransitionFade.vue";
     import {mapModuleState} from "@/util/mapStateUtils";
     import {mapActions, mapMutations} from "vuex";
     import {
@@ -48,6 +52,9 @@
     import {PUBLISH_SHARE, CREATE_SHARE_CATEGORY} from "@/store/action-types";
 
     export default {
+        components: {
+            TransitionFade
+        },
         data: () => ({
             isPublishing: false
         }),
