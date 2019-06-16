@@ -154,7 +154,7 @@
         user-select: none;
         font-size: 0.9em;
         box-sizing: border-box;
-        z-index: 100;
+        z-index: 10;
 
         * {
             box-sizing: border-box;
