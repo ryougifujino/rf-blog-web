@@ -30,7 +30,7 @@
 
 <script>
     import {mapActions, mapState} from "vuex";
-    import {mapModuleState} from "@/util/mapStateUtils";
+    import {mapModuleState} from "@/util/map-state-utils";
     import {FETCH_POST_TITLES, FETCH_SHARES} from "@/store/action-types";
 
     const RE_URL = /^https?:\/\//;

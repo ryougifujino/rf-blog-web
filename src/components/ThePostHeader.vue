@@ -21,7 +21,7 @@
 <script>
     import {mapActions} from "vuex";
     import {DELETE_POST} from "@/store/action-types";
-    import {mapModuleState} from "@/util/mapStateUtils";
+    import {mapModuleState} from "@/util/map-state-utils";
 
     export default {
         data() {

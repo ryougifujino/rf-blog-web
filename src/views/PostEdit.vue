@@ -29,7 +29,7 @@
 
 <script>
     import PostEditPublisher from '@/components/PostEditPublisher.vue';
-    import {mapModuleState} from '@/util/mapStateUtils';
+    import {mapModuleState} from '@/util/map-state-utils';
     import {mapActions, mapMutations} from 'vuex';
     import {POST_EDIT_SET_TITLE, POST_EDIT_SET_BODY} from '@/store/mutation-types';
     import {POST_EDIT_INITIALIZE} from "@/store/action-types";

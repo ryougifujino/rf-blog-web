@@ -52,7 +52,7 @@
     import TransitionFade from "@/components/TransitionFade.vue";
     import {PUBLISH_POST, FETCH_ALBUMS, CREATE_ALBUM} from '@/store/action-types';
     import {mapActions, mapMutations, mapState} from 'vuex';
-    import {mapModuleState} from '@/util/mapStateUtils';
+    import {mapModuleState} from '@/util/map-state-utils';
     import {
         POST_EDIT_SET_IS_PRIVATE,
         POST_EDIT_SET_ALBUM_ID,

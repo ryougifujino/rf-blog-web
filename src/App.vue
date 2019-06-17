@@ -36,7 +36,7 @@
     import TransitionFade from "@/components/TransitionFade.vue";
     import {CHECK_AUTH, LOG_OUT} from "@/store/action-types";
     import {mapActions} from "vuex";
-    import {mapModuleState} from "@/util/mapStateUtils";
+    import {mapModuleState} from "@/util/map-state-utils";
 
     const MAIN_VIEW_PATHS = new Set(['/', '/archives', '/share', '/about']);
     export default {

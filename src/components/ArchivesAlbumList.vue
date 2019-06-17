@@ -17,7 +17,7 @@
     import {FETCH_ALBUMS} from '@/store/action-types';
     import {mapState, mapActions, mapMutations} from 'vuex';
     import {ARCHIVES_CHECK_ALBUM} from "@/store/mutation-types";
-    import {mapModuleState} from "@/util/mapStateUtils";
+    import {mapModuleState} from "@/util/map-state-utils";
 
     export default {
         computed: {

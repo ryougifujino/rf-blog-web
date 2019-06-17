@@ -58,7 +58,7 @@
 <script>
     import PostReviewEditor from "@/components/PostReviewEditor.vue";
     import {LOCAL_KEY_FROM_USER} from "@/common/constants";
-    import {mapModuleState} from "@/util/mapStateUtils";
+    import {mapModuleState} from "@/util/map-state-utils";
     import {mapActions} from "vuex";
     import {CREATE_POST_REPLY, DELETE_POST_COMMENT, DELETE_POST_REPLY} from "@/store/action-types";
 

@@ -25,7 +25,7 @@
 <script>
     import PostReviewEditor from '@/components/PostReviewEditor.vue';
     import PostComment from "@/components/PostComment.vue";
-    import {mapModuleState} from "@/util/mapStateUtils";
+    import {mapModuleState} from "@/util/map-state-utils";
     import {CREATE_POST_COMMENT, FETCH_POST_COMMENTS} from "@/store/action-types";
     import {mapActions} from "vuex";
     import {LOCAL_KEY_FROM_USER} from "@/common/constants";

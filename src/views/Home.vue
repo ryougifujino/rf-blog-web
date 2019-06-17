@@ -14,7 +14,7 @@
 <script>
     import HomePostPreview from '@/components/HomePostPreview.vue';
     import {FETCH_POST_PREVIEWS} from '@/store/action-types';
-    import {mapModuleState} from '@/util/mapStateUtils';
+    import {mapModuleState} from '@/util/map-state-utils';
     import {mapActions} from 'vuex';
 
     export default {

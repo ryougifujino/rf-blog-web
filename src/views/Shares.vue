@@ -9,7 +9,7 @@
 <script>
     import SharesList from "@/components/SharesList.vue";
     import SharesPublisher from "@/components/SharesPublisher.vue";
-    import {mapModuleState} from "@/util/mapStateUtils";
+    import {mapModuleState} from "@/util/map-state-utils";
     import {mapMutations} from "vuex";
     import {
         SHARES_SET_PUBLISHING_SHARE_ID,

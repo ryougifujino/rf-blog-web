@@ -41,7 +41,7 @@
 
 <script>
     import TransitionFade from "@/components/TransitionFade.vue";
-    import {mapModuleState} from "@/util/mapStateUtils";
+    import {mapModuleState} from "@/util/map-state-utils";
     import {mapActions, mapMutations} from "vuex";
     import {
         SHARES_SET_PUBLISHER_VISIBLE,

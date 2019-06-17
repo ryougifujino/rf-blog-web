@@ -31,7 +31,7 @@
 <script>
     import ThePostHeader from '@/components/ThePostHeader.vue';
     import PostComments from "@/components/PostComments.vue";
-    import {mapModuleState} from "@/util/mapStateUtils";
+    import {mapModuleState} from "@/util/map-state-utils";
     import {mapActions} from "vuex";
     import {FETCH_POST} from "@/store/action-types";
 

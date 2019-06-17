@@ -29,7 +29,7 @@
 
 <script>
     import {FETCH_SHARES, FETCH_SHARE_CATEGORIES, DELETE_SHARE} from '@/store/action-types';
-    import {mapModuleState} from "@/util/mapStateUtils";
+    import {mapModuleState} from "@/util/map-state-utils";
     import {mapActions, mapGetters, mapMutations} from "vuex";
     import {
         SHARES_SET_PUBLISHER_VISIBLE,

@@ -16,7 +16,7 @@
     import {FETCH_TAGS} from '@/store/action-types';
     import {ARCHIVES_CHECK_TAG} from '@/store/mutation-types'
     import {mapState, mapActions, mapMutations} from 'vuex';
-    import {mapModuleState} from "@/util/mapStateUtils";
+    import {mapModuleState} from "@/util/map-state-utils";
 
     export default {
         computed: {
