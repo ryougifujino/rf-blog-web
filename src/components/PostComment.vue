@@ -36,7 +36,7 @@
                        :class="deleteButtonClass(comment.id + '#' + reply.id)"
                        v-click-outside:delete="deactivateDeleteButton"
                        @click="requestDelete(comment.id + '#' + reply.id, reply.id)">
-                    {{deleteButtonText(comment.id + '#' + reply.id)}}
+                        {{deleteButtonText(comment.id + '#' + reply.id)}}
                     </a>
                 </div>
                 <PostReviewEditor class="post-comment__reply-editor"
@@ -222,7 +222,7 @@
             }
 
             .region-mask--transparent {
-                background: #ff000000;
+                background: rgba(0, 0, 0, 0);
             }
         }
 

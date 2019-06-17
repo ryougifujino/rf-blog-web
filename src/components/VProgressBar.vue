@@ -65,6 +65,6 @@
 
     .v-progress-bar {
         @extend %center;
-        background: #ff000000;
+        background: rgba(0, 0, 0, 0);
     }
 </style>
