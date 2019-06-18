@@ -31,7 +31,11 @@
     import PostEditPublisher from '@/components/PostEditPublisher.vue';
     import {mapModuleState} from '@/util/map-state-utils';
     import {mapActions, mapMutations} from 'vuex';
-    import {POST_EDIT_SET_TITLE, POST_EDIT_SET_BODY} from '@/store/mutation-types';
+    import {
+        POST_EDIT_SET_TITLE,
+        POST_EDIT_SET_BODY,
+        POST_EDIT_SAVE_STATE
+    } from '@/store/mutation-types';
     import {POST_EDIT_INITIALIZE} from "@/store/action-types";
 
     export default {
@@ -71,7 +75,7 @@
         },
         methods: {
             ...mapActions([POST_EDIT_INITIALIZE]),
-            ...mapMutations([POST_EDIT_SET_TITLE, POST_EDIT_SET_BODY]),
+            ...mapMutations([POST_EDIT_SET_TITLE, POST_EDIT_SET_BODY, POST_EDIT_SAVE_STATE]),
             computeRatio: (t) => {
                 return t.scrollTop / (t.scrollHeight - t.offsetHeight);
             },
@@ -84,11 +88,21 @@
                     return;
                 }
                 this.isShowPublisher = true;
+            },
+            trySaveState() {
+                !this.$route.params.id && this[POST_EDIT_SAVE_STATE]();
             }
         },
         created() {
+            window.addEventListener('beforeunload', this.trySaveState);
+            this.$once('hook:beforeDestroy', () => window.removeEventListener('beforeunload', this.trySaveState));
+
             this[POST_EDIT_INITIALIZE](this.$route.params.id)
                 .catch(() => this.$showToast("获取博文信息失败"));
+        },
+        beforeRouteLeave(to, from, next) {
+            this.trySaveState();
+            next();
         }
     }
 </script>

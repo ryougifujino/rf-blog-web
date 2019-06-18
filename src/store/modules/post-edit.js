@@ -1,4 +1,5 @@
 import Vue from 'vue';
+import {LOCAL_KEY_POST_EDIT_STATE} from "@/common/constants";
 import {
     PUBLISH_POST,
     POST_EDIT_INITIALIZE
@@ -11,7 +12,9 @@ import {
     POST_EDIT_SET_ALBUM_ID,
     POST_EDIT_ADD_TAG,
     POST_EDIT_REMOVE_TAG,
-    POST_EDIT_RESET_STATE
+    POST_EDIT_RESET_STATE,
+    POST_EDIT_SAVE_STATE,
+    POST_EDIT_SET_STATE
 } from '@/store/mutation-types';
 import {
     fetchPost,
@@ -47,12 +50,16 @@ const actions = {
             const postCopy = Object.create(post);
             delete postCopy.body;
             rootState.posts.unshift(postCopy);
-            commit(POST_EDIT_RESET_STATE);
         }
+        // clear local post-edit state
+        commit(POST_EDIT_RESET_STATE);
+        commit(POST_EDIT_SAVE_STATE);
     },
     async [POST_EDIT_INITIALIZE]({state, commit}, postId) {
         commit(POST_EDIT_RESET_STATE);
         if (!postId) {
+            const postJson = localStorage.getItem(LOCAL_KEY_POST_EDIT_STATE);
+            postJson && commit(POST_EDIT_SET_STATE, JSON.parse(postJson));
             return;
         }
         state.isPostLoading = true;
@@ -102,8 +109,22 @@ const mutations = {
             const value = initialState[key];
             Vue.set(state, key, value instanceof Set ? new Set() : value);
         });
+    },
+    [POST_EDIT_SAVE_STATE](state) {
+        localStorage.setItem(LOCAL_KEY_POST_EDIT_STATE, stringifyState(state));
+    },
+    [POST_EDIT_SET_STATE](state, targetState) {
+        Object.keys(state).forEach(key => {
+            const value = targetState[key];
+            Vue.set(state, key, Array.isArray(value) ? new Set(value) : value);
+        });
     }
 };
+
+function stringifyState(state) {
+    return JSON.stringify(state, (key, value) =>
+        value instanceof Set ? Array.from(value) : value);
+}
 
 export default {
     state,
