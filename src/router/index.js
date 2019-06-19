@@ -11,8 +11,10 @@ const About = () => import('@/views/About.vue');
 const PostEdit = () => import('@/views/PostEdit.vue');
 const Post = () => import('@/views/Post.vue');
 const Search = () => import('@/views/Search.vue');
+const NotFound = () => import('@/views/NotFound.vue');
 
 const routes = [
+    {path: '/', component: Home},
     {path: '/archives', component: Archives},
     {path: '/share', component: Share},
     {path: '/about', component: About},
@@ -20,7 +22,7 @@ const routes = [
     {path: '/post-edit/:id', component: PostEdit},
     {path: '/post/:id', component: Post},
     {path: '/search', component: Search},
-    {path: '/', component: Home}
+    {path: '*', component: NotFound}
 ];
 
 if (process.env.NODE_ENV === 'production') {
