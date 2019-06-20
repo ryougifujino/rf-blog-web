@@ -38,7 +38,8 @@ const initialState = {
     commentPageNumber: 1,
     reachedEnd: false,
     isLoadingComments: false,
-    isShowLoadMoreBar: true
+    isShowLoadMoreBar: true,
+    allowShowLoadMoreBar: false
 };
 
 const state = {...initialState};
@@ -51,6 +52,7 @@ const actions = {
             commit(POST_SET, {post});
         } finally {
             state.isLoading = false;
+            state.allowShowLoadMoreBar = true;
         }
 
     },

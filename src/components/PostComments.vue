@@ -15,7 +15,8 @@
                      :active-reply-box-id.sync="activeReplyBoxId"
                      :active-delete-button-id.sync="activeDeleteButtonId">
         </PostComment>
-        <VLoadMoreBar :is-loading="isLoadingComments"
+        <VLoadMoreBar class="post-comments__load-more-bar"
+                      :is-loading="isLoadingComments && allowShowLoadMoreBar"
                       v-if="isShowLoadMoreBar"
                       @click="loadMore">
         </VLoadMoreBar>
@@ -44,7 +45,8 @@
             activeDeleteButtonId: ''
         }),
         computed: {
-            ...mapModuleState('post', ['comments', 'isLoadingComments', 'isShowLoadMoreBar'])
+            ...mapModuleState('post', ['comments', 'isLoadingComments', 'allowShowLoadMoreBar',
+                'isShowLoadMoreBar'])
         },
         methods: {
             ...mapActions([CREATE_POST_COMMENT, FETCH_POST_COMMENTS]),
@@ -75,6 +77,7 @@
 </script>
 
 <style lang="scss">
+    @import "~@/assets/styles/theme";
 
     .post-comments {
         max-width: 850px;
@@ -83,6 +86,10 @@
 
         &__comment-editor {
             margin-bottom: 16px;
+        }
+
+        &__load-more-bar {
+            border-top: 1px solid $text-color-secondary-light2;
         }
     }
 
