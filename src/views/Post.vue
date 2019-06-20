@@ -50,7 +50,7 @@
         },
         created() {
             const postId = this.$route.params.id;
-            this[FETCH_POST]({postId});
+            this[FETCH_POST]({postId}).catch(() => this.$showToast("加载博文失败"));
         }
     }
 </script>

@@ -76,9 +76,7 @@
         methods: {
             ...mapActions([POST_EDIT_INITIALIZE]),
             ...mapMutations([POST_EDIT_SET_TITLE, POST_EDIT_SET_BODY, POST_EDIT_SAVE_STATE]),
-            computeRatio: (t) => {
-                return t.scrollTop / (t.scrollHeight - t.offsetHeight);
-            },
+            computeRatio: (t) => t.scrollTop / (t.scrollHeight - t.offsetHeight),
             onInputScroll(scrollPayload) {
                 this.previewerScrollRatio = this.computeRatio(scrollPayload);
             },

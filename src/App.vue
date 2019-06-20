@@ -77,7 +77,7 @@
                 if (!this.isAuthenticated) {
                     this.isShowAuthDialog = true;
                 } else {
-                    this[LOG_OUT]();
+                    this[LOG_OUT]().catch(() => this.$showToast("登出失败"));
                 }
             }
         },
