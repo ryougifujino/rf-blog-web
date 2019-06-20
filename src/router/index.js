@@ -31,9 +31,18 @@ if (process.env.NODE_ENV === 'production') {
         if (!libs) {
             return;
         }
+        let retryLimit = 3;
         route.beforeEnter = async (to, from, next) => {
-            await attachLibs(libs);
-            next();
+            try {
+                await attachLibs(libs);
+                next();
+            } catch (e) {
+                if (retryLimit--) {
+                    location.reload();
+                } else {
+                    console.error("Loading scripts failed", e);
+                }
+            }
         };
     });
 }
