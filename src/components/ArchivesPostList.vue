@@ -27,7 +27,7 @@
             }
         },
         created() {
-            this[FETCH_POST_TITLES]();
+            this[FETCH_POST_TITLES]().catch(() => this.$showToast("获取档案失败"));
         }
     }
 </script>

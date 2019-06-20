@@ -40,8 +40,9 @@
                 this.isShowDeleteConfirm = true;
             },
             deleteThePost() {
-                this[DELETE_POST](this.postId);
-                this.$router.back();
+                this[DELETE_POST](this.postId)
+                    .then(() => this.$router.back())
+                    .catch(() => this.$showToast("删除失败"));
             },
             editPost() {
                 this.$router.push({path: `/post-edit/${this.postId}`});

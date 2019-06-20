@@ -134,7 +134,7 @@
             }
         },
         created() {
-            this[FETCH_ALBUMS]();
+            this[FETCH_ALBUMS]().catch(() => this.$showToast('加载专辑失败'));
         }
     }
 </script>

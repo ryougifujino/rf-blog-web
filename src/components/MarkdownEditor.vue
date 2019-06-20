@@ -49,7 +49,7 @@
                 }
             });
 
-            // 在 mounted 之前value发生变化并不会引起 watch 中方法的调用，所以要在这设定初始值
+            // 在 mounted 之前 value 发生变化并不会引起 watch 中方法的调用，所以要在这设定初始值
             editor.session.setValue(this.value);
 
             editor.session.on('change', () => this.$emit('input', editor.getValue()));
