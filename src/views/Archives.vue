@@ -38,6 +38,7 @@
 
         &__post-list {
             flex: $list-min-width;
+            margin-bottom: 8px;
             @media (min-width: $list-min-width + $aside-min-width + $space) {
                 margin-right: $space;
             }

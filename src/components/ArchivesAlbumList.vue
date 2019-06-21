@@ -47,6 +47,7 @@
     .archives-album-list {
         padding: 12px;
         border-radius: 16px;
+        margin-bottom: 16px;
         border: 1px solid $color-line;
         color: $text-color-primary-light;
 

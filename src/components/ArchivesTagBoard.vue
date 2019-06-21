@@ -43,7 +43,6 @@
     .archives-tag-board {
         padding: 12px;
         border-radius: 16px;
-        margin-top: 16px;
         background-color: $color-background-dark;
         color: $text-color-primary-light;
 
