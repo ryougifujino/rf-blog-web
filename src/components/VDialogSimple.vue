@@ -1,21 +1,28 @@
 <template>
-    <div class="mask" v-if="visible">
-        <div class="v-simple-dialog">
-            <VDialogHeader>
-                <slot name="header"></slot>
-            </VDialogHeader>
-            <div class="v-simple-dialog__body">
-                <slot name="body"></slot>
+    <TransitionFade>
+        <div class="mask" v-if="visible">
+            <div class="v-simple-dialog">
+                <VDialogHeader>
+                    <slot name="header"></slot>
+                </VDialogHeader>
+                <div class="v-simple-dialog__body">
+                    <slot name="body"></slot>
+                </div>
+                <VDialogFooter @cancel="$emit('update:visible', false)"
+                               @confirm="$emit('confirm')">
+                </VDialogFooter>
             </div>
-            <VDialogFooter @cancel="$emit('update:visible', false)"
-                           @confirm="$emit('confirm')">
-            </VDialogFooter>
         </div>
-    </div>
+    </TransitionFade>
 </template>
 
 <script>
+    import TransitionFade from "@/components/TransitionFade.vue";
+
     export default {
+        components: {
+            TransitionFade
+        },
         props: {
             visible: {
                 type: Boolean,
