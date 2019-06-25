@@ -10,7 +10,7 @@ export default {
                         const scrollTop = root.scrollTop || body.scrollTop;
                         const visibleHeight = root.clientHeight || body.clientHeight;
                         const scrollHeight = root.scrollHeight || body.scrollHeight;
-                        if (scrollTop + visibleHeight === scrollHeight) {
+                        if (scrollTop + visibleHeight >= scrollHeight - 100) {
                             binding.value();
                         }
                     };
